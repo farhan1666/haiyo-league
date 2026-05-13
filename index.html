@@ -403,23 +403,58 @@
 </main>
 <!-- END: RelicGrid -->
 <!-- BEGIN: ActionButtons -->
-<footer class="container mx-auto px-4 mt-12 flex flex-col items-center gap-8">
-<!-- Interactive Explanation Section -->
-<div class="hidden w-full bg-black/40 border border-orange-500/20 rounded-lg animate-fade-in p-10" id="explanation-panel">
-<div class="flex gap-6">
-<div class="shrink-0 overflow-hidden w-40 h-40" id="exp-icon-container">
-<img alt="Selected Relic" class="w-full h-full object-cover" id="exp-icon" src=""/>
-</div>
-<div>
-<h3 class="text-orange-400 font-bold mb-2 text-3xl" id="exp-title">Relic Name</h3>
-<p class="text-gray-300 leading-relaxed text-lg" id="exp-desc">Detailed explanation will appear here when you select a relic from the tiers above.</p>
-<button class="mt-6 flex items-center gap-2 px-4 py-2 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-sm font-semibold uppercase tracking-wider" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
-  Back to Top
-</button>
-</div>
-</div>
-</div>
+<section class="container mx-auto px-4 mt-12 flex flex-col items-center gap-8">
+  <div class="hidden w-full bg-black/40 border border-orange-500/20 rounded-lg animate-fade-in p-10" id="explanation-panel">
+    <div class="flex gap-6">
+      <div class="shrink-0 overflow-hidden w-40 h-40" id="exp-icon-container">
+        <img alt="Selected Relic" class="w-full h-full object-cover" id="exp-icon" src=""/>
+      </div>
+      <div>
+        <h3 class="text-orange-400 font-bold mb-2 text-3xl" id="exp-title">Relic Name</h3>
+        <p class="text-gray-300 leading-relaxed text-lg" id="exp-desc">Detailed explanation will appear here.</p>
+        <button class="mt-6 ... " onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+          Back to Top
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="w-full border-t border-orange-900/30 bg-black/20 py-12 mt-20">
+  <div class="container mx-auto px-4 flex flex-col items-center text-center">
+
+    <button onclick="toggleDisclaimer()" class="mb-6 flex items-center gap-2 text-orange-200/50 hover:text-orange-400 transition-colors text-sm uppercase tracking-widest font-medium">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      Disclaimer
+    </button>
+
+    <div class="space-y-2 text-[10px] text-gray-600 max-w-2xl uppercase tracking-tighter">
+      <p>Old School RuneScape is a trademark of Jagex Ltd.</p>
+      <p>This project is not affiliated with Jagex Ltd.</p>
+    </div>
+  </div>
 </footer>
+
+<div id="disclaimer-popup" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-[9999] p-4 backdrop-blur-sm">
+  <div class="bg-[#1a1a1a] border border-orange-900/50 p-6 max-w-md w-full rounded-lg shadow-2xl relative">
+    <h3 class="text-orange-400 font-bold mb-3 text-xl">Project Information</h3>
+    <div class="text-sm text-gray-300 space-y-3 leading-relaxed">
+      <p>Whilst this website used to display this information is <b>unapologetically</b> 300% vibe coded by myself (Phoneman) [<b>please</b> do not look at the source code it is a god-awful mess], all descriptions and images on this website are 100% human-made by Hai Yo.</p>
+    </div>
+    <button onclick="toggleDisclaimer()" class="mt-6 w-full py-2 bg-orange-900/30 hover:bg-orange-800/40 text-orange-200 border border-orange-700/50 rounded transition-all">
+      Close
+    </button>
+  </div>
+</div>
+
+<style>
+  /* Adding this specifically to handle the toggle via CSS flex */
+  #disclaimer-popup.active {
+      display: flex !important;
+  }
+</style>
 <!-- END: ActionButtons -->
 <script data-purpose="interaction-logic">
     /**
@@ -452,6 +487,26 @@
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+    function toggleDisclaimer() {
+    const popup = document.getElementById('disclaimer-popup');
+
+    // This toggles the .active class we defined in the <style> tag above
+    popup.classList.toggle('active');
+
+    // Optional: Prevent background scrolling when pop-up is open
+    if (popup.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+        popup.onclick = function(event) {
+            if (event.target === popup) {
+                toggleDisclaimer();
+            }
+        };
+    } else {
+        document.body.style.overflow = 'auto';
+        popup.onclick = null;
+    }
+}
+
 </script>
 <style data-purpose="animations">
     @keyframes fadeIn {
