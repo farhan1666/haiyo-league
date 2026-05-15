@@ -165,7 +165,7 @@ text-decoration: underline;
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-center py-8">
-<div class="text-title-title uppercase text-center">Lunar leagues</div>
+<div class="text-title-title uppercase text-center cursor-pointer select-none" onclick="toggleWelcomePopup()">Lunar leagues</div>
 <div class="text-title-subtitle text-center !no-underline mb-2 -mt-6">(it's all in your head)</div>
 <!-- BEGIN: RelicGrid -->
 <main class="container mx-auto px-4 py-8 max-w-full">
@@ -495,7 +495,7 @@ text-decoration: underline;
   </div>
 </footer>
 
-<div id="disclaimer-popup" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-[9999] p-4 backdrop-blur-sm">
+<div id="disclaimer-popup" class="fixed inset-0 bg-black/80 flex items-center justify-center opacity-0 pointer-events-none z-[9999] p-4 backdrop-blur-sm transition-opacity duration-300 ease-in-out">
   <div class="bg-[#1e0f29]/80 border border-orange-900/50 p-8 max-w-xl w-full rounded-lg shadow-2xl relative">
 
     <h3 class="text-orange-400 font-bold mb-4 text-3xl">Disclaimer</h3>
@@ -503,10 +503,12 @@ text-decoration: underline;
     <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
       <ul class="relic-bullet">
         <li>All descriptions and images on this website are <span class="relic-coloured-text">100% human-made</span> by Hai Yo.</li>
-        <li>This website used to display this information is <b>unapologetically</b> 300% vibe coded by myself (Phoneman)</li>
-        <ul class="relic-bullet">
-          <li><b>Please</b> do not look at the source code it is a god-awful mess</li>
-        </ul>
+        <li>
+          This website used to display this information is <b>unapologetically</b> 300% vibe coded by myself (Phoneman)
+          <ul class="relic-bullet">
+            <li><b>Please</b> do not look at the source code it is a god-awful mess</li>
+          </ul>
+        </li>
       </ul>
     </div>
 
@@ -516,19 +518,33 @@ text-decoration: underline;
   </div>
 </div>
 
-<div id="mobile-warning-popup" class="fixed inset-0 bg-black/85 hidden items-center justify-center z-[10000] p-4 backdrop-blur-md">
-  <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-8 max-w-xl w-full rounded-lg shadow-2xl relative text-center">
+<div id="welcome-popup" class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out">
+  <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-8 max-w-xl w-full rounded-lg shadow-2xl relative">
 
-    <h3 class="text-orange-400 font-bold mb-4 text-3xl uppercase">Warning</h3>
+    <img src="images/favicon.png" alt="Icon" class="absolute top-5 right-5 w-8 h-8 object-contain pointer-events-none" />
 
-    <div class="text-lg text-gray-300 space-y-4 leading-relaxed mb-6">
-      <p>This website is <span class="relic-coloured-text">not optimized</span> for mobile devices at all.</p>
-      <p>For the authentic experience and the cleanest layout, it is highly recommended to view this on a <span class="text-white font-bold">Desktop</span>.</p>
-      <p class="text-xs text-passive">(You can continue anyway, but it will not look good.)</p>
+    <h3 class="text-orange-400 font-bold mb-4 text-3xl uppercase text-center">Welcome</h3>
+
+    <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
+      <p>To best understand these relics, you'll need some essential context: </p>
+      <ul class="relic-bullet">
+        <li>All players start in <span class="relic-coloured-text">Misthalin</span>.</li>
+        <li><span class="relic-coloured-text">Sailing</span> and all its related content would be present in this League.
+          <ul class="relic-bullet">
+            <li>Attempting to cross into an ocean that does not border an area you've unlocked will <span class="relic-coloured-text">capsize</span> your boat.</li>
+          </ul>
+        </li>
+        <li>A separate system for combat, more similar to Combat Masteries than Demonic Pacts, would <span class="relic-coloured-text">coexist</span> with these relics. This is why there are only a few combat oriented choices here.</li>
+        <ul class="relic-bullet">
+          <li>If you'd be interested in seeing these, let us know!</li>
+        </ul>
+        <li>Most passive bonuses are the same as in Leagues 6: Demonic Pacts. New passive bonuses are listed in <span class="relic-coloured-text">orange</span>.</li>
+      </ul>
+      <div id="mobile-warning-slot"></div>
     </div>
 
-    <button onclick="closeMobileWarning()" class="mt-4 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold">
-      Enter Anyway
+    <button onclick="closeWelcomePopup()" class="mt-8 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold">
+      Understood, put me to sleep
     </button>
   </div>
 </div>
@@ -550,58 +566,100 @@ text-decoration: underline;
       const icon = document.getElementById('exp-icon');
       const desc = document.getElementById('exp-desc');
 
-      // Set content
       title.innerText = name;
       icon.src = iconUrl;
       desc.innerHTML = description;
 
-      // Reveal panel
       panel.classList.remove('hidden');
-
-      // Scroll to explanation panel smoothly
       panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  /**
+   * RESTORED: Standard toggle functionality for the separate disclaimer button
+   * Targets the 'disclaimer-popup' element exactly like before.
+   */
+/**
+   * Standard toggle functionality for the separate disclaimer button
+   * Swaps opacity smoothly over 300ms instead of instantly cutting out.
+   */
   function toggleDisclaimer() {
       const popup = document.getElementById('disclaimer-popup');
+      const isHidden = popup.classList.contains('opacity-0');
 
-      // This toggles the .active class we defined in the <style> tag above
-      popup.classList.toggle('active');
-
-      // Optional: Prevent background scrolling when pop-up is open
-      if (popup.classList.contains('active')) {
-          document.body.style.overflow = 'hidden';
-          popup.onclick = function(event) {
-              if (event.target === popup) {
-                  toggleDisclaimer();
-              }
-          };
+      if (isHidden) {
+          // Fade in smoothly
+          popup.classList.remove('opacity-0', 'pointer-events-none');
+          popup.classList.add('opacity-100');
+          document.body.style.overflow = 'hidden'; // Stop page scrolling
       } else {
-          document.body.style.overflow = 'auto';
-          popup.onclick = null;
-      }
-  } // <-- This closing brace was missing/misplaced!
-
-  // NOW THESE CODES SIT SAFELY OUTSIDE AND WILL RUN AUTOMATICALLY
-  function checkMobileDevice() {
-      const popup = document.getElementById('mobile-warning-popup');
-
-      if (window.innerWidth < 768) {
-          popup.classList.remove('hidden');
-          popup.classList.add('flex');
+          // Fade out smoothly
+          popup.classList.remove('opacity-100');
+          popup.classList.add('opacity-0', 'pointer-events-none');
+          document.body.style.overflow = 'auto'; // Restore page scrolling
       }
   }
 
-  function closeMobileWarning() {
-      const popup = document.getElementById('mobile-warning-popup');
-      popup.classList.remove('flex');
-      popup.classList.add('hidden');
+  /**
+ * Manual toggle functionality to re-open the welcome popup
+ */
+function toggleWelcomePopup() {
+      const popup = document.getElementById('welcome-popup');
+      // Fade in
+      popup.classList.remove('opacity-0', 'pointer-events-none');
+      popup.classList.add('opacity-100');
+      document.body.style.overflow = 'hidden';
   }
 
-  // Run the check automatically as soon as the page loads
-  window.addEventListener('DOMContentLoaded', checkMobileDevice);
+  /**
+   * Automatically handles checking first-time visit status for 'welcome-popup'
+   */
+  function handleWelcomeFlow() {
+      const popup = document.getElementById('welcome-popup');
+      const mobileSlot = document.getElementById('mobile-warning-slot');
 
+      const hasVisitedBefore = localStorage.getItem('lunar_leagues_visited');
+
+      if (!hasVisitedBefore) {
+          const isMobileTouch = window.matchMedia("(pointer: coarse)").matches;
+          const isNarrowScreen = window.innerWidth < 768;
+
+          if (isNarrowScreen || isMobileTouch) {
+              mobileSlot.innerHTML = `
+                  <hr class="border-orange-900/30 my-4">
+                  <div class="text-red-400 pl-5 space-y-1">
+                      <p class="font-bold uppercase tracking-wide">⚠️ Mobile Warning:</p>
+                      <p>This website is not optimized for mobile devices at all.</p>
+                      <p>For the authentic experience and the cleanest layout, it is highly recommended to view this on a <span class="font-bold text-white">Desktop</span>.</p>
+                      <p class="text-xs text-passive mt-1">(You can continue anyway, but it will not look good.)</p>
+                  </div>
+              `;
+          }
+
+          // Fade in automatically on first load
+          popup.classList.remove('opacity-0', 'pointer-events-none');
+          popup.classList.add('opacity-100');
+          document.body.style.overflow = 'hidden';
+      }
+  }
+
+  /**
+   * Saves the token to localStorage and fades out the popup window
+   */
+  function closeWelcomePopup() {
+      const popup = document.getElementById('welcome-popup');
+
+      // Fade out smoothly
+      popup.classList.remove('opacity-100');
+      popup.classList.add('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = 'auto';
+
+      localStorage.setItem('lunar_leagues_visited', 'true');
+  }
+
+  // Kickstart the first-time checker automatically when the document is ready
+  window.addEventListener('DOMContentLoaded', handleWelcomeFlow);
 </script>
+
 <style data-purpose="animations">
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(10px); }
