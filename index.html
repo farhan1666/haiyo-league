@@ -518,12 +518,12 @@ text-decoration: underline;
 <div id="mobile-warning-popup" class="fixed inset-0 bg-black/85 hidden items-center justify-center z-[10000] p-4 backdrop-blur-md">
   <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-8 max-w-xl w-full rounded-lg shadow-2xl relative text-center">
 
-    <h3 class="text-orange-400 font-bold mb-4 text-3xl uppercase">⚠️ Warning ⚠️</h3>
+    <h3 class="text-orange-400 font-bold mb-4 text-3xl uppercase">Warning</h3>
 
     <div class="text-lg text-gray-300 space-y-4 leading-relaxed mb-6">
       <p>This website is <span class="relic-coloured-text">not optimized</span> for mobile devices at all.</p>
       <p>For the authentic experience and the cleanest layout, it is highly recommended to view this on a <span class="text-white font-bold">Desktop</span>.</p>
-      <p class="text-xs text-passive">(You can continue anyway, but expect a total interface mess!)</p>
+      <p class="text-xs text-passive">(You can continue anyway, but it will not look good.)</p>
     </div>
 
     <button onclick="closeMobileWarning()" class="mt-4 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold">
@@ -540,75 +540,75 @@ text-decoration: underline;
 </style>
 <!-- END: ActionButtons -->
 <script data-purpose="interaction-logic">
-    /**
-     * Shows the details of a clicked relic in the explanation panel
-     */
-    function showDetails(name, iconUrl, description) {
-        const panel = document.getElementById('explanation-panel');
-        const title = document.getElementById('exp-title');
-        const icon = document.getElementById('exp-icon');
-        const desc = document.getElementById('exp-desc');
+  /**
+   * Shows the details of a clicked relic in the explanation panel
+   */
+  function showDetails(name, iconUrl, description) {
+      const panel = document.getElementById('explanation-panel');
+      const title = document.getElementById('exp-title');
+      const icon = document.getElementById('exp-icon');
+      const desc = document.getElementById('exp-desc');
 
-        // Set content
-        title.innerText = name;
-        icon.src = iconUrl;
-        desc.innerHTML = description;
+      // Set content
+      title.innerText = name;
+      icon.src = iconUrl;
+      desc.innerHTML = description;
 
-        // Reveal panel
-        panel.classList.remove('hidden');
+      // Reveal panel
+      panel.classList.remove('hidden');
 
-        // Scroll to explanation panel smoothly
-        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+      // Scroll to explanation panel smoothly
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
-    /**
-     * Resets the interface to its default state
-     */
-    function resetChoices() {
-        const panel = document.getElementById('explanation-panel');
-        panel.classList.add('hidden');
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    function toggleDisclaimer() {
-    const popup = document.getElementById('disclaimer-popup');
+  /**
+   * Resets the interface to its default state
+   */
+  function resetChoices() {
+      const panel = document.getElementById('explanation-panel');
+      panel.classList.add('hidden');
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
-    // This toggles the .active class we defined in the <style> tag above
-    popup.classList.toggle('active');
+  function toggleDisclaimer() {
+      const popup = document.getElementById('disclaimer-popup');
 
-    // Optional: Prevent background scrolling when pop-up is open
-    if (popup.classList.contains('active')) {
-        document.body.style.overflow = 'hidden';
-        popup.onclick = function(event) {
-            if (event.target === popup) {
-                toggleDisclaimer();
-            }
-        };
-    } else {
-        document.body.style.overflow = 'auto';
-        popup.onclick = null;
-    }
-    // Function to check screen size and show warning
-    function checkMobileDevice() {
+      // This toggles the .active class we defined in the <style> tag above
+      popup.classList.toggle('active');
+
+      // Optional: Prevent background scrolling when pop-up is open
+      if (popup.classList.contains('active')) {
+          document.body.style.overflow = 'hidden';
+          popup.onclick = function(event) {
+              if (event.target === popup) {
+                  toggleDisclaimer();
+              }
+          };
+      } else {
+          document.body.style.overflow = 'auto';
+          popup.onclick = null;
+      }
+  } // <-- This closing brace was missing/misplaced!
+
+  // NOW THESE CODES SIT SAFELY OUTSIDE AND WILL RUN AUTOMATICALLY
+  function checkMobileDevice() {
       const popup = document.getElementById('mobile-warning-popup');
 
-      // 768px matches Tailwind's 'md' breakpoint (anything below is mobile/tablet)
       if (window.innerWidth < 768) {
-        popup.classList.remove('hidden');
-        popup.classList.add('flex');
+          popup.classList.remove('hidden');
+          popup.classList.add('flex');
       }
-    }
+  }
 
-    // Function to close the warning when they click "Enter Anyway"
-    function closeMobileWarning() {
+  function closeMobileWarning() {
       const popup = document.getElementById('mobile-warning-popup');
       popup.classList.remove('flex');
       popup.classList.add('hidden');
-    }
+  }
 
-    // Run the check automatically as soon as the page loads
-    window.addEventListener('DOMContentLoaded', checkMobileDevice);
-}
+  // Run the check automatically as soon as the page loads
+  window.addEventListener('DOMContentLoaded', checkMobileDevice);
 
 </script>
 <style data-purpose="animations">
