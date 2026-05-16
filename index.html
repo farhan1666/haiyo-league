@@ -165,6 +165,16 @@ text-decoration: underline;
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-center py-8">
+<div class="fixed inset-0 -z-50 w-full h-full overflow-hidden bg-[#12071a]">
+  <video
+          autoplay
+          muted
+          loop
+          playsinline
+          class="w-full h-full object-cover opacity-40">
+    <source src="videos/bg.mp4" type="video/mp4">
+  </video>
+</div>
 <div class="text-title-title uppercase text-center cursor-pointer select-none" onclick="toggleWelcomePopup()">Lunar leagues</div>
 <div class="text-title-subtitle text-center !no-underline mb-2 -mt-6">(it's all in your head)</div>
 <!-- BEGIN: RelicGrid -->
