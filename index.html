@@ -500,11 +500,13 @@ text-decoration: underline;
 <footer class="w-full border-t border-orange-900/30 bg-[#1e0f29]/80 py-12 mt-20">
   <div class="container mx-auto px-4 flex flex-col items-center text-center">
 
-    <button onclick="toggleDisclaimer()" class="mb-6 flex items-center gap-2 text-orange-200/50 hover:text-orange-400 transition-colors uppercase tracking-widest font-medium">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mb-[2px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      Disclaimer
+    <button onclick="toggleDisclaimer()" class="group mb-6 flex items-center gap-2 text-orange-200/50 hover:text-orange-400 transition-colors uppercase tracking-widest font-medium">
+
+      <img src="https://oldschool.runescape.wiki/images/Heal_Group_icon_(mobile).png"
+           alt="Dream"
+           class="h-4 w-4 mb-[2px] object-contain filter grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-200" />
+
+      Credits
     </button>
 
     <div class="space-y-2 text-[20px] text-gray-600 max-w-2xl tracking-tighter">
@@ -516,16 +518,18 @@ text-decoration: underline;
 <div id="disclaimer-popup" class="fixed inset-0 bg-black/80 flex items-center justify-center opacity-0 pointer-events-none z-[9999] p-4 backdrop-blur-sm transition-opacity duration-300 ease-in-out">
   <div class="bg-[#1e0f29]/80 border border-orange-900/50 p-8 max-w-xl w-full rounded-lg shadow-2xl relative">
 
-    <h3 class="text-orange-400 font-bold mb-4 text-3xl">Disclaimer</h3>
+    <h3 class="text-orange-400 font-bold mb-4 text-3xl">Credits and Disclaimers</h3>
 
     <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
       <ul class="relic-bullet">
-        <li>All descriptions and images on this website are <span class="relic-coloured-text">100% human-made</span> by Hai Yo.</li>
+        <li>All descriptions and relic images on this website are <span class="relic-coloured-text">100% human-made</span> by Hai Yo.</li>
         <li>
-          This website used to display this information is <b>unapologetically</b> 300% vibe coded by myself (Phoneman)
+          This website used to display this information is <b>unapologetically</b> vibe coded by Phoneman btw.
           <ul class="relic-bullet">
             <li><b>Please</b> do not look at the source code it is a god-awful mess</li>
           </ul>
+          <li>Moving background video by <a class="relic-coloured-text underline" href="https://www.pexels.com/@wayne-speedy-777933/" target="_blank" rel="noopener noreferrer">Wayne Speedy</a> via <a href="https://www.pexels.com/" target="_blank" rel="noopener noreferrer">Pexels</a></li>
+          <li>Static background by Meurks: <a href="https://4kwallpapers.com/nature/full-moon-dark-background-cloudy-sky-stars-digital-art-5k-8k-5589.html" class="relic-coloured-text underline">Full moon Dark background Wallpaper.</a>
         </li>
       </ul>
     </div>
