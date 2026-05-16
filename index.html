@@ -1,736 +1,1338 @@
-<!DOCTYPE html>
+<!doctype html>
 
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Lunar Leagues</title>
-<link rel="icon" type="image/webp" href="images/favicon.webp">
-<!-- Tailwind CSS v3 CDN -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Google Fonts for typography -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
-<style data-purpose="custom-theme">
-  /* 1. Define the base OSRS font */
-  @font-face {
-      font-family: 'RuneScape Plain 12';
-      src: url('./fonts/RuneScape-Plain-12.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-  }
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <title>Lunar Leagues</title>
+    <link rel="icon" type="image/webp" href="images/favicon.webp" />
 
-  /* 2. Define the OSRS Quill font */
-  @font-face {
-      font-family: 'RuneScape Quill';
-      src: url('./fonts/RuneScape-Quill.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-  }
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
-  body {
-      background-color: #1e0f29;
-      color: #9ca3af;
-      font-family: 'RuneScape Plain 12', sans-serif;
-      font-size: 1.25rem;
-      background-image: url('images/relic_background.webp');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-  }
-
-  /* 3. Override Tailwind's font sizes to make them larger for pixel fonts */
-  .text-xs {
-      font-size: 1rem !important; /* Bumps xs up from tiny to a legible base size */
-  }
-
-  .text-lg {
-      font-size: 1.25rem !important; /* Bumps lg up to be visibly larger than body text */
-  }
-
-  /* 4. Make text-3xl use the Quill font and give it a size boost */
-  .text-3xl {
-      font-family: 'RuneScape Quill', serif !important;
-      font-size: 2.5rem !important; /* Scaled up so the detailed quill strokes render crisply */
-      text-decoration: underline;
-      letter-spacing: 0.05em;
-  }
-  .text-passive {
-  font-size: 0.9rem;
-  }
-  .text-passive-title {
-font-family: 'RuneScape Quill', serif !important;
-letter-spacing: 0.05em;
-text-decoration: underline;
-  }
-  .text-title-subtitle {
-    font-family: 'RuneScape Quill', serif !important;
-    letter-spacing: 0.05em;
-    color: #777777;
-  }
-  .text-title-title {
-    font-family: 'RuneScape Quill', serif !important;
-    letter-spacing: 0.05em;
-    color: #ffb74d;
-    font-size: 3.5rem;
-  }
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style data-purpose="custom-theme">
+      @font-face {
+        font-family: "RuneScape Plain 12";
+        src: url("./fonts/RuneScape-Plain-12.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "RuneScape Quill";
+        src: url("./fonts/RuneScape-Quill.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
+      }
+      body {
+        background-color: #1e0f29;
+        color: #9ca3af;
+        font-family: "RuneScape Plain 12", sans-serif;
+        font-size: 1.25rem;
+        background-image: url("images/relic_background.webp");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+      .text-xs {
+        font-size: 1rem !important;
+      }
+      .text-lg {
+        font-size: 1.25rem !important;
+      }
+      .text-3xl {
+        font-family: "RuneScape Quill", serif !important;
+        font-size: 2.5rem !important;
+        text-decoration: underline;
+        letter-spacing: 0.05em;
+      }
+      .text-passive {
+        font-size: 0.9rem;
+      }
+      .text-passive-title {
+        font-family: "RuneScape Quill", serif !important;
+        letter-spacing: 0.05em;
+        text-decoration: underline;
+      }
+      .text-title-subtitle {
+        font-family: "RuneScape Quill", serif !important;
+        letter-spacing: 0.05em;
+        color: #777;
+      }
+      .text-title-title {
+        font-family: "RuneScape Quill", serif !important;
+        letter-spacing: 0.05em;
+        color: #ffb74d;
+        font-size: 3.5rem;
+      }
       .relic-accent {
-          color: #ffd700;
+        color: gold;
       }
       .relic-tier-title {
-        font-family: 'RuneScape Quill', serif !important;
-          letter-spacing: 0.05em;
-
+        font-family: "RuneScape Quill", serif !important;
+        letter-spacing: 0.05em;
       }
       .relic-card {
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          transition: all 0.2s ease;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.2s ease;
       }
       .relic-card:hover {
-          background: rgba(255, 255, 255, 0.07);
-          border-color: #ff8c42;
+        background: rgba(255, 255, 255, 0.07);
+        border-color: #ff8c42;
       }
       .relic-card.selected {
-          border-color: #ffd700;
-          background: rgba(255, 215, 0, 0.05);
+        border-color: gold;
+        background: rgba(255, 215, 0, 0.05);
       }
       .stat-badge {
-          background: rgba(0, 0, 0, 0.3);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          font-size: 0.75rem;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.75rem;
       }
       .btn-action {
-          background: rgba(255, 140, 66, 0.1);
-          border: 1px solid #ff8c42;
-          color: #ff8c42;
+        background: rgba(255, 140, 66, 0.1);
+        border: 1px solid #ff8c42;
+        color: #ff8c42;
       }
       .btn-action:hover {
-          background: #ff8c42;
-          color: #1a1a1a;
+        background: #ff8c42;
+        color: #1a1a1a;
       }
-      /* Vertical divider effect */
       .tier-column {
-          border-right: 1px solid rgba(255, 255, 255, 0.05);
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
       }
       .tier-column:last-child {
-          border-right: none;
+        border-right: none;
       }
       li::before {
-          content: ">";
-          margin-right : 0.5rem;
-          color: rgb(251 146 60 / var(--tw-text-opacity, 1));
+        content: ">";
+        margin-right: 0.5rem;
+        color: rgb(251 146 60 / var(--tw-text-opacity, 1));
       }
       ul {
-          list-style-type: none;
+        list-style-type: none;
       }
       .text-color-strong {
-          color: rgb(251, 146, 60);
+        color: #fb923c;
       }
-              /* Base style for the list */
       .relic-bullet {
-          list-style-type: disc;
-          list-style-position: outside; /* Ensures bullet is to the left of the text block */
-          margin-left: 1.2rem;          /* This controls how far out the bullet protrudes */
-          padding-left: 0;              /* Removes the default inward push */
-          margin-top: 0.5rem;
-          margin-bottom: 0.5rem;
+        list-style-type: disc;
+        list-style-position: outside;
+        margin-left: 1.2rem;
+        padding-left: 0;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
       }
-
-      /* 1. Remove the triangle from relic bullets */
       .relic-bullet li::before {
-          content: none;
+        content: none;
       }
-
-      /* 2. Style the actual bullet point orange */
       .relic-bullet li::marker {
-          color: rgb(251 146 60);
-          font-size: 1.2em;
+        color: rgb(251 146 60);
+        font-size: 1.2em;
       }
-
-      /* 3. Indentation for the nested list */
       .relic-bullet .relic-bullet {
-          list-style-type: circle;
-          margin-left: 1.5rem; /* Pushes the nested bullet further right */
-          padding-left: 0;
+        list-style-type: circle;
+        margin-left: 1.5rem;
+        padding-left: 0;
       }
-
-      /* Ensure list items display correctly */
       .relic-bullet li {
-          display: list-item;
-          padding-left: 0.5rem; /* Space between the orange bullet and the text */
+        display: list-item;
+        padding-left: 0.5rem;
       }
       .relic-coloured-text {
-        color: rgb(251 146 60); /* Same orange as before */
+        color: rgb(251 146 60);
       }
     </style>
-</head>
-<body class="min-h-screen flex flex-col justify-center py-8">
-<div class="fixed inset-0 -z-50 w-full h-full overflow-hidden bg-[#12071a]">
+  </head>
+  <body class="min-h-screen flex flex-col justify-center py-8">
+    <div class="fixed inset-0 -z-50 w-full h-full overflow-hidden bg-[#12071a]">
+      <img
+        id="bg-fallback-img"
+        src="images/relic_background.webp"
+        alt="Background"
+        class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500"
+      />
 
-  <img
-          id="bg-fallback-img"
-          src="images/relic_background.webp"
-          alt="Background"
-          class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
-
-  <video
-          id="bg-video"
-          autoplay
-          muted
-          loop
-          playsinline
-          class="w-full h-full object-cover opacity-40 transition-opacity duration-500">
-    <source src="videos/bg.webm" type="video/webm">
-  </video>
-</div>
-<div class="text-title-title uppercase text-center cursor-pointer select-none" onclick="toggleWelcomePopup()">Lunar leagues</div>
-<div class="text-title-subtitle text-center !no-underline mb-2 -mt-6">(it's all in your head)</div>
-<!-- BEGIN: RelicGrid -->
-<main class="container mx-auto px-4 py-8 max-w-full">
-<div class="flex justify-between flex-wrap" id="relic-grid">
-<!-- Tier 1 Relics & Passives -->
-<section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-1">
-  <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">Tier 1</h2>
-  
-  <div class="flex flex-col gap-8 items-center">
-    <!-- Magic the Gathering -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Magic the Gathering', 'images/relics/relic_magicthegathering.webp', '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Wizard&amp;apos;s diadem,</span> a headgear item with +5 Magic accuracy.</li><li>The <span class=relic-coloured-text>Wizard&amp;apos;s diadem</span> acts as an infinite source of water, earth, fire and mind runes.</li><li>When the Wizard&amp;apos;s diadem is equipped, all <span class=relic-coloured-text>Fishing, Woodcutting,</span> and <span class=relic-coloured-text>Mining</span> actions are replaced with gathering spells, a 5-tick action (4 with Harmonised nightmare staff).</li><li>Gathering spells can be cast from a 10-tile range on any fishing spot, tree, or rock that you have the relevant level for. This must pass a Magic accuracy roll, with higher tier resources having higher Magic defence. Successful rolls will award the resource (dropped if inventory is full), <span class=relic-coloured-text>full skilling XP,</span> and an equal amount of <span class=relic-coloured-text>Magic XP.</span><ul class=relic-bullet><li>On unsuccessful rolls (splashes), you will still receive half that amount of Magic XP.</li></ul></li><li>Casting a gathering spell requires:<ul class=relic-bullet><li>1 Water, 1 Mind rune for fishing spots;</li><li>1 Earth, 1 Mind rune for trees;</li><li>1 Fire, 1 Mind rune for ore rocks.</li></ul></li><li>The <span class=relic-coloured-text>Wizard&amp;apos;s diadem</span> evolves with your <span class=relic-coloured-text>Magic level,</span> granting it bonus Magic accuracy and allowing you to use higher tier casts for better yield. Higher tier casts replace the Mind rune requirement with the following runes, if you have them:<ul class=relic-bullet><li><span class=relic-coloured-text>Level 17:</span> 1 Chaos rune, yields 1.5x resources (grants 2 every other cast) (+10 Magic accuracy)</li><li><span class=relic-coloured-text>Level 41:</span> 1 Death rune, yields 2x resources (+15 Magic accuracy)</li><li><span class=relic-coloured-text>Level 62:</span> 1 Blood rune, yields 2.5x resources (grants 3 every other cast) (+20 Magic accuracy)</li><li><span class=relic-coloured-text>Level 81:</span> 1 Wrath rune, yields 3x resources (+25 Magic accuracy)</li></ul></li><li><span class=relic-coloured-text>Full skilling XP</span> is given for all additional resources gathered.</li><li>Additionally, the <span class=relic-coloured-text>Wizard&amp;apos;s diadem</span> can be charged with Nature and Law runes:<ul class=relic-bullet><li>You can spend 1 Nature rune to process a gathered resource (cooks fish, burns logs, and smelts ore), granting <span class=relic-coloured-text>full skilling XP.</span></li><li>You can spend 1 Law rune to send a gathered resource to the bank.</li></ul></li><li>Both effects can be active at once and are toggleable.</li></ul>')">
-      <img alt="Magic the Gathering" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_magicthegathering.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Magic the Gathering</span>
+      <video
+        id="bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        class="w-full h-full object-cover opacity-40 transition-opacity duration-500"
+      >
+        <source src="videos/bg.webm" type="video/webm" />
+      </video>
     </div>
+    <div
+      class="group flex items-end justify-center gap-6 cursor-pointer select-none"
+      onclick="toggleWelcomePopup()"
+    >
+      <img
+        src="images/favicon.webp"
+        alt="Icon"
+        class="w-12 h-12 object-contain opacity-50 group-hover:opacity-100 transition-opacity duration-200 -scale-x-100 pb-[6px]"
+      />
 
-    <!-- Symbiosis -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Symbiosis', 'images/relics/relic_symbiosis.webp', '<ul class=relic-bullet><li>Your first action on a mining rock, fishing spot, or tree is now <span class=relic-coloured-text>guaranteed to succeed.</span> This is tracked individually per node.<ul class=relic-bullet><li>To be considered a first action, you must not have interacted with that node in 1 minute.</li><li>Hopping worlds does not reset this timer.</li></ul></li><li>All mining rocks now contain <span class=relic-coloured-text>5 sets of bones</span> in them. Mining a rock retrieves the bones, the tier of which scales with the quality of the ore (e.g. Bones for Copper, Dragon bones for Mithril, Superior dragon bones for Runite).<ul class=relic-bullet><li>The bones take 1 minute to respawn per unique rock.</li><li>Toggleable effect: Automatically bury bones received from mining rocks (all 5 in 1 tick).</li></ul></li><li>All fishing spots now have <span class=relic-coloured-text>exceptionally agile fish.</span> Catching an agile fish grants additional Agility XP equivalent to 5x your Fishing XP drop.<ul class=relic-bullet><li>The exceptionally agile fish takes 1 minute to respawn per unique fishing spot.</li></ul></li><li>All trees now have a <span class=relic-coloured-text>full birdhouse</span> in them. Chopping a tree grants the full rewards and Hunter XP of a birdhouse equivalent to their tier of wood (e.g. Oak trees have Oak birdhouses, Willow trees have Willow birdhouses, Magic trees have Magic birdhouses).<ul class=relic-bullet><li>The birdhouse takes 1 minute to respawn per unique tree.</li><li>Toggleable effect: Discard the birdhouse loot onto the ground.</li></ul></li></ul>')">
-      <img alt="Symbiosis" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_symbiosis.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Symbiosis</span>
-    </div>
-
-    <!-- Financial Fraud -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Financial Fraud', 'images/relics/relic_financialfraud.webp', '<ul class=relic-bullet><li>Upon unlocking this relic, receive <span class=relic-coloured-text>100,000 Coins</span> and the <span class=relic-coloured-text>Fanciest boots.</span><ul class=relic-bullet><li>The <span class=relic-coloured-text>Fanciest boots</span> grant +3 defence in all styles. That&amp;apos;s it.</li><li>You cannot receive item rewards from the Stronghold of Security.</li></ul></li><li>Any time you would receive <span class=relic-coloured-text>Coins</span> through skilling actions or monster drops, there is instead a 50% chance not to receive them, and a 50% chance to double them. If doubled, there is a 50% chance to further double it, repeating until unsuccessful.<ul class=relic-bullet><li>If you receive over 100,000,000 Coins through this, the excess will be automatically converted into Platinum tokens.</li></ul></li><li>Toggleable effect: You can now <span class=relic-coloured-text>invest</span> in yourself. While investing, every XP drop will yield a bonus XP drop for that same skill, spending 10 Coins per 1 bonus XP. The total amount received in the bonus XP drop scales with your total level, unaffected by Leagues multipliers:<ul class=relic-bullet><li><span class=relic-coloured-text>Total Level 1:</span> 20 bonus XP (200 Coins);</li><li><span class=relic-coloured-text>Total Level 500:</span> 60 bonus XP (600 Coins);</li><li><span class=relic-coloured-text>Total Level 1000:</span> 150 bonus XP (1500 Coins);</li><li><span class=relic-coloured-text>Total Level 1500:</span> 300 bonus XP (3000 Coins);</li><li><span class=relic-coloured-text>Total Level 2000:</span> 600 bonus XP (6000 Coins).</li></ul></li><li>Payment prioritizes Coins in the bank. If you cannot pay for a bonus XP drop, you will automatically stop investing.</li></ul>')">
-      <img alt="Financial Fraud" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_financialfraud.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Financial Fraud</span>
-    </div>
-  </div>
-
-  <!-- Passive Effects -->
-  <div class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
-    <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-    <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-      <li class="flex items-start gap-2">
-        <span>Leagues XP multiplier is 5x.</span>
-      </li>
-      <li class="flex items-start gap-2">
-        <span>Items from eligible sources are 2x common.</span>
-      </li>
-      <li class="flex items-start gap-2">
-        <span>Farming ticks occur every 1 minute instead of every 5 minutes.</span>
-      </li>
-      <li class="flex items-start gap-2">
-        <span>Minigame points are boosted by 4x.</span>
-      </li>
-      <li class="flex items-start gap-2">
-        <span>Run energy is never drained whilst running.</span>
-      </li>
-      <li class="flex items-start gap-2">
-        <span>All clue scrolls will drop as stackable scroll boxes, and clue step progress is saved between clues.</span>
-      </li>
-      <li class="flex items-start gap-2">
-        <span>Players will only receive clue steps and port tasks they can access within an unlocked region.</span>
-      </li>
-      <li class="flex items-start gap-2">
-          <span class="text-color-strong">Trees and mining rocks never deplete, and fishing spots are automatically tracked.</span>
-      </li>
-    </ul>
-  </div>
-</section>
-<!-- Tier 2 -->
-<section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-2">
-  <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">Tier 2</h2>
-
-  <div class="flex flex-col gap-8 items-center">
-    <!-- Conman -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Conman', 'images/relics/relic_conman.webp', '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Slippin&amp;apos; suit,</span> a body slot item.</li><li>While wearing the <span class=relic-coloured-text>Slippin&amp;apos; suit,</span> you are too classy to train Thieving. You are training <span class=relic-coloured-text>&amp;quot;Charisma&amp;quot;</span> now, so you can no longer engage in the following:<ul class=relic-bullet><li>Steal from stalls;</li><li>Steal from the Sorceress&amp;apos; Garden;</li><li>Steal from Varlamore houses;</li><li>Loot various picklockable chests;</li><li>Equip Rogues&amp;apos; equipment.</li></ul></li><li>While wearing the <span class=relic-coloured-text>Slippin&amp;apos; suit,</span> every &amp;quot;Pickpocket&amp;quot; option is replaced with <span class=relic-coloured-text>&amp;quot;Charm.&amp;quot;</span> Charming an NPC engages a passive dialogue exchange, lasting indefinitely. During this time, they will gift you receipts every 2 ticks, granting items and <span class=relic-coloured-text>Thieving XP</span> they would normally yield.<ul class=relic-bullet><li>Stall owners are also given this option, with the same yield as their stalls would give.</li><li>All loot received is noted.</li><li>Coins are received instead of Coin pouches.</li></ul></li><li>While the <span class=relic-coloured-text>Slippin&amp;apos; suit</span> is worn, every shop offers a 0.5-49.5% discount, scaling linearly with your <span class=relic-coloured-text>&amp;quot;Charisma&amp;quot;</span> level. This stacks multiplicatively with any other discounts.</li></ul>')">
-      <img alt="Conman" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_conman.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Conman</span>
-    </div>
-
-    <!-- Holy Harvest -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Holy Harvest', 'images/relics/relic_holyharvest.webp', '<ul class=relic-bullet><li>You can now offer any seed (except Anima and Spirit tree) to an altar, regardless of Farming level, with a 75% chance not to consume it (stacks multiplicatively with the Wilderness Chaos altar).</li><li>When offering a seed, you will instantly receive what you would normally harvest from it, with Ultracompost applied, in noted form. This grants full <span class=relic-coloured-text>Farming XP.</span><ul class=relic-bullet><li>For tree seeds, this also offers <span class=relic-coloured-text>Woodcutting XP</span> from chopping the logs.</li></ul></li><li>Additionally, if you have any god item equipped, you will receive a noted secondary ingredient for each item harvested, chosen randomly from a list associated with that god. Multiple god items can work simultaneously.<ul class=relic-bullet><li><span class=relic-coloured-text>Saradomin:</span> Unicorn horn dust, Chocolate dust, Dragon scale dust, Yew roots, Crushed nest, Squid paste, Crushed superior dragon bones, Yellow fin;</li><li><span class=relic-coloured-text>Zamorak:</span> Volcanic ash, Red spiders&amp;apos; eggs, Mort myre fungus, Wine of zamorak, Demonic tallow, Crab paste, Lava scale shard, Araxyte venom sack;</li><li><span class=relic-coloured-text>Armadyl:</span> White berries, Snape grass, Poison ivy berries, Aldarium, Cotton yarn, Amylase crystal, Marlin scales;</li><li><span class=relic-coloured-text>Bandos:</span> Eye of newt, Limpwurt root, Toad&amp;apos;s legs, Kebbit teeth dust, Nail beast nails, Jangerberries, Haddock eye, Zulrah&amp;apos;s scales;</li><li><span class=relic-coloured-text>Ancient:</span> Goat horn dust, Potato cactus, Magic roots, Nihil dust, Lily of the sands, Rainbow crab paste, Crystal dust, Ancient essence.</li></ul></li></ul>')">
-      <img alt="Holy Harvest" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_holyharvest.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Holy Harvest</span>
-    </div>
-
-    <!-- Perpetual Stew -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Perpetual Stew', 'images/relics/relic_perpetualstew.webp', '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Perpetual stew,</span> with 1,000 charges.</li><li>Any food item (but not potions) can be added to the stew. Both raw and cooked versions can be added, granting the full <span class=relic-coloured-text>Cooking XP</span> you&amp;apos;d receive from cooking it normally.<ul class=relic-bullet><li>For multi-step processes, such as pies, only the final step in preparation or the cooked version will work.</li><li>Noted food can be added to the stew, processing 1 item every 8 ticks. This will not be interrupted by other actions like skilling and combat.</li><li>Toggleable effect: Any food obtained through skilling actions or monster drops will automatically be added to the stew.</li></ul></li><li>Each piece of food added to the stew grants it charges equal to the amount of <span class=relic-coloured-text>Hitpoints</span> it heals, storing up to 2,147,483,647 charges.</li><li>Sipping from the stew consumes a set number of charges, healing you for the same amount.<ul class=relic-bullet><li>This incurs the standard 3-tick action delay.</li></ul></li><li>The <span class=relic-coloured-text>Perpetual stew</span> initially heals 3 Hitpoints per sip, but the recipe is improved to heal an additional 3 Hitpoints every 14 Cooking levels:<ul class=relic-bullet><li><span class=relic-coloured-text>Level 1:</span> Heals 3 HP</li><li><span class=relic-coloured-text>Level 15:</span> Heals 6 HP</li><li><span class=relic-coloured-text>Level 29:</span> Heals 9 HP</li><li><span class=relic-coloured-text>Level 43:</span> Heals 12 HP</li><li><span class=relic-coloured-text>Level 57:</span> Heals 15 HP</li><li><span class=relic-coloured-text>Level 71:</span> Heals 18 HP</li><li><span class=relic-coloured-text>Level 85:</span> Heals 21 HP</li><li><span class=relic-coloured-text>Level 99:</span> Heals 24 HP</li></ul></li></ul>')">
-      <img alt="Perpetual Stew" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_perpetualstew.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Perpetual Stew</span>
-    </div>
-  </div>
-
-  <!-- Passive Effects -->
-  <div class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
-    <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-    <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-      <li class="flex items-start gap-2"><span>Leagues XP multiplier is increased from 5x to 8x.</span></li>
-    </ul>
-  </div>
-</section>
-<!-- Tier 3 -->
-<section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-3">
-  <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">Tier 3</h2>
-
-  <div class="flex flex-col gap-8 items-center">
-    <!-- Friend of the Forest -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Friend of the Forest', 'images/relics/relic_friendoftheforest.webp', '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Druid ring,</span> which:<ul class=relic-bullet><li>Can mark up to 8 Oak or higher tier <span class=relic-coloured-text>trees</span> in the game (choppable, excludes instances and player-farmed trees), provided you have the Woodcutting level to chop them.<ul class=relic-bullet><li>A new tree can be marked at any time.</li></ul></li><li>Provides unlimited teleports to any marked tree.</li></ul></li><li>Additionally, the <span class=relic-coloured-text>Druid ring</span> will:<ul class=relic-bullet><li>Passively collect and store random <span class=relic-coloured-text>grimy herbs</span> whilst running over &amp;quot;grassy terrain.&amp;quot; This would include, for example, plains, forests, jungles, large gardens, but not isolated patches of grass in cities.</li><li>Every tile travelled has a 5% chance to collect a grimy herb.</li><li>Items stored in the ring can only be retrieved at the bank.</li><li>You cannot manually store any items in the ring.</li></ul></li><li>This ring ignores Wilderness teleport restrictions.</li></ul>')">
-      <img alt="Friend of the Forest" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_friendoftheforest.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Friend of the Forest</span>
-    </div>
-
-    <!-- Harnessed Earth -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Harnessed Earth', 'images/relics/relic_harnessedearth.webp', '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Golem ring</span>, which:<ul class=relic-bullet><li>Can mark up to 8 <span class=relic-coloured-text>mining rocks</span> in the game (excludes instances), provided you have the Mining level to use them, or <span class=relic-coloured-text>runic altars.</span><ul class=relic-bullet><li>A new rock or runic altar can be marked at any time.</li><li>Both rocks and runic altars count towards the same limit.</li></ul></li><li>Provides unlimited teleports to any marked rock or runic altar.</li><li>Acts as a wearable talisman for all runic altars.</li></ul></li><li>Additionally, the <span class=relic-coloured-text>Golem ring</span> will:<ul class=relic-bullet><li>Passively collect and store <span class=relic-coloured-text>pure essence and uncut gems</span> whilst running over &amp;quot;barren terrain.&amp;quot; This would include, for example, mountains (rocky or snowy), plateaus, deserts, volcanoes, but not man-made structures like stone bridges.</li><li>Every tile travelled has a 5% chance to collect a resource:<ul class=relic-bullet><li>49% chance of receiving 5-15 Pure essence;</li><li>49% chance of receiving any basic uncut gem;</li><li>2% chance of receiving an Uncut dragonstone.</li></ul></li><li>Items stored in the ring can only be retrieved at the bank.</li><li>You cannot manually store any items in the ring.</li></ul></li><li>This ring ignores Wilderness teleport restrictions.</li></ul>')">
-      <img alt="Harnessed Earth" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_harnessedearth.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Harnessed Earth</span>
-    </div>
-
-    <!-- Call of the Sea -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Call of the Sea', 'images/relics/relic_callofthesea.webp', '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Merfolk ring,</span> which:<ul class=relic-bullet><li>Can mark up to 8 <span class=relic-coloured-text>fishing spots</span> in the game (excludes instances), provided you have the Fishing level to catch their lowest level fish available, or <span class=relic-coloured-text>salvaging stations</span> (excluding your boat&amp;apos;s).<ul class=relic-bullet><li>A new fishing spot or salvaging station can be marked at any time.</li><li>Both fishing spots and salvaging stations count towards the same limit.</li></ul></li><li>Provides unlimited teleports to any marked fishing spot or salvaging station.</li></ul></li><li>Additionally, the <span class=relic-coloured-text>Merfolk ring</span> will:<ul class=relic-bullet><li>Passively collect and store <span class=relic-coloured-text>random planks and nails</span> whilst sailing anywhere.</li><li>You will collect a resource every 10 ticks while your boat is moving:<ul class=relic-bullet><li>49% chance of receiving any random plank;</li><li>49% chance of receiving 5-15 of any basic nail;</li><li>2% chance of receiving 5-15 Dragon nails.</li></ul></li><li>Items stored in the ring can only be retrieved at the bank.</li><li>You cannot manually store any items in the ring.</li></ul></li><li>This ring ignores Wilderness teleport restrictions.</li></ul>')">
-      <img alt="Call of the Sea" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_callofthesea.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Call of the Sea</span>
-    </div>
-  </div>
-
-  <!-- Passive Effects -->
-  <div class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
-    <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-    <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-      <li class="flex items-start gap-2"><span>Combat experience (including Hitpoints and Prayer) will be multiplied by 1.5x. This is multiplicative with other experience modifiers.</span></li>
-      <li class="flex items-start gap-2"><span>The "Bigger and Badder" slayer unlock is unlocked for free.</span></li>
-      <li class="flex items-start gap-2"><span>Slayer reward points are 5x from tasks, and you aren't required to complete 5 tasks before earning points.</span></li>
-      <li class="flex items-start gap-2"><span>Superior slayer monsters will appear at a rate of 1/50.</span></li>
-    </ul>
-  </div>
-</section>
-<!-- Tier 4 -->
-<section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-4">
-  <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">Tier 4</h2>
-
-  <div class="flex flex-col gap-8 items-center">
-    <!-- Run to the Rescue -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Run to the Rescue', 'images/relics/relic_runtotherescue.webp', '<ul class=relic-bullet><li><span class=relic-coloured-text>Agility courses</span> are now under attack! The following courses have 5-10 unaggressive monsters scattered throughout them, only visible to you:<ul class=relic-bullet><li>All Rooftop courses;</li><li>All Hallowed Sepulchre floors;</li><li>Gnome Stronghold course;</li><li>Ape Atoll course;</li><li>Werewolf course;</li><li>Wilderness course.</li></ul></li><li>The monsters spawned are randomly selected from all Slayer master lists, only spawning those which you have the requirements to kill. They will respect Combat level adjustment, if enabled.<ul class=relic-bullet><li>In addition to their standard drops, each monster has a 20% chance of dropping 5 <span class=relic-coloured-text>Marks of grace</span> or <span class=relic-coloured-text>Hallowed marks</span> in their respective courses.</li></ul></li><li>Once all the monsters are slain, completion of a lap will generate another set of monsters, randomly chosen.</li><li>If you have one, the monsters spawned will always be the ones on your <span class=relic-coloured-text>Slayer task</span> (excluding boss tasks).<ul class=relic-bullet><li>Every reset has a 33% chance of replacing 1 Slayer monster with its <span class=relic-coloured-text>Superior</span> variant.</li></ul></li><li>Killing all the monsters in a course before completing a lap will award:<ul class=relic-bullet><li><span class=relic-coloured-text>10x Agility XP</span> and completion count;</li><li>20% of the above gained as bonus <span class=relic-coloured-text>Slayer XP,</span> regardless of your Slayer task.</li><li>A 25% chance to receive a <span class=relic-coloured-text>Scroll box,</span> the maximum possible tier of which scales with the course&amp;apos;s Agility level requirement:<ul class=relic-bullet><li>Up to Easy at levels 1-19;</li><li>Up to Medium at levels 20-39;</li><li>Up to Hard at levels 40-59;</li><li>Up to Elite at levels 60-79;</li><li>Up to Master at levels 80+.</li></ul></li></ul></li></ul>')">
-      <img alt="Run to the Rescue" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_runtotherescue.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Run to the Rescue</span>
-    </div>
-
-    <!-- Industrial Evolution -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Industrial Evolution', 'images/relics/relic_industrialevolution.webp', '<ul class=relic-bullet><li>All Furnaces in the game become <span class=relic-coloured-text>Processors.</span></li><li>Processors will take certain noted materials and transform them into finished products at a rate of 1 every 32 ticks, outputting a maximum of 3,000 products at a time. The Processor can:<ul class=relic-bullet><li>Mix herbs and vials of water into unfinished potions;</li><li>Mix unfinished potions and secondaries into potions;</li><li>Tan leather and hides;</li><li>Craft tanned leather and hides into armour;</li><li>Craft glass and pottery items;</li><li>Smelt soda ash and sand into molten glass;</li><li>Smelt ore into bars;</li><li>Smith bars into armour and weapons;</li><li>Turn various Construction materials into flatpacks.</li></ul></li><li>Each Processor can only perform one action at a time, but up to <span class=relic-coloured-text>8 different Processors</span> around Gielinor can be active at once.</li><li>Processed items are sent directly to your bank. You can interact with a Processor to cancel its current process, retrieving all remaining resources.</li><li><span class=relic-coloured-text>Full skilling XP</span> is given for each action. A token amount of bonus <span class=relic-coloured-text>Smithing XP</span> is also given.</li><li>Processors will continue running <span class=relic-coloured-text>even while you are offline.</span></li><li>Toggleable effect: You can right-click a Processor to revert it to a Furnace, and vice versa.</li></ul>')">
-      <img alt="Industrial Evolution" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_industrialevolution.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Industrial Evolution</span>
-    </div>
-
-    <!-- Unleashed Teleport -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Unleashed Teleport', 'images/relics/relic_unleashedteleport.webp', '<ul class=relic-bullet><li>Home and Minigame Teleports are now an instant cast.</li><li>All spellbook teleports are now <span class=relic-coloured-text>free to cast,</span> and have no quest, diary, or Magic level requirements.</li><li>All teleportation items no longer consume charges nor themselves.</li><li>Toggleable effect: Upon casting any teleport (including those from relics), you will be presented with your <span class=relic-coloured-text>Bank interface.</span></li></ul>')">
-      <img alt="Unleashed Teleport" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_unleashedteleport.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Unleashed Teleport</span>
-    </div>
-  </div>
-
-  <!-- Passive Effects -->
-  <div class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
-    <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-    <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-      <li class="flex items-start gap-2"><span>Items from eligible sources will be 5x as common.</span></li>
-      <li class="flex items-start gap-2"><span>Minigame Points received are boosted by 8x.</span></li>
-      <li class="flex items-start gap-2"><span>Leagues XP multiplier is increased from 8x to 12x.</span></li>
-      <li class="flex items-start gap-2"><span class="text-color-strong">Clue scrolls are now 2x more common from all sources.</span></li>
-      <li class="flex items-start gap-2"><span class="text-color-strong">Clue scrolls will always have the minimum amount of steps for their tier, and yield the maximum amount of rewards.</span></li>
-    </ul>
-  </div>
-</section>
-<!-- Tier 5 -->
-<section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-5">
-  <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">Tier 5</h2>
-
-  <div class="flex flex-col gap-8 items-center">
-    <!-- Lord of the Rings -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Lord of the Rings', 'images/relics/relic_lordoftherings.webp', '<ul class=relic-bullet><li>All rings have unlimited charges.</li><li>All rings have their <span class=relic-coloured-text>stat bonuses</span> doubled.</li><li>The <span class=relic-coloured-text>passive effects</span> of all rings are twice as powerful. Some examples include:<ul class=relic-bullet><li>The Ring of recoil and Ring of suffering reflect 20% + 2 damage;</li><li>The Lightbearer regenerates 20% special attack energy every 15 seconds;</li><li>The Celestial ring offers a +8 boost to Mining;</li><li>The Druid, Golem and Merfolk rings gather double the resources per trigger.</li></ul></li><li>You are granted a <span class=relic-coloured-text>second ring slot.</span> When two rings are equipped, only the highest of any shared stat bonus is taken, and identical effects do not stack.</li></ul>')">
-      <img alt="Lord of the Rings" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_lordoftherings.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Lord of the Rings</span>
-    </div>
-
-    <!-- Runic Freelancer -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Runic Freelancer', 'images/relics/relic_runicfreelancer.webp', '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Freelance kit,</span> which:<ul class=relic-bullet><li>Can store any amount of runes of all types;</li><li>Acts as a Book of the dead for summoning thralls;</li><li>Has a <span class=relic-coloured-text>&amp;quot;Reactive Alchemy&amp;quot;</span> option, prompting you to choose an item or item stack in your inventory.</li></ul></li><li>Upon getting any XP drop, you will automatically cast High Level Alchemy on the item assigned to your <span class=relic-coloured-text>&amp;quot;Reactive Alchemy&amp;quot;</span> option, provided it is in your inventory, regardless of runes, spellbook, or Magic level.<ul class=relic-bullet><li>This cast will not interrupt other skilling or combat actions.</li><li>This effect can only trigger once every 3 ticks.</li></ul></li><li>Your spellbook icon can be right-clicked to find a <span class=relic-coloured-text>&amp;quot;DIY Spellbook.&amp;quot;</span> The DIY Spellbook presents a 7x7 grid interface, where up to 49 different spells from any spellbook can be manually chosen for each slot.<ul class=relic-bullet><li>The DIY Spellbook can be edited at any time.</li><li>All autocasting weapons can autocast any combat spell that you can cast from the DIY Spellbook.</li></ul></li></ul>')">
-      <img alt="Runic Freelancer" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_runicfreelancer.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Runic Freelancer</span>
-    </div>
-
-    <!-- Faith -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Faith', 'images/relics/relic_faith.webp', '<ul class=relic-bullet><li>The &amp;quot;Sit down&amp;quot; emote is replaced with <span class=relic-coloured-text>&amp;quot;Meditate,&amp;quot;</span> which loops indefinitely. While meditating, you will receive <span class=relic-coloured-text>Prayer XP</span> equal to your half Prayer level (affected by Leagues modifiers) every 8 ticks.</li><li>Active prayers drain Prayer points 4x slower.</li><li>You may now activate two overhead prayers at once.</li></ul>')">
-      <img alt="Faith" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_faith.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Faith</span>
-    </div>
-  </div>
-
-  <!-- Passive Effects -->
-  <div class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
-    <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-    <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-      <li class="flex items-start gap-2"><span class="text-color-strong">A Black mask is now available at any Slayer master shop for 1,000 Slayer points.</span></li>
-      <li class="flex items-start gap-2"><span class="text-color-strong">You may now purchase a specific Slayer task, including amount to kill, for 100 Slayer points each.</span></li>
-    </ul>
-  </div>
-</section>
-<!-- Tier 6 -->
-<section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-6">
-  <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">Tier 6</h2>
-
-  <div class="flex flex-col gap-8 items-center">
-    <!-- Feral Exorcism -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Feral Exorcism', 'images/relics/relic_feralexorcism.webp', '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Spirit lantern,</span> a main-hand or off-hand item (toggleable).<ul class=relic-bullet><li>This item functions as both a light source and a tinderbox.</li></ul></li><li>Creatures around Gielinor are now infested with malevolent spirits. The <span class=relic-coloured-text>Spirit lantern</span> will siphon the spirit of all monsters you kill and Hunter creatures you catch, storing up to <span class=relic-coloured-text>1,000 spirits</span> (can be equipped or in the inventory).</li><li>Toggleable effect: The Spirit lantern will note all loot received from Hunter creatures.</li><li>Successfully hunting a creature causes the lantern to siphon the spirits of all creatures of the same kind up to 15 tiles away.<ul class=relic-bullet><li>This grants full loot and <span class=relic-coloured-text>Hunter XP</span> for each creature, but does not kill them, meaning other players can also catch them and there is no respawn timer.</li></ul></li><li>The <span class=relic-coloured-text>Spirit lantern</span> can be used at any player-made Fire to cleanse the caught spirits, granting <span class=relic-coloured-text>Firemaking XP</span> equal to 4x your Firemaking level (affected by Leagues multipliers) every 2 ticks.<ul class=relic-bullet><li>This action automatically turns it into a Forester&amp;apos;s campfire and refreshes its duration.</li></ul></li><li>When cleansing spirits, there is a 0.1-9.9% chance (scaling linearly with Firemaking level) per Firemaking XP drop to receive a <span class=relic-coloured-text>bonus XP drop in your lowest levelled skill, </span>equal to 2x that skill&amp;apos;s level (affected by Leagues multipliers).</li><li>Additionally, the <span class=relic-coloured-text>Spirit lantern</span> can be used to spiritually commune with every Guild hunter, allowing you to remotely receive, turn in, and be awarded for <span class=relic-coloured-text>Hunter Rumours.</span><ul class=relic-bullet><li>Novice Hunter Rumours can be started from Level 1 Hunter.</li><li>Master Hunter Rumours do not require completion of At First Light.</li></ul></li></ul>')">
-      <img alt="Feral Exorcism" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_feralexorcism.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Feral Exorcism</span>
-    </div>
-
-    <!-- Papercrafting -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Papercrafting', 'images/relics/relic_papercrafting.webp', '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Scissors.</span><ul class=relic-bullet><li>This item functions as chisel, knife, needle and thread.</li></ul></li><li>The <span class=relic-coloured-text>Scissors</span> can be used on any noted stack of <span class=relic-coloured-text>craftable</span> and <span class=relic-coloured-text>fletchable</span> items that would normally require being unnoted to craft and fletch, converting 10 of them into their finished product every 3 ticks. <span class=relic-coloured-text>Full XP</span> is given for all items, which are also received in noted form. The <span class=relic-coloured-text>Scissors</span> can turn:<ul class=relic-bullet><li>Tanned hide and similar materials to armour;</li><li>Uncut gems to cut gems;</li><li>Cut gems to bolt tips;</li><li>Logs to arrow shafts, bows, crossbow stocks and shields;</li><li>Celastrus bark to battlestaves.</li></ul></li><li>Similarly, as long as the <span class=relic-coloured-text>Scissors</span> are in the inventory, its processing effect is also applied to items combined through <span class=relic-coloured-text>Crafting</span> and <span class=relic-coloured-text>Fletching:</span><ul class=relic-bullet><li>Bow strings to unfinished bows;</li><li>Crossbow strings to unfinished crossbows;</li><li>Steel studs to Leather bodies and chaps;</li><li>Orbs to battlestaves.</li></ul></li><li>The <span class=relic-coloured-text>Scissors</span> have no effect on Crafting and Fletching actions with items that are already stackable by default, e.g. feathers to arrow shafts.</li><li>If the Scissors are in the inventory, a noted stack of <span class=relic-coloured-text>Pure essence can be used on a runic altar,</span> converting 10 of them into runes every 3 ticks.</li><li>All aforementioned actions can be done manually to speed up the process, similar to fletching darts.</li></ul>')">
-      <img alt="Papercrafting" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_papercrafting.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Papercrafting</span>
-    </div>
-
-    <!-- Mariner -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Mariner', 'images/relics/relic_mariner.webp', '<ul class=relic-bullet><li>Toggleable effect: All your sailing vessels move at 2x speed.</li><li><span class=relic-coloured-text>Charting activities</span> receive the following benefits:<ul class=relic-bullet><li>Placing a current duck automatically finishes its route;</li><li>Portable weather stations gather all relevant data upon the first reading, regardless of where it is done;</li><li>Mermaid riddles are automatically solved;</li><li>Drinks in sealed crates will no longer teleport you or change your inventory;</li><li>Harmful NPCs no longer spawn from charting.</li></ul></li><li>In addition to Sailing XP, each unique charted location also awards <span class=relic-coloured-text>1,000,000 Coins.</span><ul class=relic-bullet><li>The 100% completion bonus is modified to only include the charter locations in your bordering oceans, once all possible areas are unlocked.</li></ul></li><li>Completing <span class=relic-coloured-text>Port Tasks</span> and <span class=relic-coloured-text>Barracuda Trials</span> roll on a unique drop table that includes:<ul class=relic-bullet><li>3 rolls on the highest level salvaging loot table you can access;</li><li>Lucky caskets, accessing the Lucky impling drop table;</li><li>Noted Frost dragon bones, Gryphon feathers, Magic stones, Bottled storm and Belle&amp;apos;s folly;</li><li>Cannonballs (100-500), the tier of which scales with your Sailing level;</li><li>Boat parts (cannon, sheets, hull, keel), the tier of which scales with your Sailing level;</li><li>Full facility bottles (containing a random completed facility);<ul class=relic-bullet><li><span class=relic-coloured-text>Salvaging</span> and <span class=relic-coloured-text>Deep sea trawling</span> have a chance to roll this same table at a much lower rate.</li></ul></li></ul></li><li>With any <span class=relic-coloured-text>trawling net</span> built onto your boat, you will passively catch fish every 16-24 ticks whilst you are on your boat, up to what your Fishing level allows you to catch. Better quality nets yield more fish (2-5) each time this effect triggers. Each catch grants full <span class=relic-coloured-text>Fishing XP.</span><ul class=relic-bullet><li>Toggleable effect: Caught fish is sent directly to your bank.</li></ul></li><li>All salvage is instantly sorted through as if at a Salvaging station, granting <span class=relic-coloured-text>full XP,</span> and loot is received noted.</li><li>Crewmates yield <span class=relic-coloured-text>100% Sailing experience</span> for all tasks performed.</li></ul>')">
-      <img alt="Mariner" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_mariner.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Mariner</span>
-    </div>
-  </div>
-
-  <!-- Passive Effects -->
-  <div class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
-    <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-    <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-      <li class="flex items-start gap-2"><span>Leagues XP multiplier is increased from 12x to 16x.</span></li>
-    </ul>
-  </div>
-</section>
-<!-- Tier 7 -->
-<section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-7">
-  <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">Tier 7</h2>
-
-  <div class="flex flex-col gap-8 items-center">
-    <!-- Reaper's Avarice -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Reaper\'s Avarice', 'images/relics/relic_reapersavarice.webp', '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Ring of avarice.</span> Whilst equipped, gain the following benefits:<ul class=relic-bullet><li>Automatically note and pick up all loot dropped by monsters. Both effects are toggleable.</li><li>Every time you kill a monster, there is a 50% chance to roll its standard loot table again. This includes all Boss and Raids standard tables.<ul class=relic-bullet><li>With <span class=relic-coloured-text>Lord of the Rings,</span> there is a second 50% chance if the first fails.</li></ul></li><li>Instead of dropping clue scrolls, all monsters directly drop <span class=relic-coloured-text>clue caskets,</span> with a 25% chance of it being one tier higher than they normally drop.</li></ul></li></ul>')">
-      <img alt="Reapers Avarice" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_reapersavarice.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Reaper's Avarice</span>
-    </div>
-
-    <!-- Raining Luck -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Raining Luck', 'images/relics/relic_rainingluck.webp', '<ul class=relic-bullet><li>Every 40-80 minutes, a <span class=relic-coloured-text>Lucky star</span> will fall somewhere in your available areas (only visible to you). You will be notified of this 1 minute before it lands. Once it does, an arrow will point out its location on the world map.<ul class=relic-bullet><li>This timer starts immediately upon unlocking this relic, and runs while offline. If the player is ineligible to receive a star after the timer has ended (e.g. was offline, or in an instance), it will instead spawn within a 1-2 minute window as soon as eligible.</li></ul></li><li>The <span class=relic-coloured-text>Lucky star</span> remains for 5 minutes, during which it can be continuously mined from.</li><li>Each successful <span class=relic-coloured-text>Mining action on the star grants XP</span> equal to 10x your Mining level (affected by Leagues multipliers), and rolls on a unique drop table with several high tier resources, such as:<ul class=relic-bullet><li>Snapdragon and torstol seeds;</li><li>Raw anglerfish and marlins (noted);</li><li>Teak and mahogany logs (noted);</li><li>Dragon equipment, including a 1/32,768 chance at a Dragon full helm;</li><li>Uncut dragonstones, Uncut onyxes, and a 1/32,768 chance at an Uncut zenyte;</li><li>Elite and Master clue geodes;</li><li><span class=relic-coloured-text>Wishing lamps,</span> granting 10,000 XP (affected by Leagues multipliers) in a random non-combat skill.</li></ul></li></ul>')">
-      <img alt="Raining Luck" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_rainingluck.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Raining Luck</span>
-    </div>
-
-    <!-- Squeal of Fortune -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Squeal of Fortune', 'images/relics/relic_squealoffortune.webp', '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Squeal of fortune.</span></li><li>The <span class=relic-coloured-text>Squeal of fortune</span> can be interacted with &amp;quot;Spins,&amp;quot; which are purchased with Coins through the <span class=relic-coloured-text>Squeal of fortune,</span> and are stored in it.</li><li>Each Spin makes a roll on a random monster&amp;apos;s drop table. The monster elected must be within your unlocked regions, and the chance for the monster chosen is as follows:<ul class=relic-bullet><li><span class=relic-coloured-text>Common:</span> 45% chance of a monster below Combat level 30</li><li><span class=relic-coloured-text>Uncommon:</span> 30% chance of a monster between Combat levels 30-100</li><li><span class=relic-coloured-text>Rare:</span> 15% chance of a non-boss monster above Combat level 100</li><li><span class=relic-coloured-text>Epic:</span> 8% chance of a roll on a Boss or Raid&amp;apos;s standard loot table</li><li><span class=relic-coloured-text>Legendary:</span> 2% chance of a roll on a Boss or Raid&amp;apos;s unique loot table</li></ul></li><li>A Spin has a base cost of 1,000 Coins, but increases by 10x for each consecutive Spin within an hour:<ul class=relic-bullet><li><span class=relic-coloured-text>1st Spin:</span> 1,000 gp</li><li><span class=relic-coloured-text>2nd Spin:</span> 10,000 gp</li><li><span class=relic-coloured-text>3rd Spin:</span> 100,000 gp</li><li><span class=relic-coloured-text>4th Spin:</span> 1,000,000 gp</li><li><span class=relic-coloured-text>5th Spin:</span> 10,000,000 gp</li><li><span class=relic-coloured-text>6th Spin:</span> 100,000,000 gp</li><li><span class=relic-coloured-text>7th Spin onwards:</span> 1,000,000,000 gp</li></ul></li><li>The price resets after 60 realtime minutes without buying a Spin.</li></ul>')">
-      <img alt="Squeal of Fortune" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_squealoffortune.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Squeal of Fortune</span>
-    </div>
-  </div>
-
-  <!-- Passive Effects -->
-  <div class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
-    <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-    <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-      <li class="flex items-start gap-2"><span class="text-color-strong">Reloaded: In addition to choosing a relic from this tier, you can unlock any additional relic from Tier 6 and below.</span></li>
-    </ul>
-  </div>
-</section>
-<!-- Tier 8 -->
-<section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-8">
-  <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">Tier 8</h2>
-
-  <div class="flex flex-col gap-8 items-center">
-    <!-- Grandmaster At Arms -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Grandmaster at Arms', 'images/relics/relic_grandmasteratarms.webp', '<ul class=relic-bullet><li>Toggleable effect: When equipping a weapon, you will <span class=relic-coloured-text>automatically equip</span> optimal items in your inventory for its attack style.</li><li>All attacks (excluding special attacks) now have <span class=relic-coloured-text>100% increased accuracy</span> and deal <span class=relic-coloured-text>100% increased damage.</span><ul class=relic-bullet><li>This value is reduced to 75%, 50%, 25%, and 0% for subsequent attacks with the same weapon in the next <span class=relic-coloured-text>24 ticks,</span> refreshing the duration with each one.</li><li>The value resets to 100% after 24 ticks without using the weapon. This is tracked individually per weapon.</li></ul></li><li>All special attacks now have <span class=relic-coloured-text>100% increased accuracy.</span></li><li>All special attacks now cost <span class=relic-coloured-text>0 energy.</span><ul class=relic-bullet><li>This value is increased to 10%, 20%, 40%, and 80% for subsequent special attacks with the same weapon in the next <span class=relic-coloured-text>24 ticks,</span> refreshing the duration with each one.</li><li>The value resets to 0 energy after 24 ticks without using the weapon&amp;apos;s special attack. This is tracked individually per weapon.</li></ul></li><li>A visual timer for the cooldown period would be overlayed onto each weapon. Manual tracking is not necessary.<ul class=relic-bullet><li>Each weapon shares the same standard and special attack timer (e.g. After a standard attack with an Arkan blade, the Arkan blade&amp;apos;s special attack will cost 10%, not 0 energy).</li></ul></li></ul>')">
-      <img alt="Grandmaster At Arms" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_grandmasteratarms.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Grandmaster at Arms</span>
-    </div>
-
-    <!-- Dragon Multicannon -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Dragon Multicannon', 'images/relics/relic_dragonmulticannon.webp', '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Dragon multicannon.</span></li><li>The <span class=relic-coloured-text>Dragon multicannon</span> is mechanically similar to the Dwarf multicannon, but differs in the following ways:<ul class=relic-bullet><li>It is a singular item, as opposed to 4 parts.</li><li>The item does not leave your inventory, and has a &amp;quot;Recall&amp;quot; option, allowing you to remotely pick up your cannon.</li><li>Upon placing it, the Dragon multicannon will automatically mount, load itself, and start firing. This process takes 8 ticks before it starts rotating and attacking.</li><li>Its damage is <span class=relic-coloured-text>typeless,</span> but still rolls against the target&amp;apos;s Heavy ranged defence. Similar to the Dwarf multicannon, the <span class=relic-coloured-text>Dragon multicannon&amp;apos;s</span> accuracy depends on your equipment accuracy bonuses.</li></ul></li><li>The <span class=relic-coloured-text>Dragon multicannon</span> can be deployed and loaded with any type of cannonball, automatically choosing the highest tier in your inventory. The tier of cannonball determines its max hit:<ul class=relic-bullet><li><span class=relic-coloured-text>Bronze cannonballs:</span> 20</li><li><span class=relic-coloured-text>Iron cannonballs:</span> 25</li><li><span class=relic-coloured-text>Steel cannonballs:</span> 30</li><li><span class=relic-coloured-text>Mithril/Granite cannonballs:</span> 35</li><li><span class=relic-coloured-text>Adamant cannonballs:</span> 40</li><li><span class=relic-coloured-text>Rune cannonballs:</span> 45</li><li><span class=relic-coloured-text>Dragon cannonballs:</span> 50<ul class=relic-bullet><li>Additionally, Dragon cannonballs burn the target for 10 damage over 10 ticks.</li></ul></li></ul></li><li>The <span class=relic-coloured-text>Dragon multicannon</span> can store up to 300 cannonballs at a time.</li><li>The <span class=relic-coloured-text>Dragon multicannon</span> can be used and will remain in areas where a Dwarf multicannon is disabled or gets destroyed.<ul class=relic-bullet><li>This perk will also work inside the Gauntlet.</li></ul></li><li>If placed in an instance, the <span class=relic-coloured-text>Dragon multicannon</span> immediately despawns when you leave it.</li></ul>')">
-      <img alt="Dragon Multicannon" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_dragonmulticannon.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Dragon Multicannon</span>
-    </div>
-
-    <!-- Leap -->
-    <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group" onclick="showDetails('Leap', 'images/relics/relic_leap.webp', '<ul class=relic-bullet><li>On your next <span class=relic-coloured-text>interactive click</span> (&amp;quot;red X&amp;quot;), you will leap up to <span class=relic-coloured-text>10 tiles in 1 tick</span> towards your target, as soon as it would put you within interacting range.<ul class=relic-bullet><li>This effectively skips the last 5 checkpoint tiles of your route, meaning it will respect walls and pathing.</li><li>Interacting range differs between actions, e.g. banking requires standing 1 tile away from a Bank booth, but shooting with a Twisted bow only requires being 10 tiles away from an NPC.</li></ul></li><li>This effect has a <span class=relic-coloured-text>cooldown of 4 ticks</span> each time it triggers.</li><li>Killing an enemy <span class=relic-coloured-text>resets</span> both your Leap cooldown and your weapon attack delay.</li><li>The Leap effect is toggleable by right-clicking the Run energy orb.</li></ul>')">
-      <img alt="Leap" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_leap.webp"/>
-      <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Leap</span>
-    </div>
-  </div>
-
-  <!-- Passive Effects -->
-  <div class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
-    <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-    <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-      <li class="flex items-start gap-2"><span class="text-color-strong">Preserve, Chivalry, Piety, Rigour and Augury are automatically unlocked, provided you have the Prayer level to use them.</span></li>
-      <li class="flex items-start gap-2"><span class="text-color-strong">With Level 99 Herblore, you can now mix a Super combat potion, a Ranging potion, a Magic potion, and an Onion together to create an Overload (Nightmare Zone version).</span></li>
-    </ul>
-  </div>
-</section>
-</div>
-</main>
-<!-- END: RelicGrid -->
-<!-- BEGIN: ActionButtons -->
-<section class="container mx-auto px-4 mt-12 flex flex-col items-center gap-8">
-  <div class="hidden w-full bg-[#1e0f29]/80 border border-orange-500/20 rounded-lg animate-fade-in p-10" id="explanation-panel">
-    <div class="flex gap-6">
-      <div class="shrink-0 overflow-hidden w-40 h-40" id="exp-icon-container">
-        <img alt="Selected Relic" class="w-full h-full object-cover" id="exp-icon" src=""/>
+      <div class="text-title-title uppercase text-center leading-none">
+        Lunar leagues
       </div>
-      <div>
-        <h3 class="text-orange-400 mb-2 text-3xl" id="exp-title">Relic Name</h3>
-        <p class="text-gray-300 leading-relaxed text-lg" id="exp-desc">Detailed explanation will appear here.</p>
-        <button class="mt-6 flex items-center gap-2 px-4 py-2 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-sm font-semibold uppercase tracking-wider" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
-        Back to Top
+
+      <img
+        src="images/favicon.webp"
+        alt="Icon"
+        class="w-12 h-12 object-contain opacity-50 group-hover:opacity-100 transition-opacity duration-200 pb-[6px]"
+      />
+    </div>
+
+    <div class="text-title-subtitle text-center !no-underline mb-2 -mt-2">
+      (it's all in your head)
+    </div>
+
+    <main class="container mx-auto px-4 py-8 max-w-full">
+      <div class="flex justify-between flex-wrap" id="relic-grid">
+        <section
+          class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+          data-purpose="tier-1"
+        >
+          <h2
+            class="relic-tier-title uppercase tracking-widest text-orange-400"
+          >
+            Tier 1
+          </h2>
+
+          <div class="flex flex-col gap-8 items-center">
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Magic the Gathering',
+                  'images/relics/relic_magicthegathering.webp',
+                  '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Wizard&amp;apos;s diadem,</span> a headgear item with +5 Magic accuracy.</li><li>The <span class=relic-coloured-text>Wizard&amp;apos;s diadem</span> acts as an infinite source of water, earth, fire and mind runes.</li><li>When the Wizard&amp;apos;s diadem is equipped, all <span class=relic-coloured-text>Fishing, Woodcutting,</span> and <span class=relic-coloured-text>Mining</span> actions are replaced with gathering spells, a 5-tick action (4 with Harmonised nightmare staff).</li><li>Gathering spells can be cast from a 10-tile range on any fishing spot, tree, or rock that you have the relevant level for. This must pass a Magic accuracy roll, with higher tier resources having higher Magic defence. Successful rolls will award the resource (dropped if inventory is full), <span class=relic-coloured-text>full skilling XP,</span> and an equal amount of <span class=relic-coloured-text>Magic XP.</span><ul class=relic-bullet><li>On unsuccessful rolls (splashes), you will still receive half that amount of Magic XP.</li></ul></li><li>Casting a gathering spell requires:<ul class=relic-bullet><li>1 Water, 1 Mind rune for fishing spots;</li><li>1 Earth, 1 Mind rune for trees;</li><li>1 Fire, 1 Mind rune for ore rocks.</li></ul></li><li>The <span class=relic-coloured-text>Wizard&amp;apos;s diadem</span> evolves with your <span class=relic-coloured-text>Magic level,</span> granting it bonus Magic accuracy and allowing you to use higher tier casts for better yield. Higher tier casts replace the Mind rune requirement with the following runes, if you have them:<ul class=relic-bullet><li><span class=relic-coloured-text>Level 17:</span> 1 Chaos rune, yields 1.5x resources (grants 2 every other cast) (+10 Magic accuracy)</li><li><span class=relic-coloured-text>Level 41:</span> 1 Death rune, yields 2x resources (+15 Magic accuracy)</li><li><span class=relic-coloured-text>Level 62:</span> 1 Blood rune, yields 2.5x resources (grants 3 every other cast) (+20 Magic accuracy)</li><li><span class=relic-coloured-text>Level 81:</span> 1 Wrath rune, yields 3x resources (+25 Magic accuracy)</li></ul></li><li><span class=relic-coloured-text>Full skilling XP</span> is given for all additional resources gathered.</li><li>Additionally, the <span class=relic-coloured-text>Wizard&amp;apos;s diadem</span> can be charged with Nature and Law runes:<ul class=relic-bullet><li>You can spend 1 Nature rune to process a gathered resource (cooks fish, burns logs, and smelts ore), granting <span class=relic-coloured-text>full skilling XP.</span></li><li>You can spend 1 Law rune to send a gathered resource to the bank.</li></ul></li><li>Both effects can be active at once and are toggleable.</li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Magic the Gathering"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_magicthegathering.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Magic the Gathering</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Symbiosis',
+                  'images/relics/relic_symbiosis.webp',
+                  '<ul class=relic-bullet><li>Your first action on a mining rock, fishing spot, or tree is now <span class=relic-coloured-text>guaranteed to succeed.</span> This is tracked individually per node.<ul class=relic-bullet><li>To be considered a first action, you must not have interacted with that node in 1 minute.</li><li>Hopping worlds does not reset this timer.</li></ul></li><li>All mining rocks now contain <span class=relic-coloured-text>5 sets of bones</span> in them. Mining a rock retrieves the bones, the tier of which scales with the quality of the ore (e.g. Bones for Copper, Dragon bones for Mithril, Superior dragon bones for Runite).<ul class=relic-bullet><li>The bones take 1 minute to respawn per unique rock.</li><li>Toggleable effect: Automatically bury bones received from mining rocks (all 5 in 1 tick).</li></ul></li><li>All fishing spots now have <span class=relic-coloured-text>exceptionally agile fish.</span> Catching an agile fish grants additional Agility XP equivalent to 5x your Fishing XP drop.<ul class=relic-bullet><li>The exceptionally agile fish takes 1 minute to respawn per unique fishing spot.</li></ul></li><li>All trees now have a <span class=relic-coloured-text>full birdhouse</span> in them. Chopping a tree grants the full rewards and Hunter XP of a birdhouse equivalent to their tier of wood (e.g. Oak trees have Oak birdhouses, Willow trees have Willow birdhouses, Magic trees have Magic birdhouses).<ul class=relic-bullet><li>The birdhouse takes 1 minute to respawn per unique tree.</li><li>Toggleable effect: Discard the birdhouse loot onto the ground.</li></ul></li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Symbiosis"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_symbiosis.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Symbiosis</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Financial Fraud',
+                  'images/relics/relic_financialfraud.webp',
+                  '<ul class=relic-bullet><li>Upon unlocking this relic, receive <span class=relic-coloured-text>100,000 Coins</span> and the <span class=relic-coloured-text>Fanciest boots.</span><ul class=relic-bullet><li>The <span class=relic-coloured-text>Fanciest boots</span> grant +3 defence in all styles. That&amp;apos;s it.</li><li>You cannot receive item rewards from the Stronghold of Security.</li></ul></li><li>Any time you would receive <span class=relic-coloured-text>Coins</span> through skilling actions or monster drops, there is instead a 50% chance not to receive them, and a 50% chance to double them. If doubled, there is a 50% chance to further double it, repeating until unsuccessful.<ul class=relic-bullet><li>If you receive over 100,000,000 Coins through this, the excess will be automatically converted into Platinum tokens.</li></ul></li><li>Toggleable effect: You can now <span class=relic-coloured-text>invest</span> in yourself. While investing, every XP drop will yield a bonus XP drop for that same skill, spending 10 Coins per 1 bonus XP. The total amount received in the bonus XP drop scales with your total level, unaffected by Leagues multipliers:<ul class=relic-bullet><li><span class=relic-coloured-text>Total Level 1:</span> 20 bonus XP (200 Coins);</li><li><span class=relic-coloured-text>Total Level 500:</span> 60 bonus XP (600 Coins);</li><li><span class=relic-coloured-text>Total Level 1000:</span> 150 bonus XP (1500 Coins);</li><li><span class=relic-coloured-text>Total Level 1500:</span> 300 bonus XP (3000 Coins);</li><li><span class=relic-coloured-text>Total Level 2000:</span> 600 bonus XP (6000 Coins).</li></ul></li><li>Payment prioritizes Coins in the bank. If you cannot pay for a bonus XP drop, you will automatically stop investing.</li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Financial Fraud"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_financialfraud.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Financial Fraud</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30"
+          >
+            <h3
+              class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+            >
+              Passive Bonuses
+            </h3>
+            <ul
+              class="text-passive leading-relaxed text-orange-100/80 space-y-2"
+            >
+              <li class="flex items-start gap-2">
+                <span>Leagues XP multiplier is 5x.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span>Items from eligible sources are 2x common.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span
+                  >Farming ticks occur every 1 minute instead of every 5
+                  minutes.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span>Minigame points are boosted by 4x.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span>Run energy is never drained whilst running.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span
+                  >All clue scrolls will drop as stackable scroll boxes, and
+                  clue step progress is saved between clues.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span
+                  >Players will only receive clue steps and port tasks they can
+                  access within an unlocked region.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-color-strong"
+                  >Trees and mining rocks never deplete, and fishing spots are
+                  automatically tracked.</span
+                >
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section
+          class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+          data-purpose="tier-2"
+        >
+          <h2
+            class="relic-tier-title uppercase tracking-widest text-orange-400"
+          >
+            Tier 2
+          </h2>
+
+          <div class="flex flex-col gap-8 items-center">
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Conman',
+                  'images/relics/relic_conman.webp',
+                  '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Slippin&amp;apos; suit,</span> a body slot item.</li><li>While wearing the <span class=relic-coloured-text>Slippin&amp;apos; suit,</span> you are too classy to train Thieving. You are training <span class=relic-coloured-text>&amp;quot;Charisma&amp;quot;</span> now, so you can no longer engage in the following:<ul class=relic-bullet><li>Steal from stalls;</li><li>Steal from the Sorceress&amp;apos; Garden;</li><li>Steal from Varlamore houses;</li><li>Loot various picklockable chests;</li><li>Equip Rogues&amp;apos; equipment.</li></ul></li><li>While wearing the <span class=relic-coloured-text>Slippin&amp;apos; suit,</span> every &amp;quot;Pickpocket&amp;quot; option is replaced with <span class=relic-coloured-text>&amp;quot;Charm.&amp;quot;</span> Charming an NPC engages a passive dialogue exchange, lasting indefinitely. During this time, they will gift you receipts every 2 ticks, granting items and <span class=relic-coloured-text>Thieving XP</span> they would normally yield.<ul class=relic-bullet><li>Stall owners are also given this option, with the same yield as their stalls would give.</li><li>All loot received is noted.</li><li>Coins are received instead of Coin pouches.</li></ul></li><li>While the <span class=relic-coloured-text>Slippin&amp;apos; suit</span> is worn, every shop offers a 0.5-49.5% discount, scaling linearly with your <span class=relic-coloured-text>&amp;quot;Charisma&amp;quot;</span> level. This stacks multiplicatively with any other discounts.</li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Conman"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_conman.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Conman</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Holy Harvest',
+                  'images/relics/relic_holyharvest.webp',
+                  '<ul class=relic-bullet><li>You can now offer any seed (except Anima and Spirit tree) to an altar, regardless of Farming level, with a 75% chance not to consume it (stacks multiplicatively with the Wilderness Chaos altar).</li><li>When offering a seed, you will instantly receive what you would normally harvest from it, with Ultracompost applied, in noted form. This grants full <span class=relic-coloured-text>Farming XP.</span><ul class=relic-bullet><li>For tree seeds, this also offers <span class=relic-coloured-text>Woodcutting XP</span> from chopping the logs.</li></ul></li><li>Additionally, if you have any god item equipped, you will receive a noted secondary ingredient for each item harvested, chosen randomly from a list associated with that god. Multiple god items can work simultaneously.<ul class=relic-bullet><li><span class=relic-coloured-text>Saradomin:</span> Unicorn horn dust, Chocolate dust, Dragon scale dust, Yew roots, Crushed nest, Squid paste, Crushed superior dragon bones, Yellow fin;</li><li><span class=relic-coloured-text>Zamorak:</span> Volcanic ash, Red spiders&amp;apos; eggs, Mort myre fungus, Wine of zamorak, Demonic tallow, Crab paste, Lava scale shard, Araxyte venom sack;</li><li><span class=relic-coloured-text>Armadyl:</span> White berries, Snape grass, Poison ivy berries, Aldarium, Cotton yarn, Amylase crystal, Marlin scales;</li><li><span class=relic-coloured-text>Bandos:</span> Eye of newt, Limpwurt root, Toad&amp;apos;s legs, Kebbit teeth dust, Nail beast nails, Jangerberries, Haddock eye, Zulrah&amp;apos;s scales;</li><li><span class=relic-coloured-text>Ancient:</span> Goat horn dust, Potato cactus, Magic roots, Nihil dust, Lily of the sands, Rainbow crab paste, Crystal dust, Ancient essence.</li></ul></li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Holy Harvest"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_holyharvest.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Holy Harvest</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Perpetual Stew',
+                  'images/relics/relic_perpetualstew.webp',
+                  '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Perpetual stew,</span> with 1,000 charges.</li><li>Any food item (but not potions) can be added to the stew. Both raw and cooked versions can be added, granting the full <span class=relic-coloured-text>Cooking XP</span> you&amp;apos;d receive from cooking it normally.<ul class=relic-bullet><li>For multi-step processes, such as pies, only the final step in preparation or the cooked version will work.</li><li>Noted food can be added to the stew, processing 1 item every 8 ticks. This will not be interrupted by other actions like skilling and combat.</li><li>Toggleable effect: Any food obtained through skilling actions or monster drops will automatically be added to the stew.</li></ul></li><li>Each piece of food added to the stew grants it charges equal to the amount of <span class=relic-coloured-text>Hitpoints</span> it heals, storing up to 2,147,483,647 charges.</li><li>Sipping from the stew consumes a set number of charges, healing you for the same amount.<ul class=relic-bullet><li>This incurs the standard 3-tick action delay.</li></ul></li><li>The <span class=relic-coloured-text>Perpetual stew</span> initially heals 3 Hitpoints per sip, but the recipe is improved to heal an additional 3 Hitpoints every 14 Cooking levels:<ul class=relic-bullet><li><span class=relic-coloured-text>Level 1:</span> Heals 3 HP</li><li><span class=relic-coloured-text>Level 15:</span> Heals 6 HP</li><li><span class=relic-coloured-text>Level 29:</span> Heals 9 HP</li><li><span class=relic-coloured-text>Level 43:</span> Heals 12 HP</li><li><span class=relic-coloured-text>Level 57:</span> Heals 15 HP</li><li><span class=relic-coloured-text>Level 71:</span> Heals 18 HP</li><li><span class=relic-coloured-text>Level 85:</span> Heals 21 HP</li><li><span class=relic-coloured-text>Level 99:</span> Heals 24 HP</li></ul></li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Perpetual Stew"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_perpetualstew.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Perpetual Stew</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30"
+          >
+            <h3
+              class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+            >
+              Passive Bonuses
+            </h3>
+            <ul
+              class="text-passive leading-relaxed text-orange-100/80 space-y-2"
+            >
+              <li class="flex items-start gap-2">
+                <span>Leagues XP multiplier is increased from 5x to 8x.</span>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section
+          class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+          data-purpose="tier-3"
+        >
+          <h2
+            class="relic-tier-title uppercase tracking-widest text-orange-400"
+          >
+            Tier 3
+          </h2>
+
+          <div class="flex flex-col gap-8 items-center">
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Friend of the Forest',
+                  'images/relics/relic_friendoftheforest.webp',
+                  '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Druid ring,</span> which:<ul class=relic-bullet><li>Can mark up to 8 Oak or higher tier <span class=relic-coloured-text>trees</span> in the game (choppable, excludes instances and player-farmed trees), provided you have the Woodcutting level to chop them.<ul class=relic-bullet><li>A new tree can be marked at any time.</li></ul></li><li>Provides unlimited teleports to any marked tree.</li></ul></li><li>Additionally, the <span class=relic-coloured-text>Druid ring</span> will:<ul class=relic-bullet><li>Passively collect and store random <span class=relic-coloured-text>grimy herbs</span> whilst running over &amp;quot;grassy terrain.&amp;quot; This would include, for example, plains, forests, jungles, large gardens, but not isolated patches of grass in cities.</li><li>Every tile travelled has a 5% chance to collect a grimy herb.</li><li>Items stored in the ring can only be retrieved at the bank.</li><li>You cannot manually store any items in the ring.</li></ul></li><li>This ring ignores Wilderness teleport restrictions.</li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Friend of the Forest"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_friendoftheforest.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Friend of the Forest</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Harnessed Earth',
+                  'images/relics/relic_harnessedearth.webp',
+                  '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Golem ring</span>, which:<ul class=relic-bullet><li>Can mark up to 8 <span class=relic-coloured-text>mining rocks</span> in the game (excludes instances), provided you have the Mining level to use them, or <span class=relic-coloured-text>runic altars.</span><ul class=relic-bullet><li>A new rock or runic altar can be marked at any time.</li><li>Both rocks and runic altars count towards the same limit.</li></ul></li><li>Provides unlimited teleports to any marked rock or runic altar.</li><li>Acts as a wearable talisman for all runic altars.</li></ul></li><li>Additionally, the <span class=relic-coloured-text>Golem ring</span> will:<ul class=relic-bullet><li>Passively collect and store <span class=relic-coloured-text>pure essence and uncut gems</span> whilst running over &amp;quot;barren terrain.&amp;quot; This would include, for example, mountains (rocky or snowy), plateaus, deserts, volcanoes, but not man-made structures like stone bridges.</li><li>Every tile travelled has a 5% chance to collect a resource:<ul class=relic-bullet><li>49% chance of receiving 5-15 Pure essence;</li><li>49% chance of receiving any basic uncut gem;</li><li>2% chance of receiving an Uncut dragonstone.</li></ul></li><li>Items stored in the ring can only be retrieved at the bank.</li><li>You cannot manually store any items in the ring.</li></ul></li><li>This ring ignores Wilderness teleport restrictions.</li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Harnessed Earth"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_harnessedearth.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Harnessed Earth</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Call of the Sea',
+                  'images/relics/relic_callofthesea.webp',
+                  '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Merfolk ring,</span> which:<ul class=relic-bullet><li>Can mark up to 8 <span class=relic-coloured-text>fishing spots</span> in the game (excludes instances), provided you have the Fishing level to catch their lowest level fish available, or <span class=relic-coloured-text>salvaging stations</span> (excluding your boat&amp;apos;s).<ul class=relic-bullet><li>A new fishing spot or salvaging station can be marked at any time.</li><li>Both fishing spots and salvaging stations count towards the same limit.</li></ul></li><li>Provides unlimited teleports to any marked fishing spot or salvaging station.</li></ul></li><li>Additionally, the <span class=relic-coloured-text>Merfolk ring</span> will:<ul class=relic-bullet><li>Passively collect and store <span class=relic-coloured-text>random planks and nails</span> whilst sailing anywhere.</li><li>You will collect a resource every 10 ticks while your boat is moving:<ul class=relic-bullet><li>49% chance of receiving any random plank;</li><li>49% chance of receiving 5-15 of any basic nail;</li><li>2% chance of receiving 5-15 Dragon nails.</li></ul></li><li>Items stored in the ring can only be retrieved at the bank.</li><li>You cannot manually store any items in the ring.</li></ul></li><li>This ring ignores Wilderness teleport restrictions.</li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Call of the Sea"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_callofthesea.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Call of the Sea</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30"
+          >
+            <h3
+              class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+            >
+              Passive Bonuses
+            </h3>
+            <ul
+              class="text-passive leading-relaxed text-orange-100/80 space-y-2"
+            >
+              <li class="flex items-start gap-2">
+                <span
+                  >Combat experience (including Hitpoints and Prayer) will be
+                  multiplied by 1.5x. This is multiplicative with other
+                  experience modifiers.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span
+                  >The "Bigger and Badder" slayer unlock is unlocked for
+                  free.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span
+                  >Slayer reward points are 5x from tasks, and you aren't
+                  required to complete 5 tasks before earning points.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span
+                  >Superior slayer monsters will appear at a rate of 1/50.</span
+                >
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section
+          class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+          data-purpose="tier-4"
+        >
+          <h2
+            class="relic-tier-title uppercase tracking-widest text-orange-400"
+          >
+            Tier 4
+          </h2>
+
+          <div class="flex flex-col gap-8 items-center">
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Run to the Rescue',
+                  'images/relics/relic_runtotherescue.webp',
+                  '<ul class=relic-bullet><li><span class=relic-coloured-text>Agility courses</span> are now under attack! The following courses have 5-10 unaggressive monsters scattered throughout them, only visible to you:<ul class=relic-bullet><li>All Rooftop courses;</li><li>All Hallowed Sepulchre floors;</li><li>Gnome Stronghold course;</li><li>Ape Atoll course;</li><li>Werewolf course;</li><li>Wilderness course.</li></ul></li><li>The monsters spawned are randomly selected from all Slayer master lists, only spawning those which you have the requirements to kill. They will respect Combat level adjustment, if enabled.<ul class=relic-bullet><li>In addition to their standard drops, each monster has a 20% chance of dropping 5 <span class=relic-coloured-text>Marks of grace</span> or <span class=relic-coloured-text>Hallowed marks</span> in their respective courses.</li></ul></li><li>Once all the monsters are slain, completion of a lap will generate another set of monsters, randomly chosen.</li><li>If you have one, the monsters spawned will always be the ones on your <span class=relic-coloured-text>Slayer task</span> (excluding boss tasks).<ul class=relic-bullet><li>Every reset has a 33% chance of replacing 1 Slayer monster with its <span class=relic-coloured-text>Superior</span> variant.</li></ul></li><li>Killing all the monsters in a course before completing a lap will award:<ul class=relic-bullet><li><span class=relic-coloured-text>10x Agility XP</span> and completion count;</li><li>20% of the above gained as bonus <span class=relic-coloured-text>Slayer XP,</span> regardless of your Slayer task.</li><li>A 25% chance to receive a <span class=relic-coloured-text>Scroll box,</span> the maximum possible tier of which scales with the course&amp;apos;s Agility level requirement:<ul class=relic-bullet><li>Up to Easy at levels 1-19;</li><li>Up to Medium at levels 20-39;</li><li>Up to Hard at levels 40-59;</li><li>Up to Elite at levels 60-79;</li><li>Up to Master at levels 80+.</li></ul></li></ul></li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Run to the Rescue"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_runtotherescue.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Run to the Rescue</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Industrial Evolution',
+                  'images/relics/relic_industrialevolution.webp',
+                  '<ul class=relic-bullet><li>All Furnaces in the game become <span class=relic-coloured-text>Processors.</span></li><li>Processors will take certain noted materials and transform them into finished products at a rate of 1 every 32 ticks, outputting a maximum of 3,000 products at a time. The Processor can:<ul class=relic-bullet><li>Mix herbs and vials of water into unfinished potions;</li><li>Mix unfinished potions and secondaries into potions;</li><li>Tan leather and hides;</li><li>Craft tanned leather and hides into armour;</li><li>Craft glass and pottery items;</li><li>Smelt soda ash and sand into molten glass;</li><li>Smelt ore into bars;</li><li>Smith bars into armour and weapons;</li><li>Turn various Construction materials into flatpacks.</li></ul></li><li>Each Processor can only perform one action at a time, but up to <span class=relic-coloured-text>8 different Processors</span> around Gielinor can be active at once.</li><li>Processed items are sent directly to your bank. You can interact with a Processor to cancel its current process, retrieving all remaining resources.</li><li><span class=relic-coloured-text>Full skilling XP</span> is given for each action. A token amount of bonus <span class=relic-coloured-text>Smithing XP</span> is also given.</li><li>Processors will continue running <span class=relic-coloured-text>even while you are offline.</span></li><li>Toggleable effect: You can right-click a Processor to revert it to a Furnace, and vice versa.</li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Industrial Evolution"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_industrialevolution.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Industrial Evolution</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Unleashed Teleport',
+                  'images/relics/relic_unleashedteleport.webp',
+                  '<ul class=relic-bullet><li>Home and Minigame Teleports are now an instant cast.</li><li>All spellbook teleports are now <span class=relic-coloured-text>free to cast,</span> and have no quest, diary, or Magic level requirements.</li><li>All teleportation items no longer consume charges nor themselves.</li><li>Toggleable effect: Upon casting any teleport (including those from relics), you will be presented with your <span class=relic-coloured-text>Bank interface.</span></li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Unleashed Teleport"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_unleashedteleport.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Unleashed Teleport</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30"
+          >
+            <h3
+              class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+            >
+              Passive Bonuses
+            </h3>
+            <ul
+              class="text-passive leading-relaxed text-orange-100/80 space-y-2"
+            >
+              <li class="flex items-start gap-2">
+                <span>Items from eligible sources will be 5x as common.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span>Minigame Points received are boosted by 8x.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span>Leagues XP multiplier is increased from 8x to 12x.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-color-strong"
+                  >Clue scrolls are now 2x more common from all sources.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-color-strong"
+                  >Clue scrolls will always have the minimum amount of steps for
+                  their tier, and yield the maximum amount of rewards.</span
+                >
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section
+          class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+          data-purpose="tier-5"
+        >
+          <h2
+            class="relic-tier-title uppercase tracking-widest text-orange-400"
+          >
+            Tier 5
+          </h2>
+
+          <div class="flex flex-col gap-8 items-center">
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Lord of the Rings',
+                  'images/relics/relic_lordoftherings.webp',
+                  '<ul class=relic-bullet><li>All rings have unlimited charges.</li><li>All rings have their <span class=relic-coloured-text>stat bonuses</span> doubled.</li><li>The <span class=relic-coloured-text>passive effects</span> of all rings are twice as powerful. Some examples include:<ul class=relic-bullet><li>The Ring of recoil and Ring of suffering reflect 20% + 2 damage;</li><li>The Lightbearer regenerates 20% special attack energy every 15 seconds;</li><li>The Celestial ring offers a +8 boost to Mining;</li><li>The Druid, Golem and Merfolk rings gather double the resources per trigger.</li></ul></li><li>You are granted a <span class=relic-coloured-text>second ring slot.</span> When two rings are equipped, only the highest of any shared stat bonus is taken, and identical effects do not stack.</li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Lord of the Rings"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_lordoftherings.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Lord of the Rings</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Runic Freelancer',
+                  'images/relics/relic_runicfreelancer.webp',
+                  '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Freelance kit,</span> which:<ul class=relic-bullet><li>Can store any amount of runes of all types;</li><li>Acts as a Book of the dead for summoning thralls;</li><li>Has a <span class=relic-coloured-text>&amp;quot;Reactive Alchemy&amp;quot;</span> option, prompting you to choose an item or item stack in your inventory.</li></ul></li><li>Upon getting any XP drop, you will automatically cast High Level Alchemy on the item assigned to your <span class=relic-coloured-text>&amp;quot;Reactive Alchemy&amp;quot;</span> option, provided it is in your inventory, regardless of runes, spellbook, or Magic level.<ul class=relic-bullet><li>This cast will not interrupt other skilling or combat actions.</li><li>This effect can only trigger once every 3 ticks.</li></ul></li><li>Your spellbook icon can be right-clicked to find a <span class=relic-coloured-text>&amp;quot;DIY Spellbook.&amp;quot;</span> The DIY Spellbook presents a 7x7 grid interface, where up to 49 different spells from any spellbook can be manually chosen for each slot.<ul class=relic-bullet><li>The DIY Spellbook can be edited at any time.</li><li>All autocasting weapons can autocast any combat spell that you can cast from the DIY Spellbook.</li></ul></li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Runic Freelancer"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_runicfreelancer.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Runic Freelancer</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Faith',
+                  'images/relics/relic_faith.webp',
+                  '<ul class=relic-bullet><li>The &amp;quot;Sit down&amp;quot; emote is replaced with <span class=relic-coloured-text>&amp;quot;Meditate,&amp;quot;</span> which loops indefinitely. While meditating, you will receive <span class=relic-coloured-text>Prayer XP</span> equal to your half Prayer level (affected by Leagues modifiers) every 8 ticks.</li><li>Active prayers drain Prayer points 4x slower.</li><li>You may now activate two overhead prayers at once.</li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Faith"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_faith.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Faith</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30"
+          >
+            <h3
+              class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+            >
+              Passive Bonuses
+            </h3>
+            <ul
+              class="text-passive leading-relaxed text-orange-100/80 space-y-2"
+            >
+              <li class="flex items-start gap-2">
+                <span class="text-color-strong"
+                  >A Black mask is now available at any Slayer master shop for
+                  1,000 Slayer points.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-color-strong"
+                  >You may now purchase a specific Slayer task, including amount
+                  to kill, for 100 Slayer points each.</span
+                >
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section
+          class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+          data-purpose="tier-6"
+        >
+          <h2
+            class="relic-tier-title uppercase tracking-widest text-orange-400"
+          >
+            Tier 6
+          </h2>
+
+          <div class="flex flex-col gap-8 items-center">
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Feral Exorcism',
+                  'images/relics/relic_feralexorcism.webp',
+                  '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Spirit lantern,</span> a main-hand or off-hand item (toggleable).<ul class=relic-bullet><li>This item functions as both a light source and a tinderbox.</li></ul></li><li>Creatures around Gielinor are now infested with malevolent spirits. The <span class=relic-coloured-text>Spirit lantern</span> will siphon the spirit of all monsters you kill and Hunter creatures you catch, storing up to <span class=relic-coloured-text>1,000 spirits</span> (can be equipped or in the inventory).</li><li>Toggleable effect: The Spirit lantern will note all loot received from Hunter creatures.</li><li>Successfully hunting a creature causes the lantern to siphon the spirits of all creatures of the same kind up to 15 tiles away.<ul class=relic-bullet><li>This grants full loot and <span class=relic-coloured-text>Hunter XP</span> for each creature, but does not kill them, meaning other players can also catch them and there is no respawn timer.</li></ul></li><li>The <span class=relic-coloured-text>Spirit lantern</span> can be used at any player-made Fire to cleanse the caught spirits, granting <span class=relic-coloured-text>Firemaking XP</span> equal to 4x your Firemaking level (affected by Leagues multipliers) every 2 ticks.<ul class=relic-bullet><li>This action automatically turns it into a Forester&amp;apos;s campfire and refreshes its duration.</li></ul></li><li>When cleansing spirits, there is a 0.1-9.9% chance (scaling linearly with Firemaking level) per Firemaking XP drop to receive a <span class=relic-coloured-text>bonus XP drop in your lowest levelled skill, </span>equal to 2x that skill&amp;apos;s level (affected by Leagues multipliers).</li><li>Additionally, the <span class=relic-coloured-text>Spirit lantern</span> can be used to spiritually commune with every Guild hunter, allowing you to remotely receive, turn in, and be awarded for <span class=relic-coloured-text>Hunter Rumours.</span><ul class=relic-bullet><li>Novice Hunter Rumours can be started from Level 1 Hunter.</li><li>Master Hunter Rumours do not require completion of At First Light.</li></ul></li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Feral Exorcism"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_feralexorcism.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Feral Exorcism</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Papercrafting',
+                  'images/relics/relic_papercrafting.webp',
+                  '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Scissors.</span><ul class=relic-bullet><li>This item functions as chisel, knife, needle and thread.</li></ul></li><li>The <span class=relic-coloured-text>Scissors</span> can be used on any noted stack of <span class=relic-coloured-text>craftable</span> and <span class=relic-coloured-text>fletchable</span> items that would normally require being unnoted to craft and fletch, converting 10 of them into their finished product every 3 ticks. <span class=relic-coloured-text>Full XP</span> is given for all items, which are also received in noted form. The <span class=relic-coloured-text>Scissors</span> can turn:<ul class=relic-bullet><li>Tanned hide and similar materials to armour;</li><li>Uncut gems to cut gems;</li><li>Cut gems to bolt tips;</li><li>Logs to arrow shafts, bows, crossbow stocks and shields;</li><li>Celastrus bark to battlestaves.</li></ul></li><li>Similarly, as long as the <span class=relic-coloured-text>Scissors</span> are in the inventory, its processing effect is also applied to items combined through <span class=relic-coloured-text>Crafting</span> and <span class=relic-coloured-text>Fletching:</span><ul class=relic-bullet><li>Bow strings to unfinished bows;</li><li>Crossbow strings to unfinished crossbows;</li><li>Steel studs to Leather bodies and chaps;</li><li>Orbs to battlestaves.</li></ul></li><li>The <span class=relic-coloured-text>Scissors</span> have no effect on Crafting and Fletching actions with items that are already stackable by default, e.g. feathers to arrow shafts.</li><li>If the Scissors are in the inventory, a noted stack of <span class=relic-coloured-text>Pure essence can be used on a runic altar,</span> converting 10 of them into runes every 3 ticks.</li><li>All aforementioned actions can be done manually to speed up the process, similar to fletching darts.</li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Papercrafting"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_papercrafting.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Papercrafting</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Mariner',
+                  'images/relics/relic_mariner.webp',
+                  '<ul class=relic-bullet><li>Toggleable effect: All your sailing vessels move at 2x speed.</li><li><span class=relic-coloured-text>Charting activities</span> receive the following benefits:<ul class=relic-bullet><li>Placing a current duck automatically finishes its route;</li><li>Portable weather stations gather all relevant data upon the first reading, regardless of where it is done;</li><li>Mermaid riddles are automatically solved;</li><li>Drinks in sealed crates will no longer teleport you or change your inventory;</li><li>Harmful NPCs no longer spawn from charting.</li></ul></li><li>In addition to Sailing XP, each unique charted location also awards <span class=relic-coloured-text>1,000,000 Coins.</span><ul class=relic-bullet><li>The 100% completion bonus is modified to only include the charter locations in your bordering oceans, once all possible areas are unlocked.</li></ul></li><li>Completing <span class=relic-coloured-text>Port Tasks</span> and <span class=relic-coloured-text>Barracuda Trials</span> roll on a unique drop table that includes:<ul class=relic-bullet><li>3 rolls on the highest level salvaging loot table you can access;</li><li>Lucky caskets, accessing the Lucky impling drop table;</li><li>Noted Frost dragon bones, Gryphon feathers, Magic stones, Bottled storm and Belle&amp;apos;s folly;</li><li>Cannonballs (100-500), the tier of which scales with your Sailing level;</li><li>Boat parts (cannon, sheets, hull, keel), the tier of which scales with your Sailing level;</li><li>Full facility bottles (containing a random completed facility);<ul class=relic-bullet><li><span class=relic-coloured-text>Salvaging</span> and <span class=relic-coloured-text>Deep sea trawling</span> have a chance to roll this same table at a much lower rate.</li></ul></li></ul></li><li>With any <span class=relic-coloured-text>trawling net</span> built onto your boat, you will passively catch fish every 16-24 ticks whilst you are on your boat, up to what your Fishing level allows you to catch. Better quality nets yield more fish (2-5) each time this effect triggers. Each catch grants full <span class=relic-coloured-text>Fishing XP.</span><ul class=relic-bullet><li>Toggleable effect: Caught fish is sent directly to your bank.</li></ul></li><li>All salvage is instantly sorted through as if at a Salvaging station, granting <span class=relic-coloured-text>full XP,</span> and loot is received noted.</li><li>Crewmates yield <span class=relic-coloured-text>100% Sailing experience</span> for all tasks performed.</li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Mariner"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_mariner.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Mariner</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30"
+          >
+            <h3
+              class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+            >
+              Passive Bonuses
+            </h3>
+            <ul
+              class="text-passive leading-relaxed text-orange-100/80 space-y-2"
+            >
+              <li class="flex items-start gap-2">
+                <span>Leagues XP multiplier is increased from 12x to 16x.</span>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section
+          class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+          data-purpose="tier-7"
+        >
+          <h2
+            class="relic-tier-title uppercase tracking-widest text-orange-400"
+          >
+            Tier 7
+          </h2>
+
+          <div class="flex flex-col gap-8 items-center">
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Reaper&#39;s Avarice',
+                  'images/relics/relic_reapersavarice.webp',
+                  '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Ring of avarice.</span> Whilst equipped, gain the following benefits:<ul class=relic-bullet><li>Automatically note and pick up all loot dropped by monsters. Both effects are toggleable.</li><li>Every time you kill a monster, there is a 50% chance to roll its standard loot table again. This includes all Boss and Raids standard tables.<ul class=relic-bullet><li>With <span class=relic-coloured-text>Lord of the Rings,</span> there is a second 50% chance if the first fails.</li></ul></li><li>Instead of dropping clue scrolls, all monsters directly drop <span class=relic-coloured-text>clue caskets,</span> with a 25% chance of it being one tier higher than they normally drop.</li></ul></li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Reapers Avarice"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_reapersavarice.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Reaper's Avarice</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Raining Luck',
+                  'images/relics/relic_rainingluck.webp',
+                  '<ul class=relic-bullet><li>Every 40-80 minutes, a <span class=relic-coloured-text>Lucky star</span> will fall somewhere in your available areas (only visible to you). You will be notified of this 1 minute before it lands. Once it does, an arrow will point out its location on the world map.<ul class=relic-bullet><li>This timer starts immediately upon unlocking this relic, and runs while offline. If the player is ineligible to receive a star after the timer has ended (e.g. was offline, or in an instance), it will instead spawn within a 1-2 minute window as soon as eligible.</li></ul></li><li>The <span class=relic-coloured-text>Lucky star</span> remains for 5 minutes, during which it can be continuously mined from.</li><li>Each successful <span class=relic-coloured-text>Mining action on the star grants XP</span> equal to 10x your Mining level (affected by Leagues multipliers), and rolls on a unique drop table with several high tier resources, such as:<ul class=relic-bullet><li>Snapdragon and torstol seeds;</li><li>Raw anglerfish and marlins (noted);</li><li>Teak and mahogany logs (noted);</li><li>Dragon equipment, including a 1/32,768 chance at a Dragon full helm;</li><li>Uncut dragonstones, Uncut onyxes, and a 1/32,768 chance at an Uncut zenyte;</li><li>Elite and Master clue geodes;</li><li><span class=relic-coloured-text>Wishing lamps,</span> granting 10,000 XP (affected by Leagues multipliers) in a random non-combat skill.</li></ul></li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Raining Luck"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_rainingluck.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Raining Luck</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Squeal of Fortune',
+                  'images/relics/relic_squealoffortune.webp',
+                  '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Squeal of fortune.</span></li><li>The <span class=relic-coloured-text>Squeal of fortune</span> can be interacted with &amp;quot;Spins,&amp;quot; which are purchased with Coins through the <span class=relic-coloured-text>Squeal of fortune,</span> and are stored in it.</li><li>Each Spin makes a roll on a random monster&amp;apos;s drop table. The monster elected must be within your unlocked regions, and the chance for the monster chosen is as follows:<ul class=relic-bullet><li><span class=relic-coloured-text>Common:</span> 45% chance of a monster below Combat level 30</li><li><span class=relic-coloured-text>Uncommon:</span> 30% chance of a monster between Combat levels 30-100</li><li><span class=relic-coloured-text>Rare:</span> 15% chance of a non-boss monster above Combat level 100</li><li><span class=relic-coloured-text>Epic:</span> 8% chance of a roll on a Boss or Raid&amp;apos;s standard loot table</li><li><span class=relic-coloured-text>Legendary:</span> 2% chance of a roll on a Boss or Raid&amp;apos;s unique loot table</li></ul></li><li>A Spin has a base cost of 1,000 Coins, but increases by 10x for each consecutive Spin within an hour:<ul class=relic-bullet><li><span class=relic-coloured-text>1st Spin:</span> 1,000 gp</li><li><span class=relic-coloured-text>2nd Spin:</span> 10,000 gp</li><li><span class=relic-coloured-text>3rd Spin:</span> 100,000 gp</li><li><span class=relic-coloured-text>4th Spin:</span> 1,000,000 gp</li><li><span class=relic-coloured-text>5th Spin:</span> 10,000,000 gp</li><li><span class=relic-coloured-text>6th Spin:</span> 100,000,000 gp</li><li><span class=relic-coloured-text>7th Spin onwards:</span> 1,000,000,000 gp</li></ul></li><li>The price resets after 60 realtime minutes without buying a Spin.</li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Squeal of Fortune"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_squealoffortune.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Squeal of Fortune</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30"
+          >
+            <h3
+              class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+            >
+              Passive Bonuses
+            </h3>
+            <ul
+              class="text-passive leading-relaxed text-orange-100/80 space-y-2"
+            >
+              <li class="flex items-start gap-2">
+                <span class="text-color-strong"
+                  >Reloaded: In addition to choosing a relic from this tier, you
+                  can unlock any additional relic from Tier 6 and below.</span
+                >
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section
+          class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+          data-purpose="tier-8"
+        >
+          <h2
+            class="relic-tier-title uppercase tracking-widest text-orange-400"
+          >
+            Tier 8
+          </h2>
+
+          <div class="flex flex-col gap-8 items-center">
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Grandmaster at Arms',
+                  'images/relics/relic_grandmasteratarms.webp',
+                  '<ul class=relic-bullet><li>Toggleable effect: When equipping a weapon, you will <span class=relic-coloured-text>automatically equip</span> optimal items in your inventory for its attack style.</li><li>All attacks (excluding special attacks) now have <span class=relic-coloured-text>100% increased accuracy</span> and deal <span class=relic-coloured-text>100% increased damage.</span><ul class=relic-bullet><li>This value is reduced to 75%, 50%, 25%, and 0% for subsequent attacks with the same weapon in the next <span class=relic-coloured-text>24 ticks,</span> refreshing the duration with each one.</li><li>The value resets to 100% after 24 ticks without using the weapon. This is tracked individually per weapon.</li></ul></li><li>All special attacks now have <span class=relic-coloured-text>100% increased accuracy.</span></li><li>All special attacks now cost <span class=relic-coloured-text>0 energy.</span><ul class=relic-bullet><li>This value is increased to 10%, 20%, 40%, and 80% for subsequent special attacks with the same weapon in the next <span class=relic-coloured-text>24 ticks,</span> refreshing the duration with each one.</li><li>The value resets to 0 energy after 24 ticks without using the weapon&amp;apos;s special attack. This is tracked individually per weapon.</li></ul></li><li>A visual timer for the cooldown period would be overlayed onto each weapon. Manual tracking is not necessary.<ul class=relic-bullet><li>Each weapon shares the same standard and special attack timer (e.g. After a standard attack with an Arkan blade, the Arkan blade&amp;apos;s special attack will cost 10%, not 0 energy).</li></ul></li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Grandmaster At Arms"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_grandmasteratarms.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Grandmaster at Arms</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Dragon Multicannon',
+                  'images/relics/relic_dragonmulticannon.webp',
+                  '<ul class=relic-bullet><li>Upon unlocking this relic, receive the <span class=relic-coloured-text>Dragon multicannon.</span></li><li>The <span class=relic-coloured-text>Dragon multicannon</span> is mechanically similar to the Dwarf multicannon, but differs in the following ways:<ul class=relic-bullet><li>It is a singular item, as opposed to 4 parts.</li><li>The item does not leave your inventory, and has a &amp;quot;Recall&amp;quot; option, allowing you to remotely pick up your cannon.</li><li>Upon placing it, the Dragon multicannon will automatically mount, load itself, and start firing. This process takes 8 ticks before it starts rotating and attacking.</li><li>Its damage is <span class=relic-coloured-text>typeless,</span> but still rolls against the target&amp;apos;s Heavy ranged defence. Similar to the Dwarf multicannon, the <span class=relic-coloured-text>Dragon multicannon&amp;apos;s</span> accuracy depends on your equipment accuracy bonuses.</li></ul></li><li>The <span class=relic-coloured-text>Dragon multicannon</span> can be deployed and loaded with any type of cannonball, automatically choosing the highest tier in your inventory. The tier of cannonball determines its max hit:<ul class=relic-bullet><li><span class=relic-coloured-text>Bronze cannonballs:</span> 20</li><li><span class=relic-coloured-text>Iron cannonballs:</span> 25</li><li><span class=relic-coloured-text>Steel cannonballs:</span> 30</li><li><span class=relic-coloured-text>Mithril/Granite cannonballs:</span> 35</li><li><span class=relic-coloured-text>Adamant cannonballs:</span> 40</li><li><span class=relic-coloured-text>Rune cannonballs:</span> 45</li><li><span class=relic-coloured-text>Dragon cannonballs:</span> 50<ul class=relic-bullet><li>Additionally, Dragon cannonballs burn the target for 10 damage over 10 ticks.</li></ul></li></ul></li><li>The <span class=relic-coloured-text>Dragon multicannon</span> can store up to 300 cannonballs at a time.</li><li>The <span class=relic-coloured-text>Dragon multicannon</span> can be used and will remain in areas where a Dwarf multicannon is disabled or gets destroyed.<ul class=relic-bullet><li>This perk will also work inside the Gauntlet.</li></ul></li><li>If placed in an instance, the <span class=relic-coloured-text>Dragon multicannon</span> immediately despawns when you leave it.</li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Dragon Multicannon"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_dragonmulticannon.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Dragon Multicannon</span
+              >
+            </div>
+
+            <div
+              class="relic-icon-wrapper cursor-pointer flex flex-col items-center group"
+              onclick="
+                showDetails(
+                  'Leap',
+                  'images/relics/relic_leap.webp',
+                  '<ul class=relic-bullet><li>On your next <span class=relic-coloured-text>interactive click</span> (&amp;quot;red X&amp;quot;), you will leap up to <span class=relic-coloured-text>10 tiles in 1 tick</span> towards your target, as soon as it would put you within interacting range.<ul class=relic-bullet><li>This effectively skips the last 5 checkpoint tiles of your route, meaning it will respect walls and pathing.</li><li>Interacting range differs between actions, e.g. banking requires standing 1 tile away from a Bank booth, but shooting with a Twisted bow only requires being 10 tiles away from an NPC.</li></ul></li><li>This effect has a <span class=relic-coloured-text>cooldown of 4 ticks</span> each time it triggers.</li><li>Killing an enemy <span class=relic-coloured-text>resets</span> both your Leap cooldown and your weapon attack delay.</li><li>The Leap effect is toggleable by right-clicking the Run energy orb.</li></ul>',
+                )
+              "
+            >
+              <img
+                alt="Leap"
+                class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                src="images/relics/relic_leap.webp"
+              />
+              <span
+                class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >Leap</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30"
+          >
+            <h3
+              class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+            >
+              Passive Bonuses
+            </h3>
+            <ul
+              class="text-passive leading-relaxed text-orange-100/80 space-y-2"
+            >
+              <li class="flex items-start gap-2">
+                <span class="text-color-strong"
+                  >Preserve, Chivalry, Piety, Rigour and Augury are
+                  automatically unlocked, provided you have the Prayer level to
+                  use them.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-color-strong"
+                  >With Level 99 Herblore, you can now mix a Super combat
+                  potion, a Ranging potion, a Magic potion, and an Onion
+                  together to create an Overload (Nightmare Zone version).</span
+                >
+              </li>
+            </ul>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <section
+      class="container mx-auto px-4 mt-12 flex flex-col items-center gap-8"
+    >
+      <div
+        class="hidden w-full bg-[#1e0f29]/80 border border-orange-500/20 rounded-lg animate-fade-in p-10"
+        id="explanation-panel"
+      >
+        <div class="flex gap-6">
+          <div
+            class="shrink-0 overflow-hidden w-40 h-40"
+            id="exp-icon-container"
+          >
+            <img
+              alt="Selected Relic"
+              class="w-full h-full object-cover"
+              id="exp-icon"
+              src=""
+            />
+          </div>
+          <div>
+            <h3 class="text-orange-400 mb-2 text-3xl" id="exp-title">
+              Relic Name
+            </h3>
+            <p class="text-gray-300 leading-relaxed text-lg" id="exp-desc">
+              Detailed explanation will appear here.
+            </p>
+            <button
+              class="mt-6 flex items-center gap-2 px-4 py-2 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-sm font-semibold uppercase tracking-wider"
+              onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+            >
+              Back to Top
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer
+      class="w-full border-t border-orange-900/30 bg-[#1e0f29]/80 py-12 mt-20"
+    >
+      <div
+        class="container mx-auto px-4 flex flex-col items-center text-center"
+      >
+        <button
+          onclick="toggleDisclaimer()"
+          class="group mb-6 flex items-center gap-2 text-orange-200/50 hover:text-orange-400 transition-colors uppercase tracking-widest font-medium"
+        >
+          <img
+            src="images/credits.webp"
+            alt="Dream"
+            class="h-4 w-4 mb-[2px] object-contain filter grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-200"
+          />
+
+          Credits
+        </button>
+
+        <div
+          class="space-y-2 text-[20px] text-gray-600 max-w-2xl tracking-tighter"
+        >
+          <p>
+            Old School RuneScape is a trademark of Jagex Ltd. This project is
+            not affiliated with Jagex Ltd.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <div
+      id="disclaimer-popup"
+      class="fixed inset-0 bg-black/80 flex items-center justify-center opacity-0 pointer-events-none z-[9999] p-4 backdrop-blur-sm transition-opacity duration-300 ease-in-out"
+    >
+      <div
+        class="bg-[#1e0f29]/80 border border-orange-900/50 p-8 max-w-xl w-full rounded-lg shadow-2xl relative"
+      >
+        <h3 class="text-orange-400 font-bold mb-4 text-3xl">
+          Credits and Disclaimers
+        </h3>
+
+        <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
+          <ul class="relic-bullet">
+            <li>
+              All descriptions and relic images on this website are
+              <span class="relic-coloured-text">100% human-made</span> by Hai
+              Yo.
+            </li>
+            <li>
+              This website used to display this information is
+              <b>unapologetically</b> vibe coded by Phoneman btw.
+              <ul class="relic-bullet">
+                <li>
+                  <b>Please</b> do not look at the source code it is a god-awful
+                  mess
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              Moving background video by
+              <a
+                class="relic-coloured-text underline"
+                href="https://www.pexels.com/@wayne-speedy-777933/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Wayne Speedy</a
+              >
+              via
+              <a
+                class="relic-coloured-text underline"
+                href="https://www.pexels.com/photo/full-moon-in-the-sky-4190863/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Pexels</a
+              >
+            </li>
+            <li>
+              Static background by Meurks:
+              <a
+                href="https://4kwallpapers.com/nature/full-moon-dark-background-cloudy-sky-stars-digital-art-5k-8k-5589.html"
+                class="relic-coloured-text underline"
+                >Full moon Dark background Wallpaper.</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <button
+          onclick="toggleDisclaimer()"
+          class="mt-8 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold"
+        >
+          Close
         </button>
       </div>
     </div>
-  </div>
-</section>
 
-<footer class="w-full border-t border-orange-900/30 bg-[#1e0f29]/80 py-12 mt-20">
-  <div class="container mx-auto px-4 flex flex-col items-center text-center">
+    <div
+      id="welcome-popup"
+      class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out"
+    >
+      <div
+        class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 sm:p-8 max-w-xl w-full max-h-[calc(100vh-2rem)] overflow-y-auto rounded-lg shadow-2xl relative"
+      >
+        <img
+          src="images/favicon.webp"
+          alt="Icon"
+          class="absolute top-5 right-5 w-8 h-8 object-contain pointer-events-none"
+        />
 
-    <button onclick="toggleDisclaimer()" class="group mb-6 flex items-center gap-2 text-orange-200/50 hover:text-orange-400 transition-colors uppercase tracking-widest font-medium">
+        <h3
+          class="text-orange-400 font-bold mb-4 text-3xl uppercase text-center"
+        >
+          Welcome
+        </h3>
 
-      <img src="images/credits.webp"
-           alt="Dream"
-           class="h-4 w-4 mb-[2px] object-contain filter grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-200" />
-
-      Credits
-    </button>
-
-    <div class="space-y-2 text-[20px] text-gray-600 max-w-2xl tracking-tighter">
-      <p>Old School RuneScape is a trademark of Jagex Ltd. This project is not affiliated with Jagex Ltd.</p>
-    </div>
-  </div>
-</footer>
-
-<div id="disclaimer-popup" class="fixed inset-0 bg-black/80 flex items-center justify-center opacity-0 pointer-events-none z-[9999] p-4 backdrop-blur-sm transition-opacity duration-300 ease-in-out">
-  <div class="bg-[#1e0f29]/80 border border-orange-900/50 p-8 max-w-xl w-full rounded-lg shadow-2xl relative">
-
-    <h3 class="text-orange-400 font-bold mb-4 text-3xl">Credits and Disclaimers</h3>
-
-    <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
-      <ul class="relic-bullet">
-        <li>All descriptions and relic images on this website are <span class="relic-coloured-text">100% human-made</span> by Hai Yo.</li>
-        <li>
-          This website used to display this information is <b>unapologetically</b> vibe coded by Phoneman btw.
+        <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
+          <p>
+            To best understand these relics, you'll need some essential context:
+          </p>
           <ul class="relic-bullet">
-            <li><b>Please</b> do not look at the source code it is a god-awful mess</li>
+            <li>
+              All players start in
+              <span class="relic-coloured-text">Misthalin</span>.
+            </li>
+            <li>
+              <span class="relic-coloured-text">Sailing</span> and all its
+              related content would be present in this League.
+              <ul class="relic-bullet">
+                <li>
+                  Attempting to cross into an ocean that does not border an area
+                  you've unlocked will
+                  <span class="relic-coloured-text">capsize</span> your boat.
+                </li>
+              </ul>
+            </li>
+            <li>
+              A separate system for combat, more similar to Combat Masteries
+              than Demonic Pacts, would
+              <span class="relic-coloured-text">coexist</span> with these
+              relics. This is why there are only a few combat oriented choices
+              here.
+            </li>
+            <ul class="relic-bullet">
+              <li>If you'd be interested in seeing these, let us know!</li>
+            </ul>
+            <li>
+              Most passive bonuses are the same as in Leagues 6: Demonic Pacts.
+              New passive bonuses are listed in
+              <span class="relic-coloured-text">orange</span>.
+            </li>
           </ul>
-          <li>Moving background video by <a class="relic-coloured-text underline" href="https://www.pexels.com/@wayne-speedy-777933/" target="_blank" rel="noopener noreferrer">Wayne Speedy</a> via <a class="relic-coloured-text underline" href="https://www.pexels.com/photo/full-moon-in-the-sky-4190863/" target="_blank" rel="noopener noreferrer">Pexels</a></li>
-          <li>Static background by Meurks: <a href="https://4kwallpapers.com/nature/full-moon-dark-background-cloudy-sky-stars-digital-art-5k-8k-5589.html" class="relic-coloured-text underline">Full moon Dark background Wallpaper.</a>
-        </li>
-      </ul>
+          <div id="mobile-warning-slot"></div>
+        </div>
+
+        <button
+          onclick="closeWelcomePopup()"
+          class="mt-8 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold"
+        >
+          Understood, put me to sleep
+        </button>
+      </div>
     </div>
 
-    <button onclick="toggleDisclaimer()" class="mt-8 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold">
-      Close
-    </button>
-  </div>
-</div>
-
-<div id="welcome-popup" class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out">
-
-  <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 sm:p-8 max-w-xl w-full max-h-[calc(100vh-2rem)] overflow-y-auto rounded-lg shadow-2xl relative">
-
-    <img src="images/favicon.webp" alt="Icon" class="absolute top-5 right-5 w-8 h-8 object-contain pointer-events-none" />
-
-    <h3 class="text-orange-400 font-bold mb-4 text-3xl uppercase text-center">Welcome</h3>
-
-    <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
-      <p>To best understand these relics, you'll need some essential context: </p>
-      <ul class="relic-bullet">
-        <li>All players start in <span class="relic-coloured-text">Misthalin</span>.</li>
-        <li><span class="relic-coloured-text">Sailing</span> and all its related content would be present in this League.
-          <ul class="relic-bullet">
-            <li>Attempting to cross into an ocean that does not border an area you've unlocked will <span class="relic-coloured-text">capsize</span> your boat.</li>
-          </ul>
-        </li>
-        <li>A separate system for combat, more similar to Combat Masteries than Demonic Pacts, would <span class="relic-coloured-text">coexist</span> with these relics. This is why there are only a few combat oriented choices here.</li>
-        <ul class="relic-bullet">
-          <li>If you'd be interested in seeing these, let us know!</li>
-        </ul>
-        <li>Most passive bonuses are the same as in Leagues 6: Demonic Pacts. New passive bonuses are listed in <span class="relic-coloured-text">orange</span>.</li>
-      </ul>
-      <div id="mobile-warning-slot"></div>
-    </div>
-
-    <button onclick="closeWelcomePopup()" class="mt-8 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold">
-      Understood, put me to sleep
-    </button>
-  </div>
-</div>
-
-<style>
-  /* Adding this specifically to handle the toggle via CSS flex */
-  #disclaimer-popup.active {
-      display: flex !important;
-  }
-</style>
-<!-- END: ActionButtons -->
-<script data-purpose="interaction-logic">
-  /**
-   * Shows the details of a clicked relic in the explanation panel
-   */
-  function showDetails(name, iconUrl, description) {
-      const panel = document.getElementById('explanation-panel');
-      const title = document.getElementById('exp-title');
-      const icon = document.getElementById('exp-icon');
-      const desc = document.getElementById('exp-desc');
-
-      title.innerText = name;
-      icon.src = iconUrl;
-      desc.innerHTML = description;
-
-      panel.classList.remove('hidden');
-      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  /**
-   * RESTORED: Standard toggle functionality for the separate disclaimer button
-   * Targets the 'disclaimer-popup' element exactly like before.
-   */
-/**
-   * Standard toggle functionality for the separate disclaimer button
-   * Swaps opacity smoothly over 300ms instead of instantly cutting out.
-   */
-  function toggleDisclaimer() {
-      const popup = document.getElementById('disclaimer-popup');
-      const isHidden = popup.classList.contains('opacity-0');
-
-      if (isHidden) {
-          // Fade in smoothly
-          popup.classList.remove('opacity-0', 'pointer-events-none');
-          popup.classList.add('opacity-100');
-          document.body.style.overflow = 'hidden'; // Stop page scrolling
-      } else {
-          // Fade out smoothly
-          popup.classList.remove('opacity-100');
-          popup.classList.add('opacity-0', 'pointer-events-none');
-          document.body.style.overflow = 'auto'; // Restore page scrolling
+    <style>
+      #disclaimer-popup.active {
+        display: flex !important;
       }
-  }
+    </style>
 
-  /**
- * Manual toggle functionality to re-open the welcome popup
- */
-function toggleWelcomePopup() {
-      const popup = document.getElementById('welcome-popup');
-      // Fade in
-      popup.classList.remove('opacity-0', 'pointer-events-none');
-      popup.classList.add('opacity-100');
-      document.body.style.overflow = 'hidden';
-  }
-
-  /**
-   * Automatically handles checking first-time visit status for 'welcome-popup'
-   */
-  function handleWelcomeFlow() {
-      const popup = document.getElementById('welcome-popup');
-      const mobileSlot = document.getElementById('mobile-warning-slot');
-
-      const hasVisitedBefore = localStorage.getItem('lunar_leagues_visited');
-
-      if (!hasVisitedBefore) {
-          const isMobileTouch = window.matchMedia("(pointer: coarse)").matches;
-          const isNarrowScreen = window.innerWidth < 768;
-
-          if (isNarrowScreen || isMobileTouch) {
-              mobileSlot.innerHTML = `
-                  <hr class="border-orange-900/30 my-4">
-                  <div class="text-red-400 pl-5 space-y-1">
-                      <p class="font-bold uppercase tracking-wide">⚠️ Mobile Warning:</p>
-                      <p>This website is not optimized for mobile devices at all.</p>
-                      <p>For the authentic experience and the cleanest layout, it is highly recommended to view this on a <span class="font-bold text-white">Desktop</span>.</p>
-                      <p class="text-xs text-passive mt-1">(You can continue anyway, but it will not look good.)</p>
-                  </div>
-              `;
-          }
-
-          // Fade in automatically on first load
-          popup.classList.remove('opacity-0', 'pointer-events-none');
-          popup.classList.add('opacity-100');
-          document.body.style.overflow = 'hidden';
+    <script data-purpose="interaction-logic">
+      function showDetails(e, t, o) {
+        const n = document.getElementById("explanation-panel"),
+          s = document.getElementById("exp-title"),
+          i = document.getElementById("exp-icon"),
+          c = document.getElementById("exp-desc");
+        ((s.innerText = e),
+          (i.src = t),
+          (c.innerHTML = o),
+          n.classList.remove("hidden"),
+          n.scrollIntoView({ behavior: "smooth", block: "start" }));
       }
-  }
-
-  /**
-   * Saves the token to localStorage and fades out the popup window
-   */
-  function closeWelcomePopup() {
-      const popup = document.getElementById('welcome-popup');
-
-      // Fade out smoothly
-      popup.classList.remove('opacity-100');
-      popup.classList.add('opacity-0', 'pointer-events-none');
-      document.body.style.overflow = 'auto';
-
-      localStorage.setItem('lunar_leagues_visited', 'true');
-  }
-
-/**
-   * Detects if iOS Low Power Mode blocks video autoplay
-   * and cleanly trades the video out for the fallback image.
-   */
-  function checkVideoAutoplay() {
-      const video = document.getElementById('bg-video');
-      const fallbackImg = document.getElementById('bg-fallback-img');
-
-      if (!video || !fallbackImg) return;
-
-      const playPromise = video.play();
-
-      if (playPromise !== undefined) {
-          playPromise.catch(error => {
-              console.log("Autoplay blocked. Seamlessly swapping to image.");
-
-              // 1. Completely hide the broken video element (and its play icon)
-              video.classList.remove('opacity-40');
-              video.classList.add('opacity-0', 'pointer-events-none');
-
-              // 2. Safely illuminate the fallback image to your preferred brightness
-              fallbackImg.classList.remove('opacity-0');
-              fallbackImg.classList.add('opacity-40');
+      function toggleDisclaimer() {
+        const e = document.getElementById("disclaimer-popup");
+        e.classList.contains("opacity-0")
+          ? (e.classList.remove("opacity-0", "pointer-events-none"),
+            e.classList.add("opacity-100"),
+            (document.body.style.overflow = "hidden"))
+          : (e.classList.remove("opacity-100"),
+            e.classList.add("opacity-0", "pointer-events-none"),
+            (document.body.style.overflow = "auto"));
+      }
+      function toggleWelcomePopup() {
+        const e = document.getElementById("welcome-popup");
+        (e.classList.remove("opacity-0", "pointer-events-none"),
+          e.classList.add("opacity-100"),
+          (document.body.style.overflow = "hidden"));
+      }
+      function handleWelcomeFlow() {
+        const e = document.getElementById("welcome-popup"),
+          t = document.getElementById("mobile-warning-slot");
+        if (!localStorage.getItem("lunar_leagues_visited")) {
+          const o = window.matchMedia("(pointer: coarse)").matches;
+          ((window.innerWidth < 768 || o) &&
+            (t.innerHTML =
+              '\n                  <hr class="border-orange-900/30 my-4">\n                  <div class="text-red-400 pl-5 space-y-1">\n                      <p class="font-bold uppercase tracking-wide">⚠️ Mobile Warning:</p>\n                      <p>This website is not optimized for mobile devices at all.</p>\n                      <p>For the authentic experience and the cleanest layout, it is highly recommended to view this on a <span class="font-bold text-white">Desktop</span>.</p>\n                      <p class="text-xs text-passive mt-1">(You can continue anyway, but it will not look good.)</p>\n                  </div>\n              '),
+            e.classList.remove("opacity-0", "pointer-events-none"),
+            e.classList.add("opacity-100"),
+            (document.body.style.overflow = "hidden"));
+        }
+      }
+      function closeWelcomePopup() {
+        const e = document.getElementById("welcome-popup");
+        (e.classList.remove("opacity-100"),
+          e.classList.add("opacity-0", "pointer-events-none"),
+          (document.body.style.overflow = "auto"),
+          localStorage.setItem("lunar_leagues_visited", "true"));
+      }
+      function checkVideoAutoplay() {
+        const e = document.getElementById("bg-video"),
+          t = document.getElementById("bg-fallback-img");
+        if (!e || !t) return;
+        const o = e.play();
+        void 0 !== o &&
+          o.catch((o) => {
+            (console.log("Autoplay blocked. Seamlessly swapping to image."),
+              e.classList.remove("opacity-40"),
+              e.classList.add("opacity-0", "pointer-events-none"),
+              t.classList.remove("opacity-0"),
+              t.classList.add("opacity-40"));
           });
       }
-  }
+      window.addEventListener("DOMContentLoaded", () => {
+        (handleWelcomeFlow(), checkVideoAutoplay());
+      });
+    </script>
 
-  // Run the video health check alongside your popup welcome flow
-  window.addEventListener('DOMContentLoaded', () => {
-      handleWelcomeFlow();
-      checkVideoAutoplay();
-  });
-</script>
-
-<style data-purpose="animations">
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
+    <style data-purpose="animations">
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fade-in {
         animation: fadeIn 0.4s ease-out forwards;
-    }
-    /* Simple custom scrollbar for the grid */
-    #relic-grid::-webkit-scrollbar {
+      }
+      #relic-grid::-webkit-scrollbar {
         height: 6px;
-    }
-    #relic-grid::-webkit-scrollbar-track {
-        background: rgba(0,0,0,0.2);
-    }
-    #relic-grid::-webkit-scrollbar-thumb {
+      }
+      #relic-grid::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+      }
+      #relic-grid::-webkit-scrollbar-thumb {
         background: #4a5568;
         border-radius: 3px;
-    }
-</style>
-</body></html>
+      }
+    </style>
+  </body>
+</html>
