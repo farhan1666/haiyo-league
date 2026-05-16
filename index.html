@@ -168,9 +168,10 @@ text-decoration: underline;
 <div class="fixed inset-0 -z-50 w-full h-full overflow-hidden bg-[#12071a]">
 
   <img
+          id="bg-fallback-img"
           src="images/relic_background.jpg"
           alt="Background"
-          class="absolute inset-0 w-full h-full object-cover" />
+          class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
 
   <video
           id="bg-video"
@@ -674,26 +675,29 @@ function toggleWelcomePopup() {
       localStorage.setItem('lunar_leagues_visited', 'true');
   }
 
-  /**
+/**
    * Detects if iOS Low Power Mode blocks video autoplay
-   * and gracefully fails-safe back to the background image file.
+   * and cleanly trades the video out for the fallback image.
    */
   function checkVideoAutoplay() {
       const video = document.getElementById('bg-video');
+      const fallbackImg = document.getElementById('bg-fallback-img');
 
-      if (!video) return;
+      if (!video || !fallbackImg) return;
 
-      // Capture the browser promise of the autoplay attempt
       const playPromise = video.play();
 
       if (playPromise !== undefined) {
           playPromise.catch(error => {
-              // Low Power Mode or browser restrictions blocked autoplay!
-              console.log("Autoplay blocked (likely iOS Low Power Mode). Falling back to image.");
+              console.log("Autoplay blocked. Seamlessly swapping to image.");
 
-              // Hide the broken video frame so the play button emoji vanishes
+              // 1. Completely hide the broken video element (and its play icon)
               video.classList.remove('opacity-40');
               video.classList.add('opacity-0', 'pointer-events-none');
+
+              // 2. Safely illuminate the fallback image to your preferred brightness
+              fallbackImg.classList.remove('opacity-0');
+              fallbackImg.classList.add('opacity-40');
           });
       }
   }
