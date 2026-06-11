@@ -239,14 +239,14 @@
   </video>
 </div>
 
-<div class="fixed bottom-6 right-6 z-[9999] md:hidden">
-  <button onclick="cycleMobilePassives()" id="passive-toggle-btn"
-          class="px-4 py-2 bg-orange-500/20 border-2 border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-black font-semibold rounded shadow-lg backdrop-blur-sm tracking-wider uppercase text-sm transition-all">
-    Passives: Show All
-  </button>
-</div>
-
 <div id="main-scroll-wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; position: relative; z-index: 1;">
+
+  <div class="fixed bottom-6 right-6 z-[10] md:hidden">
+    <button onclick="cycleMobilePassives()" id="passive-toggle-btn"
+            class="px-4 py-2 bg-orange-500/20 border-2 border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-black font-semibold rounded shadow-lg backdrop-blur-sm tracking-wider uppercase text-sm transition-all">
+      Passives: Show All
+    </button>
+  </div>
 
   <div class="group flex items-end justify-center gap-6 cursor-pointer select-none mt-8" onclick="toggleWelcomePopup()">
     <img src="images/favicon.webp" alt="Icon"
@@ -549,7 +549,6 @@
             </ul>
           </li>
           <li>Moving background video by <a class="relic-coloured-text underline" href="https://www.pexels.com/@wayne-speedy-777933/" target="_blank" rel="noopener noreferrer">Wayne Speedy</a> via <a class="relic-coloured-text underline" href="https://www.pexels.com/photo/full-moon-in-the-sky-4190863/" target="_blank" rel="noopener noreferrer">Pexels</a></li>
-          <li>Static background by Meurks: <a href="https://4kwallpapers.com/nature/full-moon-dark-background-cloudy-sky-stars-digital-art-5k-8k-5589.html" class="relic-coloured-text underline">Full moon Dark background Wallpaper.</a></li>
         </ul>
       </div>
       <button onclick="toggleDisclaimer()" class="mt-8 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold">Close</button>
@@ -558,7 +557,7 @@
 
   <div id="welcome-popup"
        class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out">
-    <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 sm:p-8 max-w-xl w-full max-h-[calc(100vh-2rem)] overflow-y-auto rounded-lg shadow-2xl relative">
+    <div class="bg-[#1e0f29]/90 border border-orange-900/50 py-6 px-4 sm:p-8 max-w-xl w-full max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative">
       <img src="images/favicon.webp" alt="Icon" class="absolute top-5 right-5 w-8 h-8 object-contain pointer-events-none">
       <h3 class="text-orange-400 font-bold mb-4 text-3xl uppercase text-center">Welcome</h3>
       <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
@@ -680,7 +679,6 @@
     }
   }
 
-  // State index tracking updated to match: 0 = Show All, 1 = New Only, 2 = Hidden
   let currentPassiveState = 0;
 
   function cycleMobilePassives() {
@@ -697,11 +695,9 @@
         const isExclusive = li.querySelector('.text-color-strong') !== null;
 
         if (currentPassiveState === 0) {
-          // Show All
           li.classList.remove('hidden');
           visibleItemsCount++;
         } else if (currentPassiveState === 1) {
-          // Only Show Exclusive (New Only)
           if (isExclusive) {
             li.classList.remove('hidden');
             visibleItemsCount++;
@@ -709,12 +705,10 @@
             li.classList.add('hidden');
           }
         } else if (currentPassiveState === 2) {
-          // Hide All
           li.classList.add('hidden');
         }
       });
 
-      // Hide parent box completely if state is "Hidden" (2) or if "New Only" filter leaves container empty
       if (currentPassiveState === 2 || visibleItemsCount === 0) {
         box.classList.add('hidden');
       } else {
@@ -753,6 +747,7 @@
     localStorage.setItem("lunar_leagues_visited", "true");
   }
 
+  // Auto-play blocking pipeline check
   function checkVideoAutoplay() {
     const backgroundVideo = document.getElementById("bg-video");
     const fallbackImage = document.getElementById("bg-fallback-img");
