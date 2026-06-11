@@ -506,9 +506,9 @@
     </div>
   </main>
 
-  <div id="relic-universal-popup"
+  <div id="relic-universal-popup" onclick="handleOutsideClick(event, 'relic-universal-popup', closeRelicPopup)"
        class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out">
-    <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 md:p-8 w-full md:max-w-[90vw] max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative flex flex-col gap-4">
+    <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 md:p-8 w-full md:max-w-[90vw] max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative flex flex-col gap-4" onclick="event.stopPropagation()">
       <div class="flex items-center justify-center gap-4 border-b border-orange-900/30 pb-3">
         <div class="w-16 h-16 md:w-20 md:h-20 shrink-0 overflow-hidden">
           <img alt="Selected Relic" class="w-full h-full object-cover" id="popup-exp-icon" src="">
@@ -536,9 +536,9 @@
     </div>
   </footer>
 
-  <div id="disclaimer-popup"
+  <div id="disclaimer-popup" onclick="handleOutsideClick(event, 'disclaimer-popup', toggleDisclaimer)"
        class="fixed inset-0 bg-black/80 flex items-center justify-center opacity-0 pointer-events-none z-[9999] p-4 backdrop-blur-sm transition-opacity duration-300 ease-in-out">
-    <div class="bg-[#1e0f29]/80 border border-orange-900/50 p-8 max-w-xl w-full rounded-lg shadow-2xl relative">
+    <div class="bg-[#1e0f29]/80 border border-orange-900/50 p-8 max-w-xl w-full rounded-lg shadow-2xl relative" onclick="event.stopPropagation()">
       <h3 class="text-orange-400 font-bold mb-4 text-3xl">Credits and Disclaimers</h3>
       <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
         <ul class="relic-bullet">
@@ -555,9 +555,9 @@
     </div>
   </div>
 
-  <div id="welcome-popup"
+  <div id="welcome-popup" onclick="handleOutsideClick(event, 'welcome-popup', closeWelcomePopup)"
        class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out">
-    <div class="bg-[#1e0f29]/90 border border-orange-900/50 py-6 px-4 sm:p-8 max-w-xl w-full max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative">
+    <div class="bg-[#1e0f29]/90 border border-orange-900/50 py-6 px-4 sm:p-8 max-w-xl w-full max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative" onclick="event.stopPropagation()">
       <img src="images/favicon.webp" alt="Icon" class="absolute top-5 right-5 w-8 h-8 object-contain pointer-events-none">
       <h3 class="text-orange-400 font-bold mb-4 text-3xl uppercase text-center">Welcome</h3>
       <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
@@ -747,7 +747,13 @@
     localStorage.setItem("lunar_leagues_visited", "true");
   }
 
-  // Auto-play blocking pipeline check
+  // Closes open popups when background dimming fields are targets of event pointer streams
+  function handleOutsideClick(event, targetId, closeFunction) {
+    if (event.target.id === targetId) {
+      closeFunction();
+    }
+  }
+
   function checkVideoAutoplay() {
     const backgroundVideo = document.getElementById("bg-video");
     const fallbackImage = document.getElementById("bg-fallback-img");
@@ -766,6 +772,19 @@
       });
     }
   }
+
+  // Intercept key events globally and clean close visible stack frames
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeRelicPopup();
+      closeWelcomePopup();
+
+      const disclaimer = document.getElementById("disclaimer-popup");
+      if (disclaimer && !disclaimer.classList.contains("opacity-0")) {
+        toggleDisclaimer();
+      }
+    }
+  });
 
   window.addEventListener("DOMContentLoaded", () => {
     handleWelcomeFlow();
