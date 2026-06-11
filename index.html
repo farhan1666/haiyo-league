@@ -894,9 +894,14 @@
 
   function showDetails(title, iconSrc, descriptionHtml) {
     const popup = document.getElementById("relic-universal-popup");
+    const descContainer = document.getElementById("popup-exp-desc");
+
     document.getElementById("popup-exp-title").innerText = title;
     document.getElementById("popup-exp-icon").src = iconSrc;
-    document.getElementById("popup-exp-desc").innerHTML = descriptionHtml;
+    descContainer.innerHTML = descriptionHtml;
+
+    // Reset the inner scroll position to the top before showing the window
+    descContainer.scrollTop = 0;
 
     popup.classList.remove("opacity-0", "pointer-events-none");
     popup.classList.add("opacity-100");
