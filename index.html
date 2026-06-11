@@ -174,7 +174,6 @@
       color: rgb(251 146 60)
     }
 
-    /* Mobile specific style overwrites */
     @media (max-width: 767px) {
       .tier-column {
         border-right: none;
@@ -199,6 +198,14 @@
     <source src="videos/bg.webm" type="video/webm">
   </video>
 </div>
+
+<div class="fixed bottom-6 right-6 z-[9999] md:hidden">
+  <button onclick="cycleMobilePassives()" id="passive-toggle-btn"
+          class="px-4 py-2 bg-orange-500/20 border-2 border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-black font-semibold rounded shadow-lg backdrop-blur-sm tracking-wider uppercase text-sm transition-all">
+    Passives: Show All
+  </button>
+</div>
+
 <div class="group flex items-end justify-center gap-6 cursor-pointer select-none" onclick="toggleWelcomePopup()">
   <img src="images/favicon.webp" alt="Icon"
        class="w-12 h-12 object-contain opacity-50 group-hover:opacity-100 transition-opacity duration-200 -scale-x-100 pb-[6px]">
@@ -248,7 +255,7 @@
         </div>
       </div>
 
-      <div class="mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
+      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
         <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
           Passive Bonuses
         </h3>
@@ -316,7 +323,7 @@
         </div>
       </div>
 
-      <div class="mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
+      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
         <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
           Passive Bonuses
         </h3>
@@ -359,7 +366,7 @@
         </div>
       </div>
 
-      <div class="mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
+      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
         <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
           Passive Bonuses
         </h3>
@@ -415,7 +422,7 @@
         </div>
       </div>
 
-      <div class="mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
+      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
         <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
           Passive Bonuses
         </h3>
@@ -471,7 +478,7 @@
         </div>
       </div>
 
-      <div class="mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
+      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
         <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
           Passive Bonuses
         </h3>
@@ -519,7 +526,7 @@
         </div>
       </div>
 
-      <div class="mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
+      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
         <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
           Passive Bonuses
         </h3>
@@ -562,7 +569,7 @@
         </div>
       </div>
 
-      <div class="mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
+      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
         <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
           Passive Bonuses
         </h3>
@@ -607,7 +614,7 @@
         </div>
       </div>
 
-      <div class="mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30">
+      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
         <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
           Passive Bonuses
         </h3>
@@ -628,45 +635,21 @@
   </div>
 </main>
 
-<section class="container mx-auto px-4 mt-12 flex flex-col items-center gap-8">
-  <div class="hidden md:block w-full bg-[#1e0f29]/80 border border-orange-500/20 rounded-lg animate-fade-in p-10"
-       id="explanation-panel">
-    <div class="flex gap-6">
-      <div class="shrink-0 overflow-hidden w-40 h-40" id="exp-icon-container">
-        <img alt="Selected Relic" class="w-full h-full object-cover" id="exp-icon" src="">
+<div id="relic-universal-popup"
+     class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out">
+  <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 md:p-8 w-full md:max-w-[90vw] max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative flex flex-col gap-4">
+    <div class="flex items-center justify-center gap-4 border-b border-orange-900/30 pb-3">
+      <div class="w-16 h-16 md:w-20 md:h-20 shrink-0 overflow-hidden">
+        <img alt="Selected Relic" class="w-full h-full object-cover" id="popup-exp-icon" src="">
       </div>
-      <div>
-        <h3 class="text-orange-400 mb-2 text-3xl" id="exp-title">
-          Relic Name
-        </h3>
-        <p class="text-gray-300 leading-relaxed text-lg" id="exp-desc">
-          Detailed explanation will appear here.
-        </p>
-        <button
-                class="mt-6 flex items-center gap-2 px-4 py-2 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-sm font-semibold uppercase tracking-wider"
-                onclick='window.scrollTo({top:0,behavior:"smooth"})'>
-          Back to Top
-        </button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div id="relic-mobile-popup"
-     class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out md:hidden">
-  <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 max-w-xl w-full max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative flex flex-col gap-4">
-    <div class="flex items-center gap-4 border-b border-orange-900/30 pb-3">
-      <div class="w-16 h-16 shrink-0 overflow-hidden">
-        <img alt="Selected Relic" class="w-full h-full object-cover" id="mobile-exp-icon" src="">
-      </div>
-      <h3 class="text-orange-400 text-3xl leading-none" id="mobile-exp-title">
+      <h3 class="text-orange-400 text-3xl leading-none" id="popup-exp-title">
         Relic Name
       </h3>
     </div>
-    <div class="text-lg text-gray-300 overflow-y-auto pr-1 leading-relaxed" id="mobile-exp-desc">
+    <div class="text-lg text-gray-300 overflow-y-auto pr-1 leading-relaxed" id="popup-exp-desc">
       Detailed explanation.
     </div>
-    <button onclick="closeMobileRelicPopup()"
+    <button onclick="closeRelicPopup()"
             class="mt-2 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider">
       Close
     </button>
@@ -789,7 +772,6 @@
           <span class="relic-coloured-text">orange</span>.
         </li>
       </ul>
-      <div id="mobile-warning-slot"></div>
     </div>
 
     <button onclick="closeWelcomePopup()"
@@ -871,36 +853,21 @@
     showDetails(title, iconSrc, finalHtml);
   }
 
-  // Handles smart rendering context based on screen dimensions
   function showDetails(title, iconSrc, descriptionHtml) {
-    const isMobile = window.innerWidth < 768;
+    const popup = document.getElementById("relic-universal-popup");
+    document.getElementById("popup-exp-title").innerText = title;
+    document.getElementById("popup-exp-icon").src = iconSrc;
+    document.getElementById("popup-exp-desc").innerHTML = descriptionHtml;
 
-    if (isMobile) {
-      // Render to Mobile Modal instead of moving screen focus
-      const mobilePopup = document.getElementById("relic-mobile-popup");
-      document.getElementById("mobile-exp-title").innerText = title;
-      document.getElementById("mobile-exp-icon").src = iconSrc;
-      document.getElementById("mobile-exp-desc").innerHTML = descriptionHtml;
-
-      mobilePopup.classList.remove("opacity-0", "pointer-events-none");
-      mobilePopup.classList.add("opacity-100");
-      document.body.style.overflow = "hidden";
-    } else {
-      // Safe standard desktop workflow
-      const explanationPanel = document.getElementById("explanation-panel");
-      document.getElementById("exp-title").innerText = title;
-      document.getElementById("exp-icon").src = iconSrc;
-      document.getElementById("exp-desc").innerHTML = descriptionHtml;
-
-      explanationPanel.classList.remove("hidden");
-      explanationPanel.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    popup.classList.remove("opacity-0", "pointer-events-none");
+    popup.classList.add("opacity-100");
+    document.body.style.overflow = "hidden";
   }
 
-  function closeMobileRelicPopup() {
-    const mobilePopup = document.getElementById("relic-mobile-popup");
-    mobilePopup.classList.remove("opacity-100");
-    mobilePopup.classList.add("opacity-0", "pointer-events-none");
+  function closeRelicPopup() {
+    const popup = document.getElementById("relic-universal-popup");
+    popup.classList.remove("opacity-100");
+    popup.classList.add("opacity-0", "pointer-events-none");
     document.body.style.overflow = "auto";
   }
 
@@ -918,6 +885,58 @@
     }
   }
 
+  // Tracking index for state management: 0 = Show All, 1 = Hide All, 2 = Only Show Exclusive
+  let currentPassiveState = 0;
+
+  function cycleMobilePassives() {
+    currentPassiveState = (currentPassiveState + 1) % 3;
+
+    const toggleBtn = document.getElementById('passive-toggle-btn');
+    const passiveBoxes = document.querySelectorAll('.passive-bonus-box');
+
+    passiveBoxes.forEach(box => {
+      const listItems = box.querySelectorAll('ul > li');
+      let visibleItemsCount = 0;
+
+      listItems.forEach(li => {
+        const isExclusive = li.querySelector('.text-color-strong') !== null;
+
+        if (currentPassiveState === 0) {
+          // Show All
+          li.classList.remove('hidden');
+          visibleItemsCount++;
+        } else if (currentPassiveState === 1) {
+          // Hide All
+          li.classList.add('hidden');
+        } else if (currentPassiveState === 2) {
+          // Only Show Exclusive
+          if (isExclusive) {
+            li.classList.remove('hidden');
+            visibleItemsCount++;
+          } else {
+            li.classList.add('hidden');
+          }
+        }
+      });
+
+      // If state is Hide All, or Only Show Exclusive left the tier empty, hide the wrapper frame cleanly
+      if (currentPassiveState === 1 || visibleItemsCount === 0) {
+        box.classList.add('hidden');
+      } else {
+        box.classList.remove('hidden');
+      }
+    });
+
+    // Update state label copy smoothly
+    if (currentPassiveState === 0) {
+      toggleBtn.innerText = "Passives: Show All";
+    } else if (currentPassiveState === 1) {
+      toggleBtn.innerText = "Passives: Hide All";
+    } else if (currentPassiveState === 2) {
+      toggleBtn.innerText = "Passives: Exclusives";
+    }
+  }
+
   function toggleWelcomePopup() {
     const welcomePopup = document.getElementById("welcome-popup");
 
@@ -928,22 +947,8 @@
 
   function handleWelcomeFlow() {
     const welcomePopup = document.getElementById("welcome-popup");
-    const mobileWarningSlot = document.getElementById("mobile-warning-slot");
 
     if (!localStorage.getItem("lunar_leagues_visited")) {
-      const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-
-      if (window.innerWidth < 768 || isTouchDevice) {
-        mobileWarningSlot.innerHTML = `
-                  <hr class="border-orange-900/30 my-4">
-                  <div class="text-orange-400/80 pl-5 space-y-1 text-sm">
-                      <p class="font-bold uppercase tracking-wide text-orange-400">📱 Mobile View Activated:</p>
-                      <p>The interface has shifted to horizontal tier scrolling to maximize layout spacing.</p>
-                      <p>Tap any relic icon to display full detailed information natively inside an on-screen modal window.</p>
-                  </div>
-              `;
-      }
-
       welcomePopup.classList.remove("opacity-0", "pointer-events-none");
       welcomePopup.classList.add("opacity-100");
       document.body.style.overflow = "hidden";
@@ -1000,7 +1005,6 @@
     animation: fadeIn .4s ease-out forwards
   }
 
-  /* Custom tracking rules for horizontal scrollbar visualization */
   .scrollbar-thin::-webkit-scrollbar {
     height: 4px;
   }
