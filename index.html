@@ -228,12 +228,12 @@
 </head>
 
 <body class="min-h-screen flex flex-col justify-center py-8">
-<div class="fixed inset-0 -z-50 w-full h-full overflow-hidden bg-[#12071a]">
+<div class="fixed inset-0 -z-50 w-full h-full overflow-hidden bg-[#12071a] pointer-events-none" style="position: fixed; backface-visibility: hidden; transform: translate3d(0,0,0);">
   <img id="bg-fallback-img" src="images/relic_background.webp" alt="Background"
        class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500">
 
   <video id="bg-video" autoplay muted loop playsinline
-         class="w-full h-full object-cover opacity-40 transition-opacity duration-500">
+         class="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity duration-500">
     <source src="videos/bg.webm" type="video/webm">
   </video>
 </div>
