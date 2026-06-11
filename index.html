@@ -185,6 +185,45 @@
         border-bottom: none;
       }
     }
+    /* Universal custom scrollbar rules for specific containers */
+  #relic-universal-popup *,
+  #popup-exp-desc,
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(251, 146, 60, 0.4) rgba(0, 0, 0, 0.3);
+  }
+
+  /* WebKit specific rules (Chrome, Safari, Edge) */
+  #relic-universal-popup ::-webkit-scrollbar,
+  #popup-exp-desc::-webkit-scrollbar,
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 6px;
+  }
+
+  #relic-universal-popup ::-webkit-scrollbar-track,
+  #popup-exp-desc::-webkit-scrollbar-track,
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+  }
+
+  #relic-universal-popup ::-webkit-scrollbar-thumb,
+  #popup-exp-desc::-webkit-scrollbar-thumb,
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(251, 146, 60, 0.4); /* Theme Orange color with transparency */
+    border-radius: 4px;
+    border: 1px solid rgba(255, 140, 66, 0.1);
+    transition: background 0.2s ease;
+  }
+
+  #relic-universal-popup ::-webkit-scrollbar-thumb:hover,
+  #popup-exp-desc::-webkit-scrollbar-thumb:hover,
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: rgba(251, 146, 60, 0.8); /* Solid theme orange bright highlight on hover */
+    box-shadow: 0 0 4px rgba(255, 140, 66, 0.5);
+  }
   </style>
 </head>
 
