@@ -581,11 +581,7 @@
     </div>
   </div>
 
-</div> <style>
-  #disclaimer-popup.active {
-    display: flex !important
-  }
-</style>
+</div>
 
 <script data-purpose="interaction-logic">
   function loadRelic(key) {
@@ -684,6 +680,7 @@
     }
   }
 
+  // State index tracking updated to match: 0 = Show All, 1 = New Only, 2 = Hidden
   let currentPassiveState = 0;
 
   function cycleMobilePassives() {
@@ -700,21 +697,25 @@
         const isExclusive = li.querySelector('.text-color-strong') !== null;
 
         if (currentPassiveState === 0) {
+          // Show All
           li.classList.remove('hidden');
           visibleItemsCount++;
         } else if (currentPassiveState === 1) {
-          li.classList.add('hidden');
-        } else if (currentPassiveState === 2) {
+          // Only Show Exclusive (New Only)
           if (isExclusive) {
             li.classList.remove('hidden');
             visibleItemsCount++;
           } else {
             li.classList.add('hidden');
           }
+        } else if (currentPassiveState === 2) {
+          // Hide All
+          li.classList.add('hidden');
         }
       });
 
-      if (currentPassiveState === 1 || visibleItemsCount === 0) {
+      // Hide parent box completely if state is "Hidden" (2) or if "New Only" filter leaves container empty
+      if (currentPassiveState === 2 || visibleItemsCount === 0) {
         box.classList.add('hidden');
       } else {
         box.classList.remove('hidden');
@@ -724,9 +725,9 @@
     if (currentPassiveState === 0) {
       toggleBtn.innerText = "Passives: Show All";
     } else if (currentPassiveState === 1) {
-      toggleBtn.innerText = "Passives: Hidden";
-    } else if (currentPassiveState === 2) {
       toggleBtn.innerText = "Passives: New Only";
+    } else if (currentPassiveState === 2) {
+      toggleBtn.innerText = "Passives: Hidden";
     }
   }
 
