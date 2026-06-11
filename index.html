@@ -185,7 +185,7 @@
         border-bottom: none;
       }
     }
-    /* Universal custom scrollbar rules for specific containers */
+
   #relic-universal-popup *,
   #popup-exp-desc,
   .scrollbar-thin {
@@ -193,7 +193,6 @@
     scrollbar-color: rgba(251, 146, 60, 0.4) rgba(0, 0, 0, 0.3);
   }
 
-  /* WebKit specific rules (Chrome, Safari, Edge) */
   #relic-universal-popup ::-webkit-scrollbar,
   #popup-exp-desc::-webkit-scrollbar,
   .scrollbar-thin::-webkit-scrollbar {
@@ -212,7 +211,7 @@
   #relic-universal-popup ::-webkit-scrollbar-thumb,
   #popup-exp-desc::-webkit-scrollbar-thumb,
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: rgba(251, 146, 60, 0.4); /* Theme Orange color with transparency */
+    background: rgba(251, 146, 60, 0.4);
     border-radius: 4px;
     border: 1px solid rgba(255, 140, 66, 0.1);
     transition: background 0.2s ease;
@@ -221,17 +220,19 @@
   #relic-universal-popup ::-webkit-scrollbar-thumb:hover,
   #popup-exp-desc::-webkit-scrollbar-thumb:hover,
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background: rgba(251, 146, 60, 0.8); /* Solid theme orange bright highlight on hover */
+    background: rgba(251, 146, 60, 0.8);
     box-shadow: 0 0 4px rgba(255, 140, 66, 0.5);
   }
   </style>
 </head>
 
-<body class="min-h-screen flex flex-col justify-center py-8">
-<div class="fixed inset-0 -z-50 w-full h-full overflow-hidden bg-[#12071a] pointer-events-none" style="position: fixed; backface-visibility: hidden; transform: translate3d(0,0,0);">
+<body class="min-h-screen flex flex-col justify-center py-8" style="margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; position: fixed;">
+
+<div id="fixed-bg-container"
+     class="absolute inset-0 -z-50 w-full h-full overflow-hidden bg-[#12071a] pointer-events-none"
+     style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -50; transform: translate3d(0,0,0); backface-visibility: hidden;">
   <img id="bg-fallback-img" src="images/relic_background.webp" alt="Background"
        class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500">
-
   <video id="bg-video" autoplay muted loop playsinline
          class="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity duration-500">
     <source src="videos/bg.webm" type="video/webm">
@@ -245,582 +246,342 @@
   </button>
 </div>
 
-<div class="group flex items-end justify-center gap-6 cursor-pointer select-none" onclick="toggleWelcomePopup()">
-  <img src="images/favicon.webp" alt="Icon"
-       class="w-12 h-12 object-contain opacity-50 group-hover:opacity-100 transition-opacity duration-200 -scale-x-100 pb-[6px]">
+<div id="main-scroll-wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; position: relative; z-index: 1;">
 
-  <div class="text-title-title uppercase text-center leading-none">
-    Lunar leagues
-  </div>
-
-  <img src="images/favicon.webp" alt="Icon"
-       class="w-12 h-12 object-contain opacity-50 group-hover:opacity-100 transition-opacity duration-200 pb-[6px]">
-</div>
-
-<div class="text-title-subtitle text-center !no-underline mb-2 -mt-2">
-  (it's all in your head)
-</div>
-
-<main class="container mx-auto px-4 py-8 max-w-full">
-  <div class="flex flex-col md:flex-row md:justify-between gap-8 md:gap-0" id="relic-grid">
-    <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-1">
-      <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-        Tier 1
-      </h2>
-
-      <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('magicthegathering')">
-          <img alt="Magic the Gathering" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_magicthegathering.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Magic the
-              Gathering</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('symbiosis')">
-          <img alt="Symbiosis" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_symbiosis.webp">
-          <span
-                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Symbiosis</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('financialfraud')">
-          <img alt="Financial Fraud" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_financialfraud.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Financial
-              Fraud</span>
-        </div>
-      </div>
-
-      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-        <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
-          Passive Bonuses
-        </h3>
-        <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-          <li class="flex items-start gap-2">
-            <span>Leagues XP multiplier is 5x.</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span>Items from eligible sources are 2x common.</span>
-          </li>
-          <li class="flex items-start gap-2">
-              <span>Farming ticks occur every 1 minute instead of every 5
-                minutes.</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span>Minigame points are boosted by 4x.</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span>Run energy is never drained whilst running.</span>
-          </li>
-          <li class="flex items-start gap-2">
-              <span>All clue scrolls will drop as stackable scroll boxes, and
-                clue step progress is saved between clues.</span>
-          </li>
-          <li class="flex items-start gap-2">
-              <span>Players will only receive clue steps and port tasks they can
-                access within an unlocked region.</span>
-          </li>
-          <li class="flex items-start gap-2">
-              <span class="text-color-strong">Trees and mining rocks never deplete, and fishing spots are
-                automatically tracked.</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-2">
-      <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-        Tier 2
-      </h2>
-
-      <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('conman')">
-          <img alt="Conman" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_conman.webp">
-          <span
-                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Conman</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('holyharvest')">
-          <img alt="Holy Harvest" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_holyharvest.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Holy
-              Harvest</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('perpetualstew')">
-          <img alt="Perpetual Stew" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_perpetualstew.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Perpetual
-              Stew</span>
-        </div>
-      </div>
-
-      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-        <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
-          Passive Bonuses
-        </h3>
-        <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-          <li class="flex items-start gap-2">
-            <span>Leagues XP multiplier is increased from 5x to 8x.</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-3">
-      <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-        Tier 3
-      </h2>
-
-      <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('friendoftheforest')">
-          <img alt="Friend of the Forest" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_friendoftheforest.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Friend of
-              the Forest</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('harnessedearth')">
-          <img alt="Harnessed Earth" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_harnessedearth.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Harnessed
-              Earth</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('callofthesea')">
-          <img alt="Call of the Sea" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_callofthesea.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Call of
-              the Sea</span>
-        </div>
-      </div>
-
-      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-        <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
-          Passive Bonuses
-        </h3>
-        <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-          <li class="flex items-start gap-2">
-              <span>Combat experience (including Hitpoints and Prayer) will be
-                multiplied by 1.5x. This is multiplicative with other
-                experience modifiers.</span>
-          </li>
-          <li class="flex items-start gap-2">
-              <span>The "Bigger and Badder" slayer unlock is unlocked for
-                free.</span>
-          </li>
-          <li class="flex items-start gap-2">
-              <span>Slayer reward points are 5x from tasks, and you aren't
-                required to complete 5 tasks before earning points.</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span>Superior slayer monsters will appear at a rate of 1/50.</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-4">
-      <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-        Tier 4
-      </h2>
-
-      <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('runtotherescue')">
-          <img alt="Run to the Rescue" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_runtotherescue.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Run to the
-              Rescue</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('industrialevolution')">
-          <img alt="Industrial Evolution" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_industrialevolution.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Industrial
-              Evolution</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('unleashedteleport')">
-          <img alt="Unleashed Teleport" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_unleashedteleport.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Unleashed
-              Teleport</span>
-        </div>
-      </div>
-
-      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-        <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
-          Passive Bonuses
-        </h3>
-        <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-          <li class="flex items-start gap-2">
-            <span>Items from eligible sources will be 5x as common.</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span>Minigame Points received are boosted by 8x.</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span>Leagues XP multiplier is increased from 8x to 12x.</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="text-color-strong">Clue scrolls are now 2x more common from all sources.</span>
-          </li>
-          <li class="flex items-start gap-2">
-              <span class="text-color-strong">Clue scrolls will always have the minimum amount of steps for
-                their tier, and yield the maximum amount of rewards.</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-5">
-      <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-        Tier 5
-      </h2>
-
-      <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('lordoftherings')">
-          <img alt="Lord of the Rings" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_lordoftherings.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Lord of
-              the Rings</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('runicfreelancer')">
-          <img alt="Runic Freelancer" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_runicfreelancer.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Runic
-              Freelancer</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('faith')">
-          <img alt="Faith" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_faith.webp">
-          <span
-                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Faith</span>
-        </div>
-      </div>
-
-      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-        <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
-          Passive Bonuses
-        </h3>
-        <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-          <li class="flex items-start gap-2">
-              <span class="text-color-strong">A Black mask is now available at any Slayer master shop for
-                1,000 Slayer points.</span>
-          </li>
-          <li class="flex items-start gap-2">
-              <span class="text-color-strong">You may now purchase a specific Slayer task, including amount
-                to kill, for 100 Slayer points each.</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-6">
-      <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-        Tier 6
-      </h2>
-
-      <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('feralexorcism')">
-          <img alt="Feral Exorcism" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_feralexorcism.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Feral
-              Exorcism</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('papercrafting')">
-          <img alt="Papercrafting" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_papercrafting.webp">
-          <span
-                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Papercrafting</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('mariner')">
-          <img alt="Mariner" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_mariner.webp">
-          <span
-                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Mariner</span>
-        </div>
-      </div>
-
-      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-        <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
-          Passive Bonuses
-        </h3>
-        <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-          <li class="flex items-start gap-2">
-            <span>Leagues XP multiplier is increased from 12x to 16x.</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-7">
-      <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-        Tier 7
-      </h2>
-
-      <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('reapersavarice')">
-          <img alt="Reapers Avarice" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_reapersavarice.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Reaper's
-              Avarice</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('rainingluck')">
-          <img alt="Raining Luck" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_rainingluck.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Raining
-              Luck</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('squealoffortune')">
-          <img alt="Squeal of Fortune" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_squealoffortune.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Squeal of
-              Fortune</span>
-        </div>
-      </div>
-
-      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-        <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
-          Passive Bonuses
-        </h3>
-        <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-          <li class="flex items-start gap-2">
-              <span class="text-color-strong">Reloaded: In addition to choosing a relic from this tier, you
-                can unlock any additional relic from Tier 6 and below.</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-8">
-      <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-        Tier 8
-      </h2>
-
-      <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('grandmasteratarms')">
-          <img alt="Grandmaster At Arms" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_grandmasteratarms.webp">
-          <span
-                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Grandmaster at
-              Arms</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('dragonmulticannon')">
-          <img alt="Dragon Multicannon" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_dragonmulticannon.webp">
-          <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Dragon
-              Multicannon</span>
-        </div>
-
-        <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full"
-             onclick="loadRelic('leap')">
-          <img alt="Leap" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
-               src="images/relics/relic_leap.webp">
-          <span
-                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Leap</span>
-        </div>
-      </div>
-
-      <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-        <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">
-          Passive Bonuses
-        </h3>
-        <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-          <li class="flex items-start gap-2">
-              <span class="text-color-strong">Preserve, Chivalry, Piety, Rigour and Augury are
-                automatically unlocked, provided you have the Prayer level to
-                use them.</span>
-          </li>
-          <li class="flex items-start gap-2">
-              <span class="text-color-strong">With Level 99 Herblore, you can now mix a Super combat
-                potion, a Ranging potion, a Magic potion, and an Onion
-                together to create an Overload (Nightmare Zone version).</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-  </div>
-</main>
-
-<div id="relic-universal-popup"
-     class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out">
-  <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 md:p-8 w-full md:max-w-[90vw] max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative flex flex-col gap-4">
-    <div class="flex items-center justify-center gap-4 border-b border-orange-900/30 pb-3">
-      <div class="w-16 h-16 md:w-20 md:h-20 shrink-0 overflow-hidden">
-        <img alt="Selected Relic" class="w-full h-full object-cover" id="popup-exp-icon" src="">
-      </div>
-      <h3 class="text-orange-400 text-3xl leading-none" id="popup-exp-title">
-        Relic Name
-      </h3>
-    </div>
-    <div class="text-lg text-gray-300 overflow-y-auto pr-1 leading-relaxed" id="popup-exp-desc">
-      Detailed explanation.
-    </div>
-    <button onclick="closeRelicPopup()"
-            class="mt-2 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider">
-      Close
-    </button>
-  </div>
-</div>
-
-<footer class="w-full border-t border-orange-900/30 bg-[#1e0f29]/80 py-12 mt-20">
-  <div class="container mx-auto px-4 flex flex-col items-center text-center">
-    <button onclick="toggleDisclaimer()"
-            class="group mb-6 flex items-center gap-2 text-orange-200/50 hover:text-orange-400 transition-colors uppercase tracking-widest font-medium">
-      <img src="images/credits.webp" alt="Dream"
-           class="h-4 w-4 mb-[2px] object-contain filter grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-200">
-
-      Credits
-    </button>
-
-    <div class="space-y-2 text-[20px] text-gray-600 max-w-2xl tracking-tighter">
-      <p>
-        Old School RuneScape is a trademark of Jagex Ltd. This project is
-        not affiliated with Jagex Ltd.
-      </p>
-    </div>
-  </div>
-</footer>
-
-<div id="disclaimer-popup"
-     class="fixed inset-0 bg-black/80 flex items-center justify-center opacity-0 pointer-events-none z-[9999] p-4 backdrop-blur-sm transition-opacity duration-300 ease-in-out">
-  <div class="bg-[#1e0f29]/80 border border-orange-900/50 p-8 max-w-xl w-full rounded-lg shadow-2xl relative">
-    <h3 class="text-orange-400 font-bold mb-4 text-3xl">
-      Credits and Disclaimers
-    </h3>
-
-    <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
-      <ul class="relic-bullet">
-        <li>
-          All descriptions and relic images on this website are
-          <span class="relic-coloured-text">100% human-made</span> by Hai
-          Yo.
-        </li>
-        <li>
-          This website used to display this information is
-          <b>unapologetically</b> vibe coded by Phoneman btw.
-          <ul class="relic-bullet">
-            <li>
-              <b>Please</b> do not look at the source code it is a god-awful
-              mess
-            </li>
-          </ul>
-        </li>
-
-        <li>
-          Moving background video by
-          <a class="relic-coloured-text underline" href="https://www.pexels.com/@wayne-speedy-777933/" target="_blank"
-             rel="noopener noreferrer">Wayne Speedy</a>
-          via
-          <a class="relic-coloured-text underline" href="https://www.pexels.com/photo/full-moon-in-the-sky-4190863/"
-             target="_blank" rel="noopener noreferrer">Pexels</a>
-        </li>
-        <li>
-          Static background by Meurks:
-          <a href="https://4kwallpapers.com/nature/full-moon-dark-background-cloudy-sky-stars-digital-art-5k-8k-5589.html"
-             class="relic-coloured-text underline">Full moon Dark background Wallpaper.</a>
-        </li>
-      </ul>
-    </div>
-
-    <button onclick="toggleDisclaimer()"
-            class="mt-8 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold">
-      Close
-    </button>
-  </div>
-</div>
-
-<div id="welcome-popup"
-     class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out">
-  <div
-          class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 sm:p-8 max-w-xl w-full max-h-[calc(100vh-2rem)] overflow-y-auto rounded-lg shadow-2xl relative">
+  <div class="group flex items-end justify-center gap-6 cursor-pointer select-none mt-8" onclick="toggleWelcomePopup()">
     <img src="images/favicon.webp" alt="Icon"
-         class="absolute top-5 right-5 w-8 h-8 object-contain pointer-events-none">
-
-    <h3 class="text-orange-400 font-bold mb-4 text-3xl uppercase text-center">
-      Welcome
-    </h3>
-
-    <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
-      <p>
-        To best understand these relics, you'll need some essential context:
-      </p>
-      <ul class="relic-bullet">
-        <li>
-          All players start in
-          <span class="relic-coloured-text">Misthalin</span>.
-        </li>
-        <li>
-          <span class="relic-coloured-text">Sailing</span> and all its
-          related content would be present in this League.
-          <ul class="relic-bullet">
-            <li>
-              You would only have access to the oceans which you can
-              directly sail into from
-              <span class="relic-coloured-text">docking points in areas you've unlocked</span>
-              (e.g. Misthalin grants access to the Ardent Ocean. Varlamore
-              grants access to the Western and Sunset Oceans).
-            </li>
-          </ul>
-        </li>
-        <li>
-          A separate system for combat, more similar to Combat Masteries
-          than Demonic Pacts, would
-          <span class="relic-coloured-text">coexist</span> with these
-          relics. This is why there are only a few combat oriented choices
-          here.
-        </li>
-        <ul class="relic-bullet">
-          <li>If you'd be interested in seeing these, let us know!</li>
-        </ul>
-        <li>
-          Most passive bonuses are the same as in Leagues 6: Demonic Pacts.
-          New passive bonuses are listed in
-          <span class="relic-coloured-text">orange</span>.
-        </li>
-      </ul>
+         class="w-12 h-12 object-contain opacity-50 group-hover:opacity-100 transition-opacity duration-200 -scale-x-100 pb-[6px]">
+    <div class="text-title-title uppercase text-center leading-none">
+      Lunar leagues
     </div>
-
-    <button onclick="closeWelcomePopup()"
-            class="mt-8 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold">
-      Understood, put me to sleep
-    </button>
+    <img src="images/favicon.webp" alt="Icon"
+         class="w-12 h-12 object-contain opacity-50 group-hover:opacity-100 transition-opacity duration-200 pb-[6px]">
   </div>
-</div>
 
-<style>
+  <div class="text-title-subtitle text-center !no-underline mb-2 -mt-2">
+    (it's all in your head)
+  </div>
+
+  <main class="container mx-auto px-4 py-8 max-w-full">
+    <div class="flex flex-col md:flex-row md:justify-between gap-8 md:gap-0" id="relic-grid">
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-1">
+        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
+          Tier 1
+        </h2>
+
+        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('magicthegathering')">
+            <img alt="Magic the Gathering" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_magicthegathering.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Magic the Gathering</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('symbiosis')">
+            <img alt="Symbiosis" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_symbiosis.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Symbiosis</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('financialfraud')">
+            <img alt="Financial Fraud" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_financialfraud.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Financial Fraud</span>
+          </div>
+        </div>
+
+        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
+          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
+          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
+            <li class="flex items-start gap-2"><span>Leagues XP multiplier is 5x.</span></li>
+            <li class="flex items-start gap-2"><span>Items from eligible sources are 2x common.</span></li>
+            <li class="flex items-start gap-2"><span>Farming ticks occur every 1 minute instead of every 5 minutes.</span></li>
+            <li class="flex items-start gap-2"><span>Minigame points are boosted by 4x.</span></li>
+            <li class="flex items-start gap-2"><span>Run energy is never drained whilst running.</span></li>
+            <li class="flex items-start gap-2"><span>All clue scrolls will drop as stackable scroll boxes, and clue step progress is saved between clues.</span></li>
+            <li class="flex items-start gap-2"><span>Players will only receive clue steps and port tasks they can access within an unlocked region.</span></li>
+            <li class="flex items-start gap-2"><span class="text-color-strong">Trees and mining rocks never deplete, and fishing spots are automatically tracked.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-2">
+        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
+          Tier 2
+        </h2>
+
+        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('conman')">
+            <img alt="Conman" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_conman.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Conman</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('holyharvest')">
+            <img alt="Holy Harvest" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_holyharvest.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Holy Harvest</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('perpetualstew')">
+            <img alt="Perpetual Stew" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_perpetualstew.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Perpetual Stew</span>
+          </div>
+        </div>
+
+        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
+          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
+          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
+            <li class="flex items-start gap-2"><span>Leagues XP multiplier is increased from 5x to 8x.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-3">
+        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
+          Tier 3
+        </h2>
+
+        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('friendoftheforest')">
+            <img alt="Friend of the Forest" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_friendoftheforest.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Friend of the Forest</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('harnessedearth')">
+            <img alt="Harnessed Earth" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_harnessedearth.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Harnessed Earth</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('callofthesea')">
+            <img alt="Call of the Sea" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_callofthesea.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Call of the Sea</span>
+          </div>
+        </div>
+
+        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
+          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
+          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
+            <li class="flex items-start gap-2"><span>Combat experience (including Hitpoints and Prayer) will be multiplied by 1.5x. This is multiplicative with other experience modifiers.</span></li>
+            <li class="flex items-start gap-2"><span>The "Bigger and Badder" slayer unlock is unlocked for free.</span></li>
+            <li class="flex items-start gap-2"><span>Slayer reward points are 5x from tasks, and you aren't required to complete 5 tasks before earning points.</span></li>
+            <li class="flex items-start gap-2"><span>Superior slayer monsters will appear at a rate of 1/50.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-4">
+        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
+          Tier 4
+        </h2>
+
+        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('runtotherescue')">
+            <img alt="Run to the Rescue" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_runtotherescue.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Run to the Rescue</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('industrialevolution')">
+            <img alt="Industrial Evolution" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_industrialevolution.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Industrial Evolution</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('unleashedteleport')">
+            <img alt="Unleashed Teleport" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_unleashedteleport.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Unleashed Teleport</span>
+          </div>
+        </div>
+
+        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
+          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
+          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
+            <li class="flex items-start gap-2"><span>Items from eligible sources will be 5x as common.</span></li>
+            <li class="flex items-start gap-2"><span>Minigame Points received are boosted by 8x.</span></li>
+            <li class="flex items-start gap-2"><span>Leagues XP multiplier is increased from 8x to 12x.</span></li>
+            <li class="flex items-start gap-2"><span class="text-color-strong">Clue scrolls are now 2x more common from all sources.</span></li>
+            <li class="flex items-start gap-2"><span class="text-color-strong">Clue scrolls will always have the minimum amount of steps for their tier, and yield the maximum amount of rewards.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-5">
+        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
+          Tier 5
+        </h2>
+
+        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('lordoftherings')">
+            <img alt="Lord of the Rings" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_lordoftherings.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Lord of the Rings</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('runicfreelancer')">
+            <img alt="Runic Freelancer" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_runicfreelancer.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Runic Freelancer</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('faith')">
+            <img alt="Faith" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_faith.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Faith</span>
+          </div>
+        </div>
+
+        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
+          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
+          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
+            <li class="flex items-start gap-2"><span class="text-color-strong">A Black mask is now available at any Slayer master shop for 1,000 Slayer points.</span></li>
+            <li class="flex items-start gap-2"><span class="text-color-strong">You may now purchase a specific Slayer task, including amount to kill, for 100 Slayer points each.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-6">
+        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
+          Tier 6
+        </h2>
+
+        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('feralexorcism')">
+            <img alt="Feral Exorcism" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_feralexorcism.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Feral Exorcism</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('papercrafting')">
+            <img alt="Papercrafting" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_papercrafting.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Papercrafting</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('mariner')">
+            <img alt="Mariner" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_mariner.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Mariner</span>
+          </div>
+        </div>
+
+        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
+          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
+          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
+            <li class="flex items-start gap-2"><span>Leagues XP multiplier is increased from 12x to 16x.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-7">
+        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
+          Tier 7
+        </h2>
+
+        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('reapersavarice')">
+            <img alt="Reapers Avarice" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_reapersavarice.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Reaper's Avarice</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('rainingluck')">
+            <img alt="Raining Luck" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_rainingluck.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Raining Luck</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('squealoffortune')">
+            <img alt="Squeal of Fortune" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_squealoffortune.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Squeal of Fortune</span>
+          </div>
+        </div>
+
+        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
+          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
+          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
+            <li class="flex items-start gap-2"><span class="text-color-strong">Reloaded: In addition to choosing a relic from this tier, you can unlock any additional relic from Tier 6 and below.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-8">
+        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
+          Tier 8
+        </h2>
+
+        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('grandmasteratarms')">
+            <img alt="Grandmaster At Arms" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_grandmasteratarms.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Grandmaster at Arms</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('dragonmulticannon')">
+            <img alt="Dragon Multicannon" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_dragonmulticannon.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Dragon Multicannon</span>
+          </div>
+          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('leap')">
+            <img alt="Leap" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_leap.webp">
+            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Leap</span>
+          </div>
+        </div>
+
+        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
+          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
+          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
+            <li class="flex items-start gap-2"><span class="text-color-strong">Preserve, Chivalry, Piety, Rigour and Augury are automatically unlocked, provided you have the Prayer level to use them.</span></li>
+            <li class="flex items-start gap-2"><span class="text-color-strong">With Level 99 Herblore, you can now mix a Super combat potion, a Ranging potion, a Magic potion, and an Onion together to create an Overload (Nightmare Zone version).</span></li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="relic-universal-popup"
+       class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out">
+    <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 md:p-8 w-full md:max-w-[90vw] max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative flex flex-col gap-4">
+      <div class="flex items-center justify-center gap-4 border-b border-orange-900/30 pb-3">
+        <div class="w-16 h-16 md:w-20 md:h-20 shrink-0 overflow-hidden">
+          <img alt="Selected Relic" class="w-full h-full object-cover" id="popup-exp-icon" src="">
+        </div>
+        <h3 class="text-orange-400 text-3xl leading-none" id="popup-exp-title">Relic Name</h3>
+      </div>
+      <div class="text-lg text-gray-300 overflow-y-auto pr-1 leading-relaxed" id="popup-exp-desc">Detailed explanation.</div>
+      <button onclick="closeRelicPopup()"
+              class="mt-2 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider">
+        Close
+      </button>
+    </div>
+  </div>
+
+  <footer class="w-full border-t border-orange-900/30 bg-[#1e0f29]/80 py-12 mt-20">
+    <div class="container mx-auto px-4 flex flex-col items-center text-center">
+      <button onclick="toggleDisclaimer()"
+              class="group mb-6 flex items-center gap-2 text-orange-200/50 hover:text-orange-400 transition-colors uppercase tracking-widest font-medium">
+        <img src="images/credits.webp" alt="Dream" class="h-4 w-4 mb-[2px] object-contain filter grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-200">
+        Credits
+      </button>
+      <div class="space-y-2 text-[20px] text-gray-600 max-w-2xl tracking-tighter">
+        <p>Old School RuneScape is a trademark of Jagex Ltd. This project is not affiliated with Jagex Ltd.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="disclaimer-popup"
+       class="fixed inset-0 bg-black/80 flex items-center justify-center opacity-0 pointer-events-none z-[9999] p-4 backdrop-blur-sm transition-opacity duration-300 ease-in-out">
+    <div class="bg-[#1e0f29]/80 border border-orange-900/50 p-8 max-w-xl w-full rounded-lg shadow-2xl relative">
+      <h3 class="text-orange-400 font-bold mb-4 text-3xl">Credits and Disclaimers</h3>
+      <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
+        <ul class="relic-bullet">
+          <li>All descriptions and relic images on this website are <span class="relic-coloured-text">100% human-made</span> by Hai Yo.</li>
+          <li>This website used to display this information is <b>unapologetically</b> vibe coded by Phoneman btw.
+            <ul class="relic-bullet">
+              <li><b>Please</b> do not look at the source code it is a god-awful mess</li>
+            </ul>
+          </li>
+          <li>Moving background video by <a class="relic-coloured-text underline" href="https://www.pexels.com/@wayne-speedy-777933/" target="_blank" rel="noopener noreferrer">Wayne Speedy</a> via <a class="relic-coloured-text underline" href="https://www.pexels.com/photo/full-moon-in-the-sky-4190863/" target="_blank" rel="noopener noreferrer">Pexels</a></li>
+          <li>Static background by Meurks: <a href="https://4kwallpapers.com/nature/full-moon-dark-background-cloudy-sky-stars-digital-art-5k-8k-5589.html" class="relic-coloured-text underline">Full moon Dark background Wallpaper.</a></li>
+        </ul>
+      </div>
+      <button onclick="toggleDisclaimer()" class="mt-8 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold">Close</button>
+    </div>
+  </div>
+
+  <div id="welcome-popup"
+       class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out">
+    <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 sm:p-8 max-w-xl w-full max-h-[calc(100vh-2rem)] overflow-y-auto rounded-lg shadow-2xl relative">
+      <img src="images/favicon.webp" alt="Icon" class="absolute top-5 right-5 w-8 h-8 object-contain pointer-events-none">
+      <h3 class="text-orange-400 font-bold mb-4 text-3xl uppercase text-center">Welcome</h3>
+      <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
+        <p>To best understand these relics, you'll need some essential context:</p>
+        <ul class="relic-bullet">
+          <li>All players start in <span class="relic-coloured-text">Misthalin</span>.</li>
+          <li><span class="relic-coloured-text">Sailing</span> and all its related content would be present in this League.
+            <ul class="relic-bullet">
+              <li>You would only have access to the oceans which you can directly sail into from <span class="relic-coloured-text">docking points in areas you've unlocked</span> (e.g. Misthalin grants access to the Ardent Ocean. Varlamore grants access to the Western and Sunset Oceans).</li>
+            </ul>
+          </li>
+          <li>A separate system for combat, more similar to Combat Masteries than Demonic Pacts, would <span class="relic-coloured-text">coexist</span> with these relics. This is why there are only a few combat oriented choices here.</li>
+          <ul class="relic-bullet">
+            <li>If you'd be interested in seeing these, let us know!</li>
+          </ul>
+          <li>Most passive bonuses are the same as in Leagues 6: Demonic Pacts. New passive bonuses are listed in <span class="relic-coloured-text">orange</span>.</li>
+        </ul>
+      </div>
+      <button onclick="closeWelcomePopup()" class="mt-8 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold">Understood, put me to sleep</button>
+    </div>
+  </div>
+
+</div> <style>
   #disclaimer-popup.active {
     display: flex !important
   }
@@ -842,7 +603,7 @@
       let cleanLine = line.trimEnd();
       if (!cleanLine.trim()) return;
 
-      cleanLine = cleanLine.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+      cleanLine = cleanLine.replace(/\*\*(.*?)\*\"/g, '<b>$1</b>');
       cleanLine = cleanLine.replace(/\*(.*?)\*/g, '<span class="relic-coloured-text">$1</span>');
 
       const matchSpaces = line.match(/^\s*/);
@@ -899,20 +660,16 @@
     document.getElementById("popup-exp-title").innerText = title;
     document.getElementById("popup-exp-icon").src = iconSrc;
     descContainer.innerHTML = descriptionHtml;
-
-    // Reset the inner scroll position to the top before showing the window
     descContainer.scrollTop = 0;
 
     popup.classList.remove("opacity-0", "pointer-events-none");
     popup.classList.add("opacity-100");
-    document.body.style.overflow = "hidden";
   }
 
   function closeRelicPopup() {
     const popup = document.getElementById("relic-universal-popup");
     popup.classList.remove("opacity-100");
     popup.classList.add("opacity-0", "pointer-events-none");
-    document.body.style.overflow = "auto";
   }
 
   function toggleDisclaimer() {
@@ -921,15 +678,12 @@
     if (disclaimerPopup.classList.contains("opacity-0")) {
       disclaimerPopup.classList.remove("opacity-0", "pointer-events-none");
       disclaimerPopup.classList.add("opacity-100");
-      document.body.style.overflow = "hidden";
     } else {
       disclaimerPopup.classList.remove("opacity-100");
       disclaimerPopup.classList.add("opacity-0", "pointer-events-none");
-      document.body.style.overflow = "auto";
     }
   }
 
-  // Tracking index for state management: 0 = Show All, 1 = Hide All, 2 = Only Show Exclusive
   let currentPassiveState = 0;
 
   function cycleMobilePassives() {
@@ -946,14 +700,11 @@
         const isExclusive = li.querySelector('.text-color-strong') !== null;
 
         if (currentPassiveState === 0) {
-          // Show All
           li.classList.remove('hidden');
           visibleItemsCount++;
         } else if (currentPassiveState === 1) {
-          // Hide All
           li.classList.add('hidden');
         } else if (currentPassiveState === 2) {
-          // Only Show Exclusive
           if (isExclusive) {
             li.classList.remove('hidden');
             visibleItemsCount++;
@@ -963,7 +714,6 @@
         }
       });
 
-      // If state is Hide All, or Only Show Exclusive left the tier empty, hide the wrapper frame cleanly
       if (currentPassiveState === 1 || visibleItemsCount === 0) {
         box.classList.add('hidden');
       } else {
@@ -971,22 +721,19 @@
       }
     });
 
-    // Update state label copy smoothly
     if (currentPassiveState === 0) {
       toggleBtn.innerText = "Passives: Show All";
     } else if (currentPassiveState === 1) {
-      toggleBtn.innerText = "Passives: Hide All";
+      toggleBtn.innerText = "Passives: Hidden";
     } else if (currentPassiveState === 2) {
-      toggleBtn.innerText = "Passives: Exclusives";
+      toggleBtn.innerText = "Passives: New Only";
     }
   }
 
   function toggleWelcomePopup() {
     const welcomePopup = document.getElementById("welcome-popup");
-
     welcomePopup.classList.remove("opacity-0", "pointer-events-none");
     welcomePopup.classList.add("opacity-100");
-    document.body.style.overflow = "hidden";
   }
 
   function handleWelcomeFlow() {
@@ -995,16 +742,13 @@
     if (!localStorage.getItem("lunar_leagues_visited")) {
       welcomePopup.classList.remove("opacity-0", "pointer-events-none");
       welcomePopup.classList.add("opacity-100");
-      document.body.style.overflow = "hidden";
     }
   }
 
   function closeWelcomePopup() {
     const welcomePopup = document.getElementById("welcome-popup");
-
     welcomePopup.classList.remove("opacity-100");
     welcomePopup.classList.add("opacity-0", "pointer-events-none");
-    document.body.style.overflow = "auto";
     localStorage.setItem("lunar_leagues_visited", "true");
   }
 
@@ -1032,17 +776,11 @@
     checkVideoAutoplay();
   });
 </script>
+
 <style data-purpose="animations">
   @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px)
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0)
-    }
+    from { opacity: 0; transform: translateY(10px) }
+    to { opacity: 1; transform: translateY(0) }
   }
 
   .animate-fade-in {
@@ -1060,21 +798,11 @@
     border-radius: 2px;
   }
 
-  #relic-grid::-webkit-scrollbar {
-    height: 6px
-  }
-
-  #relic-grid::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, .2)
-  }
-
-  #relic-grid::-webkit-scrollbar-thumb {
-    background: #4a5568;
-    border-radius: 3px
-  }
+  #relic-grid::-webkit-scrollbar { height: 6px }
+  #relic-grid::-webkit-scrollbar-track { background: rgba(0, 0, 0, .2) }
+  #relic-grid::-webkit-scrollbar-thumb { background: #4a5568; border-radius: 3px }
 </style>
-<script data-goatcounter="https://phoneman.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://phoneman.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 
 </html>
