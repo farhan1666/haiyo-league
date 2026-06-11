@@ -508,14 +508,24 @@
 
   <div id="relic-universal-popup" onclick="handleOutsideClick(event, 'relic-universal-popup', closeRelicPopup)"
        class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out">
-    <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 md:p-8 w-full md:max-w-[90vw] max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative flex flex-col gap-4" onclick="event.stopPropagation()">
-      <div class="flex items-center justify-center gap-4 border-b border-orange-900/30 pb-3">
-        <div class="w-16 h-16 md:w-20 md:h-20 shrink-0 overflow-hidden">
-          <img alt="Selected Relic" class="w-full h-full object-cover" id="popup-exp-icon" src="">
+    <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 md:p-8 w-full md:max-w-5xl max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative flex flex-col gap-4" onclick="event.stopPropagation()">
+
+      <div class="flex items-center justify-center gap-4 md:gap-6 border-b border-orange-900/30 pb-2 min-h-[5rem] md:min-h-[8rem]">
+
+        <div class="w-20 h-20 md:w-32 md:h-32 shrink-0 overflow-hidden">
+          <img alt="Selected Relic" class="w-full h-full object-contain" id="popup-exp-icon" src="">
         </div>
-        <h3 class="text-orange-400 text-3xl leading-none" id="popup-exp-title">Relic Name</h3>
+
+        <h3 class="text-3xl !text-[2.6rem] sm:!text-[3.4rem] md:!text-[4.2rem] text-orange-400 leading-none select-none" id="popup-exp-title">
+          Relic Name
+        </h3>
+
       </div>
-      <div class="text-lg text-gray-300 overflow-y-auto pr-1 leading-relaxed" id="popup-exp-desc">Detailed explanation.</div>
+
+      <div class="text-lg text-gray-300 overflow-y-auto pr-1 leading-relaxed" id="popup-exp-desc">
+        Detailed explanation.
+      </div>
+
       <button onclick="closeRelicPopup()"
               class="mt-2 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider">
         Close
