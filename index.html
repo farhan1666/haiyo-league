@@ -1,1289 +1,2121 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width,initial-scale=1" name="viewport">
-  <title>Lunar Leagues</title>
-  <link rel="icon" type="image/webp" href="images/favicon.webp">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <title>Lunar Leagues</title>
+    <link rel="icon" type="image/webp" href="images/favicon.webp" />
 
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script src="relics.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="relics.js"></script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
-  <style data-purpose="custom-theme">
-    @font-face {
-      font-family: "RuneScape Plain 12";
-      src: url("./fonts/RuneScape-Plain-12.ttf") format("truetype");
-      font-weight: 400;
-      font-style: normal
-    }
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style data-purpose="custom-theme">
+      @font-face {
+        font-family: "RuneScape Plain 12";
+        src: url("./fonts/RuneScape-Plain-12.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
+      }
 
-    @font-face {
-      font-family: "RuneScape Quill";
-      src: url("./fonts/RuneScape-Quill.ttf") format("truetype");
-      font-weight: 400;
-      font-style: normal
-    }
+      @font-face {
+        font-family: "RuneScape Quill";
+        src: url("./fonts/RuneScape-Quill.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
+      }
 
-    body {
-      background-color: #1e0f29;
-      color: #9ca3af;
-      font-family: "RuneScape Plain 12", sans-serif;
-      font-size: 1.25rem;
-      background-image: url("images/relic_background.webp");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed
-    }
+      body {
+        background-color: #1e0f29;
+        color: #9ca3af;
+        font-family: "RuneScape Plain 12", sans-serif;
+        font-size: 1.25rem;
+        background-image: url("images/relic_background.webp");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
 
-    .text-xs {
-      font-size: 1rem !important
-    }
+      .text-xs {
+        font-size: 1rem !important;
+      }
 
-    .text-lg {
-      font-size: 1.25rem !important
-    }
+      .text-lg {
+        font-size: 1.25rem !important;
+      }
 
-    .text-3xl {
-      font-family: "RuneScape Quill", serif !important;
-      font-size: 2.5rem !important;
-      text-decoration: underline;
-      letter-spacing: .05em
-    }
+      .text-3xl {
+        font-family: "RuneScape Quill", serif !important;
+        font-size: 2.5rem !important;
+        text-decoration: underline;
+        letter-spacing: 0.05em;
+      }
 
-    .text-passive {
-      font-size: 1.0rem
-    }
+      .text-passive {
+        font-size: 1rem;
+      }
 
-    .text-passive-title {
-      font-family: "RuneScape Quill", serif !important;
-      letter-spacing: .05em;
-      text-decoration: underline
-    }
+      .text-passive-title {
+        font-family: "RuneScape Quill", serif !important;
+        letter-spacing: 0.05em;
+        text-decoration: underline;
+      }
 
-    .text-title-subtitle {
-      font-family: "RuneScape Quill", serif !important;
-      letter-spacing: .05em;
-      color: #777
-    }
+      .text-title-subtitle {
+        font-family: "RuneScape Quill", serif !important;
+        letter-spacing: 0.05em;
+        color: #777;
+      }
 
-    .text-title-title {
-      font-family: "RuneScape Quill", serif !important;
-      letter-spacing: .05em;
-      color: #ffb74d;
-      font-size: 3.5rem
-    }
+      .text-title-title {
+        font-family: "RuneScape Quill", serif !important;
+        letter-spacing: 0.05em;
+        color: #ffb74d;
+        font-size: 3.5rem;
+      }
 
-    .relic-accent {
-      color: gold
-    }
+      .relic-accent {
+        color: gold;
+      }
 
-    .relic-tier-title {
-      font-family: "RuneScape Quill", serif !important;
-      letter-spacing: .05em
-    }
+      .relic-tier-title {
+        font-family: "RuneScape Quill", serif !important;
+        letter-spacing: 0.05em;
+      }
 
-    .relic-card {
-      background: rgba(255, 255, 255, .03);
-      border: 1px solid rgba(255, 255, 255, .05);
-      transition: all .2s ease
-    }
+      .relic-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.2s ease;
+      }
 
-    .relic-card:hover {
-      background: rgba(255, 255, 255, .07);
-      border-color: #ff8c42
-    }
+      .relic-card:hover {
+        background: rgba(255, 255, 255, 0.07);
+        border-color: #ff8c42;
+      }
 
-    .relic-card.selected {
-      border-color: gold;
-      background: rgba(255, 215, 0, .05)
-    }
+      .relic-card.selected {
+        border-color: gold;
+        background: rgba(255, 215, 0, 0.05);
+      }
 
-    .stat-badge {
-      background: rgba(0, 0, 0, .3);
-      border: 1px solid rgba(255, 255, 255, .1);
-      font-size: .75rem
-    }
+      .stat-badge {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.75rem;
+      }
 
-    .btn-action {
-      background: rgba(255, 140, 66, .1);
-      border: 1px solid #ff8c42;
-      color: #ff8c42
-    }
+      .btn-action {
+        background: rgba(255, 140, 66, 0.1);
+        border: 1px solid #ff8c42;
+        color: #ff8c42;
+      }
 
-    .btn-action:hover {
-      background: #ff8c42;
-      color: #1a1a1a
-    }
+      .btn-action:hover {
+        background: #ff8c42;
+        color: #1a1a1a;
+      }
 
-    .tier-column {
-      border-right: 1px solid rgba(255, 255, 255, .05)
-    }
-
-    .tier-column:last-child {
-      border-right: none
-    }
-
-    li::before {
-      content: ">";
-      margin-right: .5rem;
-      color: rgb(251 146 60 / var(--tw-text-opacity, 1))
-    }
-
-    ul {
-      list-style-type: none
-    }
-
-    .text-color-strong {
-      color: #fb923c
-    }
-
-    .relic-bullet {
-      list-style-type: disc;
-      list-style-position: outside;
-      margin-left: 1.2rem;
-      padding-left: 0;
-      margin-top: .5rem;
-      margin-bottom: .5rem
-    }
-
-    .relic-bullet li::before {
-      content: none
-    }
-
-    .relic-bullet li::marker {
-      color: rgb(251 146 60);
-      font-size: 1.2em
-    }
-
-    .relic-bullet .relic-bullet {
-      list-style-type: circle;
-      margin-left: 1.5rem;
-      padding-left: 0
-    }
-
-    .relic-bullet li {
-      display: list-item;
-      padding-left: .5rem
-    }
-
-    .relic-coloured-text {
-      color: rgb(251 146 60)
-    }
-
-    @media (max-width: 767px) {
       .tier-column {
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, .05);
-        padding-bottom: 1.5rem;
-        width: 100%;
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
       }
+
       .tier-column:last-child {
-        border-bottom: none;
+        border-right: none;
       }
-    }
 
-  #relic-universal-popup *,
-  #popup-exp-desc,
-  .scrollbar-thin {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(251, 146, 60, 0.4) rgba(0, 0, 0, 0.3);
-  }
+      li::before {
+        content: ">";
+        margin-right: 0.5rem;
+        color: rgb(251 146 60 / var(--tw-text-opacity, 1));
+      }
 
-  #relic-universal-popup ::-webkit-scrollbar,
-  #popup-exp-desc::-webkit-scrollbar,
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 8px;
-    height: 6px;
-  }
+      ul {
+        list-style-type: none;
+      }
 
-  #relic-universal-popup ::-webkit-scrollbar-track,
-  #popup-exp-desc::-webkit-scrollbar-track,
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.03);
-  }
+      .text-color-strong {
+        color: #fb923c;
+      }
 
-  #relic-universal-popup ::-webkit-scrollbar-thumb,
-  #popup-exp-desc::-webkit-scrollbar-thumb,
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: rgba(251, 146, 60, 0.4);
-    border-radius: 4px;
-    border: 1px solid rgba(255, 140, 66, 0.1);
-    transition: background 0.2s ease;
-  }
+      .relic-bullet {
+        list-style-type: disc;
+        list-style-position: outside;
+        margin-left: 1.2rem;
+        padding-left: 0;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
 
-  #relic-universal-popup ::-webkit-scrollbar-thumb:hover,
-  #popup-exp-desc::-webkit-scrollbar-thumb:hover,
-  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background: rgba(251, 146, 60, 0.8);
-    box-shadow: 0 0 4px rgba(255, 140, 66, 0.5);
-  }
+      .relic-bullet li::before {
+        content: none;
+      }
 
-  /* Core UI drop-shadow filters tracking individual asset geometries (Enhanced Prominence) */
-  .relic-glow-orange {
-    filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.95))
-            drop-shadow(0 0 12px rgba(249, 115, 22, 0.7))
-            drop-shadow(0 0 24px rgba(249, 115, 22, 0.35));
-  }
+      .relic-bullet li::marker {
+        color: rgb(251 146 60);
+        font-size: 1.2em;
+      }
 
-  .relic-glow-reload {
-    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.95))
-            drop-shadow(0 0 12px rgba(255, 255, 255, 0.7))
-            drop-shadow(0 0 24px rgba(255, 255, 255, 0.35));
-  }
+      .relic-bullet .relic-bullet {
+        list-style-type: circle;
+        margin-left: 1.5rem;
+        padding-left: 0;
+      }
 
-  /* Game Floating Notification Styling */
-  .osrs-float-indicator {
-    font-family: "RuneScape Plain 12", sans-serif;
-    color: #00ff00;
-    text-shadow: 1px 1px 0px #000000;
-    font-size: 1.1rem;
-    white-space: nowrap;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    pointer-events: none;
-    z-index: 50;
-    animation: gameFloatAnimation 1s ease-out forwards;
-  }
+      .relic-bullet li {
+        display: list-item;
+        padding-left: 0.5rem;
+      }
 
-  @keyframes gameFloatAnimation {
-    0% {
-      top: -8px;
-      opacity: 1;
-    }
-    100% {
-      top: -33px;
-      opacity: 0;
-    }
-  }
+      .relic-coloured-text {
+        color: rgb(251 146 60);
+      }
 
-  /* Dynamic Custom Tooltip Styling */
-  .share-error-tooltip {
-    font-family: "RuneScape Plain 12", sans-serif;
-    background: rgba(30, 15, 41, 0.95);
-    border: 1px solid rgba(251, 146, 60, 0.4);
-    color: #ef4444;
-    text-shadow: 1px 1px 0px #000000;
-    padding: 6px 12px;
-    font-size: 1.1rem;
-    border-radius: 4px;
-    pointer-events: none;
-    z-index: 9999;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    white-space: nowrap;
-  }
-    /* Disable hover effects on touch devices */
-@media (hover: hover) {
-  .btn-action:hover { background: #ff8c42; color: #1a1a1a; }
-  /* Add similar for your share and clear buttons if needed */
-}
+      @media (max-width: 767px) {
+        .tier-column {
+          border-right: none;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+          padding-bottom: 1.5rem;
+          width: 100%;
+        }
+        .tier-column:last-child {
+          border-bottom: none;
+        }
+      }
 
-/* Force mobile-friendly active states */
-button:active {
-  transform: scale(0.98);
-  opacity: 0.8;
-}
-  </style>
-</head>
+      #relic-universal-popup *,
+      #popup-exp-desc,
+      .scrollbar-thin {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(251, 146, 60, 0.4) rgba(0, 0, 0, 0.3);
+      }
 
-<body class="min-h-screen flex flex-col justify-center py-8" style="margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; position: fixed;">
+      #relic-universal-popup ::-webkit-scrollbar,
+      #popup-exp-desc::-webkit-scrollbar,
+      .scrollbar-thin::-webkit-scrollbar {
+        width: 8px;
+        height: 6px;
+      }
 
-<div id="fixed-bg-container"
-     class="absolute inset-0 -z-50 w-full h-full overflow-hidden bg-[#12071a] pointer-events-none"
-     style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -50; transform: translate3d(0,0,0); backface-visibility: hidden;">
-  <img id="bg-fallback-img" src="images/relic_background.webp" alt="Background"
-       class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500">
-  <video id="bg-video" autoplay muted loop playsinline
-         class="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity duration-500">
-    <source src="videos/bg.webm" type="video/webm">
-  </video>
-</div>
+      #relic-universal-popup ::-webkit-scrollbar-track,
+      #popup-exp-desc::-webkit-scrollbar-track,
+      .scrollbar-thin::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
 
-<div id="main-scroll-wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; position: relative; z-index: 1;">
+      #relic-universal-popup ::-webkit-scrollbar-thumb,
+      #popup-exp-desc::-webkit-scrollbar-thumb,
+      .scrollbar-thin::-webkit-scrollbar-thumb {
+        background: rgba(251, 146, 60, 0.4);
+        border-radius: 4px;
+        border: 1px solid rgba(255, 140, 66, 0.1);
+        transition: background 0.2s ease;
+      }
 
-  <div class="fixed bottom-6 right-6 z-[10] md:hidden">
-    <button onclick="cycleMobilePassives()" id="passive-toggle-btn"
-            class="px-4 py-2 bg-orange-500/20 border-2 border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-black font-semibold rounded shadow-lg backdrop-blur-sm tracking-wider uppercase text-sm transition-all">
-      Passives: Show All
-    </button>
-  </div>
+      #relic-universal-popup ::-webkit-scrollbar-thumb:hover,
+      #popup-exp-desc::-webkit-scrollbar-thumb:hover,
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        background: rgba(251, 146, 60, 0.8);
+        box-shadow: 0 0 4px rgba(255, 140, 66, 0.5);
+      }
 
-  <div class="group flex items-center justify-center gap-3 md:gap-6 cursor-pointer select-none mt-8" onclick="toggleWelcomePopup()">
-    <img src="images/favicon.webp" alt="Icon"
-         class="w-8 h-8 md:w-12 md:h-12 object-contain opacity-50 group-hover:opacity-100 transition-opacity duration-200 -scale-x-100">
+      /* Core UI drop-shadow filters tracking individual asset geometries (Enhanced Prominence) */
+      .relic-glow-orange {
+        filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.95))
+          drop-shadow(0 0 12px rgba(249, 115, 22, 0.7))
+          drop-shadow(0 0 24px rgba(249, 115, 22, 0.35));
+      }
 
-    <div class="text-title-title uppercase text-center leading-none text-[2.2rem] sm:text-[2.8rem] md:text-[3.5rem]">
-      Lunar leagues
+      .relic-glow-reload {
+        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.95))
+          drop-shadow(0 0 12px rgba(255, 255, 255, 0.7))
+          drop-shadow(0 0 24px rgba(255, 255, 255, 0.35));
+      }
+
+      /* Game Floating Notification Styling */
+      .osrs-float-indicator {
+        font-family: "RuneScape Plain 12", sans-serif;
+        color: #00ff00;
+        text-shadow: 1px 1px 0px #000000;
+        font-size: 1.1rem;
+        white-space: nowrap;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        pointer-events: none;
+        z-index: 50;
+        animation: gameFloatAnimation 1s ease-out forwards;
+      }
+
+      @keyframes gameFloatAnimation {
+        0% {
+          top: -8px;
+          opacity: 1;
+        }
+        100% {
+          top: -33px;
+          opacity: 0;
+        }
+      }
+
+      /* Dynamic Custom Tooltip Styling */
+      .share-error-tooltip {
+        font-family: "RuneScape Plain 12", sans-serif;
+        background: rgba(30, 15, 41, 0.95);
+        border: 1px solid rgba(251, 146, 60, 0.4);
+        color: #ef4444;
+        text-shadow: 1px 1px 0px #000000;
+        padding: 6px 12px;
+        font-size: 1.1rem;
+        border-radius: 4px;
+        pointer-events: none;
+        z-index: 9999;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        white-space: nowrap;
+      }
+      /* Disable hover effects on touch devices */
+      @media (hover: hover) {
+        .btn-action:hover {
+          background: #ff8c42;
+          color: #1a1a1a;
+        }
+        /* Add similar for your share and clear buttons if needed */
+      }
+
+      /* Force mobile-friendly active states */
+      button:active {
+        transform: scale(0.98);
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+
+  <body
+    class="min-h-screen flex flex-col justify-center py-8"
+    style="
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: fixed;
+    "
+  >
+    <div
+      id="fixed-bg-container"
+      class="absolute inset-0 -z-50 w-full h-full overflow-hidden bg-[#12071a] pointer-events-none"
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -50;
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+      "
+    >
+      <img
+        id="bg-fallback-img"
+        src="images/relic_background.webp"
+        alt="Background"
+        class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500"
+      />
+      <video
+        id="bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        class="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity duration-500"
+      >
+        <source src="videos/bg.webm" type="video/webm" />
+      </video>
     </div>
 
-    <img src="images/favicon.webp" alt="Icon"
-         class="w-8 h-8 md:w-12 md:h-12 object-contain opacity-50 group-hover:opacity-100 transition-opacity duration-200">
-  </div>
-
-  <div class="text-title-subtitle text-center !no-underline mb-2 -mt-2">
-    (it's all in your head)
-  </div>
-
-  <div class="text-center mb-2 flex justify-center gap-3">
-    <div class="relative inline-block pointer-events-auto" id="share-btn-wrapper"
-         onclick="copyShareUrl()"
-         onmouseover="handleShareTooltip(event)"
-         onmousemove="handleShareTooltip(event)"
-         onmouseleave="hideShareTooltip()"
-         ontouchstart="handleShareTooltipMobile(event)">
-      <button onclick="copyShareUrl()" id="share-btn"
-              class="pointer-events-none px-5 py-2 font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all bg-gray-800/50 border border-gray-700 text-gray-500">
-        Share Build
-      </button>
-    </div>
-    <button onclick="clearCompleteBuild()" id="clear-btn"
-            class="px-5 py-2 bg-red-500/10 border border-red-500/40 text-red-400 hover:bg-red-500 hover:text-black font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all">
-      Clear Build
-    </button>
-  </div>
-
-  <main class="container mx-auto px-4 py-8 max-w-full">
-    <div class="flex flex-col md:flex-row md:justify-between gap-8 md:gap-0" id="relic-grid">
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-1" data-purpose="tier-1">
-        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-          Tier 1
-        </h2>
-
-        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="magicthegathering" onclick="loadRelic('magicthegathering')">
-            <img alt="Magic the Gathering" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_magicthegathering.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Magic the Gathering</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="symbiosis" onclick="loadRelic('symbiosis')">
-            <img alt="Symbiosis" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_symbiosis.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Symbiosis</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="financialfraud" onclick="loadRelic('financialfraud')">
-            <img alt="Financial Fraud" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_financialfraud.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Financial Fraud</span>
-          </div>
-        </div>
-
-        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-            <li class="flex items-start gap-2"><span>Leagues XP multiplier is 5x.</span></li>
-            <li class="flex items-start gap-2"><span>Items from eligible sources are 2x common.</span></li>
-            <li class="flex items-start gap-2"><span>Farming ticks occur every 1 minute instead of every 5 minutes.</span></li>
-            <li class="flex items-start gap-2"><span>Minigame points are boosted by 4x.</span></li>
-            <li class="flex items-start gap-2"><span>Run energy is never drained whilst running.</span></li>
-            <li class="flex items-start gap-2"><span>All clue scrolls will drop as stackable scroll boxes, and clue step progress is saved between clues.</span></li>
-            <li class="flex items-start gap-2"><span>Players will only receive clue steps and port tasks they can access within an unlocked region.</span></li>
-            <li class="flex items-start gap-2"><span class="text-color-strong">Trees and mining rocks never deplete, and fishing spots are automatically tracked.</span></li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-2" data-purpose="tier-2">
-        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-          Tier 2
-        </h2>
-
-        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="conman" onclick="loadRelic('conman')">
-            <img alt="Conman" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_conman.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Conman</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="holyharvest" onclick="loadRelic('holyharvest')">
-            <img alt="Holy Harvest" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_holyharvest.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Holy Harvest</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="perpetualstew" onclick="loadRelic('perpetualstew')">
-            <img alt="Perpetual Stew" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_perpetualstew.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Perpetual Stew</span>
-          </div>
-        </div>
-
-        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-            <li class="flex items-start gap-2"><span>Leagues XP multiplier is increased from 5x to 8x.</span></li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-3" data-purpose="tier-3">
-        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-          Tier 3
-        </h2>
-
-        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="friendoftheforest" onclick="loadRelic('friendoftheforest')">
-            <img alt="Friend of the Forest" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_friendoftheforest.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Friend of the Forest</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="harnessedearth" onclick="loadRelic('harnessedearth')">
-            <img alt="Harnessed Earth" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_harnessedearth.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Harnessed Earth</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="callofthesea" onclick="loadRelic('callofthesea')">
-            <img alt="Call of the Sea" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_callofthesea.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Call of the Sea</span>
-          </div>
-        </div>
-
-        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-            <li class="flex items-start gap-2"><span>Combat experience (including Hitpoints and Prayer) will be multiplied by 1.5x. This is multiplicative with other experience modifiers.</span></li>
-            <li class="flex items-start gap-2"><span>The "Bigger and Badder" slayer unlock is unlocked for free.</span></li>
-            <li class="flex items-start gap-2"><span>Slayer reward points are 5x from tasks, and you aren't required to complete 5 tasks before earning points.</span></li>
-            <li class="flex items-start gap-2"><span>Superior slayer monsters will appear at a rate of 1/50.</span></li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-4" data-purpose="tier-4">
-        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-          Tier 4
-        </h2>
-
-        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="runtotherescue" onclick="loadRelic('runtotherescue')">
-            <img alt="Run to the Rescue" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_runtotherescue.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Run to the Rescue</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="industrialevolution" onclick="loadRelic('industrialevolution')">
-            <img alt="Industrial Evolution" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_industrialevolution.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Industrial Evolution</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="unleashedteleport" onclick="loadRelic('unleashedteleport')">
-            <img alt="Unleashed Teleport" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_unleashedteleport.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Unleashed Teleport</span>
-          </div>
-        </div>
-
-        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-            <li class="flex items-start gap-2"><span>Items from eligible sources will be 5x as common.</span></li>
-            <li class="flex items-start gap-2"><span>Minigame Points received are boosted by 8x.</span></li>
-            <li class="flex items-start gap-2"><span>Leagues XP multiplier is increased from 8x to 12x.</span></li>
-            <li class="flex items-start gap-2"><span class="text-color-strong">Clue scrolls are now 2x more common from all sources.</span></li>
-            <li class="flex items-start gap-2"><span class="text-color-strong">Clue scrolls will always have the minimum amount of steps for their tier, and yield the maximum amount of rewards.</span></li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-5" data-purpose="tier-5">
-        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-          Tier 5
-        </h2>
-
-        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="lordoftherings" onclick="loadRelic('lordoftherings')">
-            <img alt="Lord of the Rings" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_lordoftherings.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Lord of the Rings</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="runicfreelancer" onclick="loadRelic('runicfreelancer')">
-            <img alt="Runic Freelancer" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_runicfreelancer.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Runic Freelancer</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="faith" onclick="loadRelic('faith')">
-            <img alt="Faith" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_faith.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Faith</span>
-          </div>
-        </div>
-
-        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
-            <li class="flex items-start gap-2"><span class="text-color-strong">A Black mask is now available at any Slayer master shop for 1,000 Slayer points.</span></li>
-            <li class="flex items-start gap-2"><span class="text-color-strong">You may now purchase a specific Slayer task, including amount to kill, for 100 Slayer points each.</span></li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-6" data-purpose="tier-6">
-        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-          Tier 6
-        </h2>
-
-        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="feralexorcism" onclick="loadRelic('feralexorcism')">
-            <img alt="Feral Exorcism" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_feralexorcism.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Feral Exorcism</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="papercrafting" onclick="loadRelic('papercrafting')">
-            <img alt="Papercrafting" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_papercrafting.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Papercrafting</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="mariner" onclick="loadRelic('mariner')">
-            <img alt="Mariner" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_mariner.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Mariner</span>
-          </div>
-        </div>
-
-        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-          <ul class="text-passive text-orange-100/80 space-y-2">
-            <li class="flex items-start gap-2"><span>Leagues XP multiplier is increased from 12x to 16x.</span></li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-7" data-purpose="tier-7">
-        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-          Tier 7
-        </h2>
-
-        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="reapersavarice" onclick="loadRelic('reapersavarice')">
-            <img alt="Reapers Avarice" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_reapersavarice.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Reaper's Avarice</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="rainingluck" onclick="loadRelic('rainingluck')">
-            <img alt="Raining Luck" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_rainingluck.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Raining Luck</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="squealoffortune" onclick="loadRelic('squealoffortune')">
-            <img alt="Squeal of Fortune" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_squealoffortune.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Squeal of Fortune</span>
-          </div>
-        </div>
-
-        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-          <ul class="text-passive text-orange-100/80 space-y-2">
-            <li class="flex items-start gap-2"><span class="text-color-strong">Reloaded: In addition to choosing a relic from this tier, you can unlock any additional relic from Tier 6 and below.</span></li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-8" data-purpose="tier-8">
-        <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
-          Tier 8
-        </h2>
-
-        <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="grandmasteratarms" onclick="loadRelic('grandmasteratarms')">
-            <img alt="Grandmaster At Arms" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_grandmasteratarms.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Grandmaster at Arms</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="dragonmulticannon" onclick="loadRelic('dragonmulticannon')">
-            <img alt="Dragon Multicannon" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_dragonmulticannon.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Dragon Multicannon</span>
-          </div>
-          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="leap" onclick="loadRelic('leap')">
-            <img alt="Leap" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_leap.webp">
-            <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Leap</span>
-          </div>
-        </div>
-
-        <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
-          <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-          <ul class="text-passive text-orange-100/80 space-y-2">
-            <li class="flex items-start gap-2"><span class="text-color-strong">Preserve, Chivalry, Piety, Rigour and Augury are automatically unlocked, provided you have the Prayer level to use them.</span></li>
-            <li class="flex items-start gap-2"><span class="text-color-strong">With Level 99 Herblore, you can now mix a Super combat potion, a Ranging potion, a Magic potion, and an Onion together to create an Overload (Nightmare Zone version).</span></li>
-          </ul>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <div id="relic-universal-popup" onclick="handleOutsideClick(event, 'relic-universal-popup', closeRelicPopup)"
-       class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out">
-    <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 md:p-8 w-full md:max-w-5xl max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative flex flex-col gap-4" onclick="event.stopPropagation()">
-
-      <div class="flex items-center justify-center gap-4 md:gap-6 border-b border-orange-900/30 pb-2 min-h-[5rem] md:min-h-[8rem]">
-        <div class="w-20 h-20 md:w-32 md:h-32 shrink-0 overflow-hidden">
-          <img alt="Selected Relic" class="w-full h-full object-contain" id="popup-exp-icon" src="">
-        </div>
-        <h3 class="text-3xl !text-[2.6rem] sm:!text-[3.4rem] md:!text-[4.2rem] text-orange-400 leading-none select-none" id="popup-exp-title">
-          Relic Name
-        </h3>
-      </div>
-
-      <div class="text-lg text-gray-300 overflow-y-auto pr-1 leading-relaxed" id="popup-exp-desc">
-        Detailed explanation.
-      </div>
-
-      <div class="flex flex-col sm:flex-row gap-2 w-full mt-4" id="popup-action-container">
-        <button onclick="selectCurrentRelic(false)" id="popup-select-btn"
-                class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider">
-          Select This Relic
-        </button>
-        <button onclick="selectCurrentRelic(true)" id="popup-reloaded-btn"
-                class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider hidden">
-          Reload
+    <div
+      id="main-scroll-wrapper"
+      style="
+        width: 100vw;
+        height: 100vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+        z-index: 1;
+      "
+    >
+      <div class="fixed bottom-6 right-6 z-[10] md:hidden">
+        <button
+          onclick="cycleMobilePassives()"
+          id="passive-toggle-btn"
+          class="px-4 py-2 bg-orange-500/20 border-2 border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-black font-semibold rounded shadow-lg backdrop-blur-sm tracking-wider uppercase text-sm transition-all"
+        >
+          Passives: Show All
         </button>
       </div>
 
-      <button onclick="closeRelicPopup()"
-              class="mt-2 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider">
-        Close
-      </button>
-    </div>
-  </div>
+      <div
+        class="group flex items-center justify-center gap-3 md:gap-6 cursor-pointer select-none mt-8"
+        onclick="toggleWelcomePopup()"
+      >
+        <img
+          src="images/favicon.webp"
+          alt="Icon"
+          class="w-8 h-8 md:w-12 md:h-12 object-contain opacity-50 group-hover:opacity-100 transition-opacity duration-200 -scale-x-100"
+        />
 
-  <footer class="w-full border-t border-orange-900/30 bg-[#1e0f29]/80 py-12 mt-20">
-    <div class="container mx-auto px-4 flex flex-col items-center text-center">
-      <button onclick="toggleDisclaimer()"
-              class="group mb-6 flex items-center gap-2 text-orange-200/50 hover:text-orange-400 transition-colors uppercase tracking-widest font-medium">
-        <img src="images/credits.webp" alt="Dream" class="h-4 w-4 mb-[2px] object-contain filter grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-200">
-        Credits
-      </button>
-      <div class="space-y-2 text-[20px] text-gray-600 max-w-2xl tracking-tighter">
-        <p>Old School RuneScape is a trademark of Jagex Ltd. This project is not affiliated with Jagex Ltd.</p>
+        <div
+          class="text-title-title uppercase text-center leading-none text-[2.2rem] sm:text-[2.8rem] md:text-[3.5rem]"
+        >
+          Lunar leagues
+        </div>
+
+        <img
+          src="images/favicon.webp"
+          alt="Icon"
+          class="w-8 h-8 md:w-12 md:h-12 object-contain opacity-50 group-hover:opacity-100 transition-opacity duration-200"
+        />
       </div>
-    </div>
-  </footer>
 
-  <div id="disclaimer-popup" onclick="handleOutsideClick(event, 'disclaimer-popup', toggleDisclaimer)"
-       class="fixed inset-0 bg-black/80 flex items-center justify-center opacity-0 pointer-events-none z-[9999] p-4 backdrop-blur-sm transition-opacity duration-300 ease-in-out">
-    <div class="bg-[#1e0f29]/80 border border-orange-900/50 p-8 max-w-xl w-full rounded-lg shadow-2xl relative" onclick="event.stopPropagation()">
-      <h3 class="text-orange-400 font-bold mb-4 text-3xl">Credits and Disclaimers</h3>
-      <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
-        <ul class="relic-bullet">
-          <li>All descriptions and relic images on this website are <span class="relic-coloured-text">100% human-made</span> by Hai Yo.</li>
-          <li>This website used to display this information is <b>unapologetically</b> vibe coded by Phoneman btw.
+      <div class="text-title-subtitle text-center !no-underline mb-2 -mt-2">
+        (it's all in your head)
+      </div>
+
+      <div class="text-center mb-2 flex justify-center gap-3">
+        <div
+          class="relative inline-block pointer-events-auto"
+          id="share-btn-wrapper"
+          onclick="copyShareUrl()"
+          onmouseover="handleShareTooltip(event)"
+          onmousemove="handleShareTooltip(event)"
+          onmouseleave="hideShareTooltip()"
+          ontouchstart="handleShareTooltipMobile(event)"
+        >
+          <button
+            onclick="copyShareUrl()"
+            id="share-btn"
+            class="pointer-events-none px-5 py-2 font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all bg-gray-800/50 border border-gray-700 text-gray-500"
+          >
+            Share Build
+          </button>
+        </div>
+        <button
+          onclick="clearCompleteBuild()"
+          id="clear-btn"
+          class="px-5 py-2 bg-red-500/10 border border-red-500/40 text-red-400 hover:bg-red-500 hover:text-black font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all"
+        >
+          Clear Build
+        </button>
+      </div>
+
+      <main class="container mx-auto px-4 py-8 max-w-full">
+        <div
+          class="flex flex-col md:flex-row md:justify-between gap-8 md:gap-0"
+          id="relic-grid"
+        >
+          <section
+            class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+            id="tier-column-1"
+            data-purpose="tier-1"
+          >
+            <h2
+              class="relic-tier-title uppercase tracking-widest text-orange-400"
+            >
+              Tier 1
+            </h2>
+
+            <div
+              class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0"
+            >
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="magicthegathering"
+                onclick="loadRelic('magicthegathering')"
+              >
+                <img
+                  alt="Magic the Gathering"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_magicthegathering.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Magic the Gathering
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="symbiosis"
+                onclick="loadRelic('symbiosis')"
+              >
+                <img
+                  alt="Symbiosis"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_symbiosis.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Symbiosis
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="financialfraud"
+                onclick="loadRelic('financialfraud')"
+              >
+                <img
+                  alt="Financial Fraud"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_financialfraud.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Financial Fraud
+                </span>
+              </div>
+            </div>
+
+            <div
+              class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200"
+            >
+              <h3
+                class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+              >
+                Passive Bonuses
+              </h3>
+              <ul
+                class="text-passive leading-relaxed text-orange-100/80 space-y-2"
+              >
+                <li class="flex items-start gap-2">
+                  <span>Leagues XP multiplier is 5x.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span>Items from eligible sources are 2x common.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span>
+                    Farming ticks occur every 1 minute instead of every 5
+                    minutes.
+                  </span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span>Minigame points are boosted by 4x.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span>Run energy is never drained whilst running.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span>
+                    All clue scrolls will drop as stackable scroll boxes, and
+                    clue step progress is saved between clues.
+                  </span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span>
+                    Players will only receive clue steps and port tasks they can
+                    access within an unlocked region.
+                  </span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-color-strong">
+                    Trees and mining rocks never deplete, and fishing spots are
+                    automatically tracked.
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section
+            class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+            id="tier-column-2"
+            data-purpose="tier-2"
+          >
+            <h2
+              class="relic-tier-title uppercase tracking-widest text-orange-400"
+            >
+              Tier 2
+            </h2>
+
+            <div
+              class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0"
+            >
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="conman"
+                onclick="loadRelic('conman')"
+              >
+                <img
+                  alt="Conman"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_conman.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Conman
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="holyharvest"
+                onclick="loadRelic('holyharvest')"
+              >
+                <img
+                  alt="Holy Harvest"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_holyharvest.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Holy Harvest
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="perpetualstew"
+                onclick="loadRelic('perpetualstew')"
+              >
+                <img
+                  alt="Perpetual Stew"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_perpetualstew.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Perpetual Stew
+                </span>
+              </div>
+            </div>
+
+            <div
+              class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200"
+            >
+              <h3
+                class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+              >
+                Passive Bonuses
+              </h3>
+              <ul
+                class="text-passive leading-relaxed text-orange-100/80 space-y-2"
+              >
+                <li class="flex items-start gap-2">
+                  <span>Leagues XP multiplier is increased from 5x to 8x.</span>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section
+            class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+            id="tier-column-3"
+            data-purpose="tier-3"
+          >
+            <h2
+              class="relic-tier-title uppercase tracking-widest text-orange-400"
+            >
+              Tier 3
+            </h2>
+
+            <div
+              class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0"
+            >
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="friendoftheforest"
+                onclick="loadRelic('friendoftheforest')"
+              >
+                <img
+                  alt="Friend of the Forest"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_friendoftheforest.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Friend of the Forest
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="harnessedearth"
+                onclick="loadRelic('harnessedearth')"
+              >
+                <img
+                  alt="Harnessed Earth"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_harnessedearth.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Harnessed Earth
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="callofthesea"
+                onclick="loadRelic('callofthesea')"
+              >
+                <img
+                  alt="Call of the Sea"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_callofthesea.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Call of the Sea
+                </span>
+              </div>
+            </div>
+
+            <div
+              class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200"
+            >
+              <h3
+                class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+              >
+                Passive Bonuses
+              </h3>
+              <ul
+                class="text-passive leading-relaxed text-orange-100/80 space-y-2"
+              >
+                <li class="flex items-start gap-2">
+                  <span>
+                    Combat experience (including Hitpoints and Prayer) will be
+                    multiplied by 1.5x. This is multiplicative with other
+                    experience modifiers.
+                  </span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span>
+                    The "Bigger and Badder" slayer unlock is unlocked for free.
+                  </span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span>
+                    Slayer reward points are 5x from tasks, and you aren't
+                    required to complete 5 tasks before earning points.
+                  </span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span>
+                    Superior slayer monsters will appear at a rate of 1/50.
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section
+            class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+            id="tier-column-4"
+            data-purpose="tier-4"
+          >
+            <h2
+              class="relic-tier-title uppercase tracking-widest text-orange-400"
+            >
+              Tier 4
+            </h2>
+
+            <div
+              class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0"
+            >
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="runtotherescue"
+                onclick="loadRelic('runtotherescue')"
+              >
+                <img
+                  alt="Run to the Rescue"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_runtotherescue.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Run to the Rescue
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="industrialevolution"
+                onclick="loadRelic('industrialevolution')"
+              >
+                <img
+                  alt="Industrial Evolution"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_industrialevolution.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Industrial Evolution
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="unleashedteleport"
+                onclick="loadRelic('unleashedteleport')"
+              >
+                <img
+                  alt="Unleashed Teleport"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_unleashedteleport.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Unleashed Teleport
+                </span>
+              </div>
+            </div>
+
+            <div
+              class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200"
+            >
+              <h3
+                class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+              >
+                Passive Bonuses
+              </h3>
+              <ul
+                class="text-passive leading-relaxed text-orange-100/80 space-y-2"
+              >
+                <li class="flex items-start gap-2">
+                  <span>Items from eligible sources will be 5x as common.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span>Minigame Points received are boosted by 8x.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span>
+                    Leagues XP multiplier is increased from 8x to 12x.
+                  </span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-color-strong">
+                    Clue scrolls are now 2x more common from all sources.
+                  </span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-color-strong">
+                    Clue scrolls will always have the minimum amount of steps
+                    for their tier, and yield the maximum amount of rewards.
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section
+            class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+            id="tier-column-5"
+            data-purpose="tier-5"
+          >
+            <h2
+              class="relic-tier-title uppercase tracking-widest text-orange-400"
+            >
+              Tier 5
+            </h2>
+
+            <div
+              class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0"
+            >
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="lordoftherings"
+                onclick="loadRelic('lordoftherings')"
+              >
+                <img
+                  alt="Lord of the Rings"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_lordoftherings.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Lord of the Rings
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="runicfreelancer"
+                onclick="loadRelic('runicfreelancer')"
+              >
+                <img
+                  alt="Runic Freelancer"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_runicfreelancer.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Runic Freelancer
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="faith"
+                onclick="loadRelic('faith')"
+              >
+                <img
+                  alt="Faith"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_faith.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Faith
+                </span>
+              </div>
+            </div>
+
+            <div
+              class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200"
+            >
+              <h3
+                class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+              >
+                Passive Bonuses
+              </h3>
+              <ul
+                class="text-passive leading-relaxed text-orange-100/80 space-y-2"
+              >
+                <li class="flex items-start gap-2">
+                  <span class="text-color-strong">
+                    A Black mask is now available at any Slayer master shop for
+                    1,000 Slayer points.
+                  </span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-color-strong">
+                    You may now purchase a specific Slayer task, including
+                    amount to kill, for 100 Slayer points each.
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section
+            class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+            id="tier-column-6"
+            data-purpose="tier-6"
+          >
+            <h2
+              class="relic-tier-title uppercase tracking-widest text-orange-400"
+            >
+              Tier 6
+            </h2>
+
+            <div
+              class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0"
+            >
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="feralexorcism"
+                onclick="loadRelic('feralexorcism')"
+              >
+                <img
+                  alt="Feral Exorcism"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_feralexorcism.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Feral Exorcism
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="papercrafting"
+                onclick="loadRelic('papercrafting')"
+              >
+                <img
+                  alt="Papercrafting"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_papercrafting.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Papercrafting
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="mariner"
+                onclick="loadRelic('mariner')"
+              >
+                <img
+                  alt="Mariner"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_mariner.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Mariner
+                </span>
+              </div>
+            </div>
+
+            <div
+              class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200"
+            >
+              <h3
+                class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+              >
+                Passive Bonuses
+              </h3>
+              <ul class="text-passive text-orange-100/80 space-y-2">
+                <li class="flex items-start gap-2">
+                  <span>
+                    Leagues XP multiplier is increased from 12x to 16x.
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section
+            class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+            id="tier-column-7"
+            data-purpose="tier-7"
+          >
+            <h2
+              class="relic-tier-title uppercase tracking-widest text-orange-400"
+            >
+              Tier 7
+            </h2>
+
+            <div
+              class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0"
+            >
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="reapersavarice"
+                onclick="loadRelic('reapersavarice')"
+              >
+                <img
+                  alt="Reapers Avarice"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_reapersavarice.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Reaper's Avarice
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="rainingluck"
+                onclick="loadRelic('rainingluck')"
+              >
+                <img
+                  alt="Raining Luck"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_rainingluck.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Raining Luck
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="squealoffortune"
+                onclick="loadRelic('squealoffortune')"
+              >
+                <img
+                  alt="Squeal of Fortune"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_squealoffortune.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Squeal of Fortune
+                </span>
+              </div>
+            </div>
+
+            <div
+              class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200"
+            >
+              <h3
+                class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+              >
+                Passive Bonuses
+              </h3>
+              <ul class="text-passive text-orange-100/80 space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-color-strong">
+                    Reloaded: In addition to choosing a relic from this tier,
+                    you can unlock any additional relic from Tier 6 and below.
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section
+            class="tier-column flex-1 px-4 flex flex-col items-center gap-6"
+            id="tier-column-8"
+            data-purpose="tier-8"
+          >
+            <h2
+              class="relic-tier-title uppercase tracking-widest text-orange-400"
+            >
+              Tier 8
+            </h2>
+
+            <div
+              class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0"
+            >
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="grandmasteratarms"
+                onclick="loadRelic('grandmasteratarms')"
+              >
+                <img
+                  alt="Grandmaster At Arms"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_grandmasteratarms.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Grandmaster at Arms
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="dragonmulticannon"
+                onclick="loadRelic('dragonmulticannon')"
+              >
+                <img
+                  alt="Dragon Multicannon"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_dragonmulticannon.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Dragon Multicannon
+                </span>
+              </div>
+              <div
+                class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full"
+                data-relic-id="leap"
+                onclick="loadRelic('leap')"
+              >
+                <img
+                  alt="Leap"
+                  class="w-20 h-20 p-1 group-hover:scale-110 transition-transform"
+                  src="images/relics/relic_leap.webp"
+                />
+                <span
+                  class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium"
+                >
+                  Leap
+                </span>
+              </div>
+            </div>
+
+            <div
+              class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200"
+            >
+              <h3
+                class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline"
+              >
+                Passive Bonuses
+              </h3>
+              <ul class="text-passive text-orange-100/80 space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-color-strong">
+                    Preserve, Chivalry, Piety, Rigour and Augury are
+                    automatically unlocked, provided you have the Prayer level
+                    to use them.
+                  </span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-color-strong">
+                    With Level 99 Herblore, you can now mix a Super combat
+                    potion, a Ranging potion, a Magic potion, and an Onion
+                    together to create an Overload (Nightmare Zone version).
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <div
+        id="relic-universal-popup"
+        onclick="
+          handleOutsideClick(event, 'relic-universal-popup', closeRelicPopup)
+        "
+        class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out"
+      >
+        <div
+          class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 md:p-8 w-full md:max-w-5xl max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative flex flex-col gap-4"
+          onclick="event.stopPropagation()"
+        >
+          <div
+            class="flex items-center justify-center gap-4 md:gap-6 border-b border-orange-900/30 pb-2 min-h-[5rem] md:min-h-[8rem]"
+          >
+            <div class="w-20 h-20 md:w-32 md:h-32 shrink-0 overflow-hidden">
+              <img
+                alt="Selected Relic"
+                class="w-full h-full object-contain"
+                id="popup-exp-icon"
+                src=""
+              />
+            </div>
+            <h3
+              class="text-3xl !text-[2.6rem] sm:!text-[3.4rem] md:!text-[4.2rem] text-orange-400 leading-none select-none"
+              id="popup-exp-title"
+            >
+              Relic Name
+            </h3>
+          </div>
+
+          <div
+            class="text-lg text-gray-300 overflow-y-auto pr-1 leading-relaxed"
+            id="popup-exp-desc"
+          >
+            Detailed explanation.
+          </div>
+
+          <div
+            class="flex flex-col sm:flex-row gap-2 w-full mt-4"
+            id="popup-action-container"
+          >
+            <button
+              onclick="selectCurrentRelic(false)"
+              id="popup-select-btn"
+              class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider"
+            >
+              Select This Relic
+            </button>
+            <button
+              onclick="selectCurrentRelic(true)"
+              id="popup-reloaded-btn"
+              class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider hidden"
+            >
+              Reload
+            </button>
+          </div>
+
+          <button
+            onclick="closeRelicPopup()"
+            class="mt-2 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+
+      <footer
+        class="w-full border-t border-orange-900/30 bg-[#1e0f29]/80 py-12 mt-20"
+      >
+        <div
+          class="container mx-auto px-4 flex flex-col items-center text-center"
+        >
+          <button
+            onclick="toggleDisclaimer()"
+            class="group mb-6 flex items-center gap-2 text-orange-200/50 hover:text-orange-400 transition-colors uppercase tracking-widest font-medium"
+          >
+            <img
+              src="images/credits.webp"
+              alt="Dream"
+              class="h-4 w-4 mb-[2px] object-contain filter grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-200"
+            />
+            Credits
+          </button>
+          <div
+            class="space-y-2 text-[20px] text-gray-600 max-w-2xl tracking-tighter"
+          >
+            <p>
+              Old School RuneScape is a trademark of Jagex Ltd. This project is
+              not affiliated with Jagex Ltd.
+            </p>
+          </div>
+        </div>
+      </footer>
+
+      <div
+        id="disclaimer-popup"
+        onclick="
+          handleOutsideClick(event, 'disclaimer-popup', toggleDisclaimer)
+        "
+        class="fixed inset-0 bg-black/80 flex items-center justify-center opacity-0 pointer-events-none z-[9999] p-4 backdrop-blur-sm transition-opacity duration-300 ease-in-out"
+      >
+        <div
+          class="bg-[#1e0f29]/80 border border-orange-900/50 p-8 max-w-xl w-full rounded-lg shadow-2xl relative"
+          onclick="event.stopPropagation()"
+        >
+          <h3 class="text-orange-400 font-bold mb-4 text-3xl">
+            Credits and Disclaimers
+          </h3>
+          <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
             <ul class="relic-bullet">
-              <li><b>Please</b> do not look at the source code it is a god-awful mess</li>
+              <li>
+                All descriptions and relic images on this website are
+                <span class="relic-coloured-text">100% human-made</span>
+                by Hai Yo.
+              </li>
+              <li>
+                This website used to display this information is
+                <b>unapologetically</b>
+                vibe coded by Phoneman btw.
+                <ul class="relic-bullet">
+                  <li>
+                    <b>Please</b>
+                    do not look at the source code it is a god-awful mess
+                  </li>
+                </ul>
+              </li>
+              <li>
+                Moving background video by
+                <a
+                  class="relic-coloured-text underline"
+                  href="https://www.pexels.com/@wayne-speedy-777933/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Wayne Speedy
+                </a>
+                via
+                <a
+                  class="relic-coloured-text underline"
+                  href="https://www.pexels.com/photo/full-moon-in-the-sky-4190863/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Pexels
+                </a>
+              </li>
             </ul>
-          </li>
-          <li>Moving background video by <a class="relic-coloured-text underline" href="https://www.pexels.com/@wayne-speedy-777933/" target="_blank" rel="noopener noreferrer">Wayne Speedy</a> via <a class="relic-coloured-text underline" href="https://www.pexels.com/photo/full-moon-in-the-sky-4190863/" target="_blank" rel="noopener noreferrer">Pexels</a></li>
-        </ul>
+          </div>
+          <button
+            onclick="toggleDisclaimer()"
+            class="mt-8 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold"
+          >
+            Close
+          </button>
+        </div>
       </div>
-      <button onclick="toggleDisclaimer()" class="mt-8 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold">Close</button>
-    </div>
-  </div>
 
-  <div id="welcome-popup" onclick="handleOutsideClick(event, 'welcome-popup', closeWelcomePopup)"
-       class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out">
-    <div class="bg-[#1e0f29]/90 border border-orange-900/50 py-6 px-4 sm:p-8 max-w-xl w-full max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative" onclick="event.stopPropagation()">
-      <img src="images/favicon.webp" alt="Icon" class="absolute top-5 right-5 w-8 h-8 object-contain pointer-events-none">
-      <h3 class="text-orange-400 font-bold mb-4 text-3xl uppercase text-center">Welcome</h3>
-      <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
-        <p>To best understand these relics, you'll need some essential context:</p>
-        <ul class="relic-bullet">
-          <li>All players start in <span class="relic-coloured-text">Misthalin</span>.</li>
-          <li><span class="relic-coloured-text">Sailing</span> and all its related content would be present in this League.
+      <div
+        id="welcome-popup"
+        onclick="handleOutsideClick(event, 'welcome-popup', closeWelcomePopup)"
+        class="fixed inset-0 bg-black/85 flex items-center justify-center opacity-0 pointer-events-none z-[99999] p-4 backdrop-blur-md transition-opacity duration-300 ease-in-out"
+      >
+        <div
+          class="bg-[#1e0f29]/90 border border-orange-900/50 py-6 px-4 sm:p-8 max-w-xl w-full max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative"
+          onclick="event.stopPropagation()"
+        >
+          <img
+            src="images/favicon.webp"
+            alt="Icon"
+            class="absolute top-5 right-5 w-8 h-8 object-contain pointer-events-none"
+          />
+          <h3
+            class="text-orange-400 font-bold mb-4 text-3xl uppercase text-center"
+          >
+            Welcome
+          </h3>
+          <div class="text-lg text-gray-300 space-y-4 leading-relaxed">
+            <p>
+              To best understand these relics, you'll need some essential
+              context:
+            </p>
             <ul class="relic-bullet">
-              <li>You would only have access to the oceans which you can directly sail into from <span class="relic-coloured-text">docking points in areas you've unlocked</span> (e.g. Misthalin grants access to the Ardent Ocean. Varlamore grants access to the Western and Sunset Oceans).</li>
+              <li>
+                All players start in
+                <span class="relic-coloured-text">Misthalin</span>
+                .
+              </li>
+              <li>
+                <span class="relic-coloured-text">Sailing</span>
+                and all its related content would be present in this League.
+                <ul class="relic-bullet">
+                  <li>
+                    You would only have access to the oceans which you can
+                    directly sail into from
+                    <span class="relic-coloured-text">
+                      docking points in areas you've unlocked
+                    </span>
+                    (e.g. Misthalin grants access to the Ardent Ocean. Varlamore
+                    grants access to the Western and Sunset Oceans).
+                  </li>
+                </ul>
+              </li>
+              <li>
+                A separate system for combat, more similar to Combat Masteries
+                than Demonic Pacts, would
+                <span class="relic-coloured-text">coexist</span>
+                with these relics. This is why there are only a few combat
+                oriented choices here.
+              </li>
+              <ul class="relic-bullet">
+                <li>If you'd be interested in seeing these, let us know!</li>
+              </ul>
+              <li>
+                Most passive bonuses are the same as in Leagues 6: Demonic
+                Pacts. New passive bonuses are listed in
+                <span class="relic-coloured-text">orange</span>
+                .
+              </li>
             </ul>
-          </li>
-          <li>A separate system for combat, more similar to Combat Masteries than Demonic Pacts, would <span class="relic-coloured-text">coexist</span> with these relics. This is why there are only a few combat oriented choices here.</li>
-          <ul class="relic-bullet">
-            <li>If you'd be interested in seeing these, let us know!</li>
-          </ul>
-          <li>Most passive bonuses are the same as in Leagues 6: Demonic Pacts. New passive bonuses are listed in <span class="relic-coloured-text">orange</span>.</li>
-        </ul>
+          </div>
+          <button
+            onclick="closeWelcomePopup()"
+            class="mt-8 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-400 hover:text-black transition-colors rounded text-lg font-semibold"
+          >
+            Understood, put me to sleep
+          </button>
+        </div>
       </div>
-      <button onclick="closeWelcomePopup()" class="mt-8 w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-400 hover:text-black transition-colors rounded text-lg font-semibold">Understood, put me to sleep</button>
     </div>
-  </div>
 
-</div>
+    <div
+      id="share-tooltip-element"
+      class="share-error-tooltip fixed hidden"
+    ></div>
 
-<div id="share-tooltip-element" class="share-error-tooltip fixed hidden"></div>
+    <script data-purpose="interaction-logic">
+      let selections = {
+        1: null,
+        2: null,
+        3: null,
+        4: null,
+        5: null,
+        6: null,
+        7: null,
+        8: null,
+      };
+      let reloadedSelection = null;
+      let currentlyOpenRelicKey = null;
 
-<script data-purpose="interaction-logic">
-  let selections = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null, 8: null };
-  let reloadedSelection = null;
-  let currentlyOpenRelicKey = null;
+      const TIER_MAPPINGS = {
+        1: ["magicthegathering", "symbiosis", "financialfraud"],
+        2: ["conman", "holyharvest", "perpetualstew"],
+        3: ["friendoftheforest", "harnessedearth", "callofthesea"],
+        4: ["runtotherescue", "industrialevolution", "unleashedteleport"],
+        5: ["lordoftherings", "runicfreelancer", "faith"],
+        6: ["feralexorcism", "papercrafting", "mariner"],
+        7: ["reapersavarice", "rainingluck", "squealoffortune"],
+        8: ["grandmasteratarms", "dragonmulticannon", "leap"],
+      };
 
-  const TIER_MAPPINGS = {
-    1: ['magicthegathering', 'symbiosis', 'financialfraud'],
-    2: ['conman', 'holyharvest', 'perpetualstew'],
-    3: ['friendoftheforest', 'harnessedearth', 'callofthesea'],
-    4: ['runtotherescue', 'industrialevolution', 'unleashedteleport'],
-    5: ['lordoftherings', 'runicfreelancer', 'faith'],
-    6: ['feralexorcism', 'papercrafting', 'mariner'],
-    7: ['reapersavarice', 'rainingluck', 'squealoffortune'],
-    8: ['grandmasteratarms', 'dragonmulticannon', 'leap']
-  };
+      function loadRelic(key) {
+        currentlyOpenRelicKey = key;
+        const rawText = RELIC_RAW_DATA[key];
+        if (!rawText) return;
 
-  function loadRelic(key) {
-    currentlyOpenRelicKey = key;
-    const rawText = RELIC_RAW_DATA[key];
-    if (!rawText) return;
+        const processedText = rawText.replace(/^__.*?__\s*/m, "").trim();
+        const normalizedText = processedText
+          .replace(/\xa0/g, " ")
+          .replace(/\t/g, "    ");
+        const lines = normalizedText.split("\n");
 
-    const processedText = rawText.replace(/^__.*?__\s*/m, '').trim();
-    const normalizedText = processedText.replace(/\xa0/g, ' ').replace(/\t/g, '    ');
-    const lines = normalizedText.split('\n');
+        let htmlOutput = [];
+        let stack = [];
 
-    let htmlOutput = [];
-    let stack = [];
+        lines.forEach((line) => {
+          let cleanLine = line.trimEnd();
+          if (!cleanLine.trim()) return;
 
-    lines.forEach(line => {
-      let cleanLine = line.trimEnd();
-      if (!cleanLine.trim()) return;
+          cleanLine = cleanLine.replace(/\*\*(.*?)\*\"/g, "<b>$1</b>");
+          cleanLine = cleanLine.replace(
+            /\*(.*?)\*/g,
+            '<span class="relic-coloured-text">$1</span>',
+          );
 
-      cleanLine = cleanLine.replace(/\*\*(.*?)\*\"/g, '<b>$1</b>');
-      cleanLine = cleanLine.replace(/\*(.*?)\*/g, '<span class="relic-coloured-text">$1</span>');
+          const matchSpaces = line.match(/^\s*/);
+          const leadingSpaces = matchSpaces ? matchSpaces[0].length : 0;
+          const targetDepth = Math.floor(leadingSpaces / 3) + 1;
 
-      const matchSpaces = line.match(/^\s*/);
-      const leadingSpaces = matchSpaces ? matchSpaces[0].length : 0;
-      const targetDepth = Math.floor(leadingSpaces / 3) + 1;
+          if (cleanLine.trim().startsWith("- ")) {
+            const content = cleanLine.trim().substring(2).trim();
 
-      if (cleanLine.trim().startsWith("- ")) {
-        const content = cleanLine.trim().substring(2).trim();
+            while (stack.length > targetDepth * 2) {
+              htmlOutput.push(`</${stack.pop()}>`);
+            }
 
-        while (stack.length > (targetDepth * 2)) {
-          htmlOutput.push(`</${stack.pop()}>`);
-        }
+            if (stack.length === targetDepth * 2) {
+              htmlOutput.push("</li>");
+              stack.pop();
+            }
 
-        if (stack.length === (targetDepth * 2)) {
-          htmlOutput.push("</li>");
-          stack.pop();
-        }
+            while (stack.length < targetDepth * 2) {
+              if (stack.length % 2 === 0) {
+                htmlOutput.push("<ul class='relic-bullet'>");
+                stack.push("ul");
+              } else {
+                stack.push("li");
+              }
+            }
 
-        while (stack.length < (targetDepth * 2)) {
-          if (stack.length % 2 === 0) {
-            htmlOutput.push("<ul class='relic-bullet'>");
-            stack.push("ul");
+            htmlOutput.push(`<li>${content}`);
           } else {
-            stack.push("li");
+            while (stack.length > 0) {
+              htmlOutput.push(`</${stack.pop()}>`);
+            }
+            htmlOutput.push(`<p>${cleanLine.trim()}</p>`);
           }
-        }
+        });
 
-        htmlOutput.push(`<li>${content}`);
-      } else {
         while (stack.length > 0) {
           htmlOutput.push(`</${stack.pop()}>`);
         }
-        htmlOutput.push(`<p>${cleanLine.trim()}</p>`);
-      }
-    });
 
-    while (stack.length > 0) {
-      htmlOutput.push(`</${stack.pop()}>`);
-    }
+        const finalHtml = htmlOutput.join("");
 
-    const finalHtml = htmlOutput.join("");
+        const gridItem = document.querySelector(`[data-relic-id="${key}"]`);
+        const title = gridItem ? gridItem.querySelector("span").innerText : key;
+        const iconSrc = gridItem ? gridItem.querySelector("img").src : "";
 
-    const gridItem = document.querySelector(`[data-relic-id="${key}"]`);
-    const title = gridItem ? gridItem.querySelector('span').innerText : key;
-    const iconSrc = gridItem ? gridItem.querySelector('img').src : '';
+        const tier = getTierByRelicKey(key);
+        const selectBtn = document.getElementById("popup-select-btn");
+        const reloadedBtn = document.getElementById("popup-reloaded-btn");
 
-    const tier = getTierByRelicKey(key);
-    const selectBtn = document.getElementById('popup-select-btn');
-    const reloadedBtn = document.getElementById('popup-reloaded-btn');
+        selectBtn.innerText = "Select This Relic";
+        selectBtn.className =
+          "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
 
-    selectBtn.innerText = "Select This Relic";
-    selectBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
+        reloadedBtn.innerText = "Reload";
+        reloadedBtn.className =
+          "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider hidden";
 
-    reloadedBtn.innerText = "Reload";
-    reloadedBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider hidden";
-
-    if (!isTierSelectable(tier)) {
-      if (tier === 8 && hasCompletedMainTiersOneToSeven() && !reloadedSelection) {
-        selectBtn.innerText = "Select Reload Slot First";
-      } else {
-        selectBtn.innerText = `Select Tiers 1-${tier - 1} First`;
-      }
-      selectBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-800/50 border border-gray-700 text-gray-500 transition-colors rounded text-lg font-semibold uppercase tracking-wider cursor-not-allowed";
-    } else if (selections[tier] === key) {
-      selectBtn.innerText = "Selected ✓";
-      selectBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
-    }
-
-    if (tier >= 1 && tier <= 6 && selections[7]) {
-      reloadedBtn.classList.remove('hidden');
-      if (selections[tier] === key) {
-        reloadedBtn.innerText = "Unavailable";
-        reloadedBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-800/50 border border-gray-700 text-gray-500 transition-colors rounded text-lg font-semibold uppercase tracking-wider cursor-not-allowed";
-      } else if (!isTierSelectable(tier)) {
-        reloadedBtn.innerText = "Complete Order First";
-        reloadedBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-800/50 border border-gray-700 text-gray-500 transition-colors rounded text-lg font-semibold uppercase tracking-wider cursor-not-allowed";
-      } else if (reloadedSelection === key) {
-        reloadedBtn.innerText = "Reload Active ✓";
-        reloadedBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/40 border border-orange-400 text-orange-300 hover:bg-orange-400 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
-      }
-    } else {
-      reloadedBtn.classList.add('hidden');
-    }
-
-    showDetails(title, iconSrc, finalHtml);
-  }
-
-  function hasCompletedMainTiersOneToSeven() {
-    for (let t = 1; t <= 7; t++) {
-      if (!selections[t]) return false;
-    }
-    return true;
-  }
-
-  function isTierSelectable(tier) {
-    if (tier === 1) return true;
-    if (tier === 8) {
-      if (!hasCompletedMainTiersOneToSeven()) return false;
-      if (!reloadedSelection) return false;
-      return true;
-    }
-    for (let t = 1; t < tier; t++) {
-      if (!selections[t]) return false;
-    }
-    return true;
-  }
-
-  function getTierByRelicKey(key) {
-    for (const [tier, keys] of Object.entries(TIER_MAPPINGS)) {
-      if (keys.includes(key)) return parseInt(tier);
-    }
-    return null;
-  }
-
-  function triggerFloatingIndicator(relicKey) {
-    const parentContainer = document.querySelector(`[data-relic-id="${relicKey}"]`);
-    if (!parentContainer) return;
-
-    const oldIndicator = parentContainer.querySelector('.osrs-float-indicator');
-    if (oldIndicator) oldIndicator.remove();
-
-    const indicator = document.createElement('div');
-    indicator.className = 'osrs-float-indicator';
-    indicator.innerText = 'Reload unlocked';
-
-    parentContainer.appendChild(indicator);
-
-    setTimeout(() => {
-      indicator.remove();
-    }, 1000);
-  }
-
-  function selectCurrentRelic(isReloadedSelection = false) {
-    if (!currentlyOpenRelicKey) return;
-
-    const tier = getTierByRelicKey(currentlyOpenRelicKey);
-    if (!tier || !isTierSelectable(tier)) return;
-
-    let tier7SelectedNow = false;
-
-    if (isReloadedSelection) {
-      if (!selections[7] || selections[tier] === currentlyOpenRelicKey) return;
-      if (reloadedSelection === currentlyOpenRelicKey) {
-        reloadedSelection = null;
-        selections[8] = null;
-      } else {
-        reloadedSelection = currentlyOpenRelicKey;
-      }
-    } else {
-      if (selections[tier] === currentlyOpenRelicKey) {
-        for (let t = tier; t <= 8; t++) {
-          selections[t] = null;
+        if (!isTierSelectable(tier)) {
+          if (
+            tier === 8 &&
+            hasCompletedMainTiersOneToSeven() &&
+            !reloadedSelection
+          ) {
+            selectBtn.innerText = "Select Reload Slot First";
+          } else {
+            selectBtn.innerText = `Select Tiers 1-${tier - 1} First`;
+          }
+          selectBtn.className =
+            "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-800/50 border border-gray-700 text-gray-500 transition-colors rounded text-lg font-semibold uppercase tracking-wider cursor-not-allowed";
+        } else if (selections[tier] === key) {
+          selectBtn.innerText = "Selected ✓";
+          selectBtn.className =
+            "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
         }
-        reloadedSelection = null;
-      } else {
-        selections[tier] = currentlyOpenRelicKey;
-        if (tier === 7) tier7SelectedNow = true;
-        if (reloadedSelection === currentlyOpenRelicKey) reloadedSelection = null;
+
+        if (tier >= 1 && tier <= 6 && selections[7]) {
+          reloadedBtn.classList.remove("hidden");
+          if (selections[tier] === key) {
+            reloadedBtn.innerText = "Unavailable";
+            reloadedBtn.className =
+              "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-800/50 border border-gray-700 text-gray-500 transition-colors rounded text-lg font-semibold uppercase tracking-wider cursor-not-allowed";
+          } else if (!isTierSelectable(tier)) {
+            reloadedBtn.innerText = "Complete Order First";
+            reloadedBtn.className =
+              "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-800/50 border border-gray-700 text-gray-500 transition-colors rounded text-lg font-semibold uppercase tracking-wider cursor-not-allowed";
+          } else if (reloadedSelection === key) {
+            reloadedBtn.innerText = "Reload Active ✓";
+            reloadedBtn.className =
+              "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/40 border border-orange-400 text-orange-300 hover:bg-orange-400 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
+          }
+        } else {
+          reloadedBtn.classList.add("hidden");
+        }
+
+        showDetails(title, iconSrc, finalHtml);
       }
-    }
 
-    updateGridVisuals();
-    updateUrlParams();
-    closeRelicPopup();
-
-    if (tier7SelectedNow) {
-      triggerFloatingIndicator(currentlyOpenRelicKey);
-    }
-  }
-
-  function updateGridVisuals() {
-    document.querySelectorAll('.relic-icon-wrapper img').forEach(img => {
-      img.classList.remove('relic-glow-orange', 'relic-glow-reload');
-    });
-
-    Object.values(selections).forEach(key => {
-      if (!key) return;
-      const activeIcon = document.querySelector(`[data-relic-id="${key}"] img`);
-      if (activeIcon) {
-        activeIcon.classList.add('relic-glow-orange');
+      function hasCompletedMainTiersOneToSeven() {
+        for (let t = 1; t <= 7; t++) {
+          if (!selections[t]) return false;
+        }
+        return true;
       }
-    });
 
-    if (reloadedSelection) {
-      const reloadedIcon = document.querySelector(`[data-relic-id="${reloadedSelection}"] img`);
-      if (reloadedIcon) {
-        reloadedIcon.classList.add('relic-glow-reload');
+      function isTierSelectable(tier) {
+        if (tier === 1) return true;
+        if (tier === 8) {
+          if (!hasCompletedMainTiersOneToSeven()) return false;
+          if (!reloadedSelection) return false;
+          return true;
+        }
+        for (let t = 1; t < tier; t++) {
+          if (!selections[t]) return false;
+        }
+        return true;
       }
-    }
 
-    updateShareButtonState();
-  }
-
-  function isBuildComplete() {
-    for (let t = 1; t <= 8; t++) {
-      if (!selections[t]) return false;
-    }
-    if (selections[7] && !reloadedSelection) return false;
-    return true;
-  }
-
-  function getShareValidationMessage() {
-    let missingMainTier = null;
-    for (let t = 1; t <= 8; t++) {
-      if (!selections[t]) {
-        missingMainTier = t;
-        break;
+      function getTierByRelicKey(key) {
+        for (const [tier, keys] of Object.entries(TIER_MAPPINGS)) {
+          if (keys.includes(key)) return parseInt(tier);
+        }
+        return null;
       }
-    }
 
-    if (missingMainTier !== null) {
-      if (missingMainTier === 8 && selections[7] && !reloadedSelection) {
-        return "Tier 8 unlocked but reload is missing";
+      function triggerFloatingIndicator(relicKey) {
+        const parentContainer = document.querySelector(
+          `[data-relic-id="${relicKey}"]`,
+        );
+        if (!parentContainer) return;
+
+        const oldIndicator = parentContainer.querySelector(
+          ".osrs-float-indicator",
+        );
+        if (oldIndicator) oldIndicator.remove();
+
+        const indicator = document.createElement("div");
+        indicator.className = "osrs-float-indicator";
+        indicator.innerText = "Reload unlocked";
+
+        parentContainer.appendChild(indicator);
+
+        setTimeout(() => {
+          indicator.remove();
+        }, 1000);
       }
-      return "Complete previous tiers first";
-    }
 
-    if (selections[7] && !reloadedSelection) {
-      return "Tier 8 unlocked but reload is missing";
-    }
+      function selectCurrentRelic(isReloadedSelection = false) {
+        if (!currentlyOpenRelicKey) return;
 
-    return null;
-  }
+        const tier = getTierByRelicKey(currentlyOpenRelicKey);
+        if (!tier || !isTierSelectable(tier)) return;
 
-  function handleShareTooltip(event) {
-    if (isBuildComplete()) {
-      hideShareTooltip();
-      return;
-    }
+        let tier7SelectedNow = false;
 
-    const tooltip = document.getElementById('share-tooltip-element');
-    const msg = getShareValidationMessage();
-    if (!msg) return;
+        if (isReloadedSelection) {
+          if (!selections[7] || selections[tier] === currentlyOpenRelicKey)
+            return;
+          if (reloadedSelection === currentlyOpenRelicKey) {
+            reloadedSelection = null;
+            selections[8] = null;
+          } else {
+            reloadedSelection = currentlyOpenRelicKey;
+          }
+        } else {
+          if (selections[tier] === currentlyOpenRelicKey) {
+            for (let t = tier; t <= 8; t++) {
+              selections[t] = null;
+            }
+            reloadedSelection = null;
+          } else {
+            selections[tier] = currentlyOpenRelicKey;
+            if (tier === 7) tier7SelectedNow = true;
+            if (reloadedSelection === currentlyOpenRelicKey)
+              reloadedSelection = null;
+          }
+        }
 
-    tooltip.innerText = msg;
-    tooltip.classList.remove('hidden');
+        updateGridVisuals();
+        updateUrlParams();
+        closeRelicPopup();
 
-    tooltip.style.left = (event.clientX + 15) + 'px';
-    tooltip.style.top = (event.clientY + 15) + 'px';
-  }
-
-  function handleShareTooltipMobile(event) {
-    if (isBuildComplete()) return;
-
-    const tooltip = document.getElementById('share-tooltip-element');
-    const msg = getShareValidationMessage();
-    if (!msg) return;
-
-    tooltip.innerText = msg;
-    tooltip.classList.remove('hidden');
-
-    tooltip.style.left = '50%';
-    tooltip.style.top = '15%';
-    tooltip.style.transform = 'translateX(-50%)';
-
-    setTimeout(hideShareTooltip, 2500);
-  }
-
-  function hideShareTooltip() {
-    const tooltip = document.getElementById('share-tooltip-element');
-    tooltip.classList.add('hidden');
-    tooltip.style.transform = '';
-  }
-
-function updateShareButtonState() {
-  const shareBtn = document.getElementById('share-btn');
-  if (isBuildComplete()) {
-    shareBtn.classList.remove('pointer-events-none', 'bg-gray-800/50', 'border-gray-700', 'text-gray-500');
-    shareBtn.classList.add('pointer-events-auto', 'bg-orange-500/20', 'border-orange-500', 'text-orange-400');
-    shareBtn.innerText = "🔗 Share Build";
-  } else {
-    shareBtn.classList.add('pointer-events-none', 'bg-gray-800/50', 'border-gray-700', 'text-gray-500');
-    shareBtn.classList.remove('pointer-events-auto', 'bg-orange-500/20', 'border-orange-500', 'text-orange-400');
-    shareBtn.innerText = "Share Build";
-  }
-}
-
-  function clearCompleteBuild() {
-    selections = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null, 8: null };
-    reloadedSelection = null;
-    hideShareTooltip();
-    updateGridVisuals();
-    updateUrlParams();
-  }
-
-  function updateUrlParams() {
-    const url = new URL(window.location.href);
-    let codeString = "";
-
-    for (let t = 1; t <= 8; t++) {
-      const selectedKey = selections[t];
-      if (selectedKey) {
-        const choiceIdx = TIER_MAPPINGS[t].indexOf(selectedKey);
-        if (choiceIdx !== -1) {
-          const charCode = 97 + ((t - 1) * 3) + choiceIdx;
-          codeString += String.fromCharCode(charCode);
+        if (tier7SelectedNow) {
+          triggerFloatingIndicator(currentlyOpenRelicKey);
         }
       }
-    }
 
-    if (reloadedSelection) {
-      const rTier = getTierByRelicKey(reloadedSelection);
-      const rIdx = TIER_MAPPINGS[rTier].indexOf(reloadedSelection);
-      if (rIdx !== -1) {
-        const rCharCode = 97 + ((rTier - 1) * 3) + rIdx;
-        codeString += "R" + String.fromCharCode(rCharCode);
+      function updateGridVisuals() {
+        document.querySelectorAll(".relic-icon-wrapper img").forEach((img) => {
+          img.classList.remove("relic-glow-orange", "relic-glow-reload");
+        });
+
+        Object.values(selections).forEach((key) => {
+          if (!key) return;
+          const activeIcon = document.querySelector(
+            `[data-relic-id="${key}"] img`,
+          );
+          if (activeIcon) {
+            activeIcon.classList.add("relic-glow-orange");
+          }
+        });
+
+        if (reloadedSelection) {
+          const reloadedIcon = document.querySelector(
+            `[data-relic-id="${reloadedSelection}"] img`,
+          );
+          if (reloadedIcon) {
+            reloadedIcon.classList.add("relic-glow-reload");
+          }
+        }
+
+        updateShareButtonState();
       }
-    }
 
-    if (codeString) {
-      url.searchParams.set('b', codeString);
-    } else {
-      url.searchParams.delete('b');
-    }
-    window.history.replaceState({}, '', url);
-  }
-
-  function parseUrlParams() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const buildParam = urlParams.get('b');
-    if (!buildParam) {
-      updateGridVisuals();
-      return;
-    }
-
-    selections = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null, 8: null };
-    reloadedSelection = null;
-
-    let mainPart = buildParam;
-    let reloadedPart = "";
-
-    if (buildParam.includes("R")) {
-      const parts = buildParam.split("R");
-      mainPart = parts[0];
-      reloadedPart = parts[1] || "";
-    }
-
-    for (let i = 0; i < mainPart.length; i++) {
-      const code = mainPart.charCodeAt(i) - 97;
-      if (code >= 0 && code < 24) {
-        const tier = Math.floor(code / 3) + 1;
-        const choiceIdx = code % 3;
-        const relicKey = TIER_MAPPINGS[tier]?.[choiceIdx];
-        if (relicKey) selections[tier] = relicKey;
+      function isBuildComplete() {
+        for (let t = 1; t <= 8; t++) {
+          if (!selections[t]) return false;
+        }
+        if (selections[7] && !reloadedSelection) return false;
+        return true;
       }
-    }
 
-    if (reloadedPart.length > 0) {
-      const rCode = reloadedPart.charCodeAt(0) - 97;
-      if (rCode >= 0 && rCode < 18) {
-        const rTier = Math.floor(rCode / 3) + 1;
-        const rChoiceIdx = rCode % 3;
-        const rRelicKey = TIER_MAPPINGS[rTier]?.[rChoiceIdx];
-        if (rRelicKey) reloadedSelection = rRelicKey;
+      function getShareValidationMessage() {
+        let missingMainTier = null;
+        for (let t = 1; t <= 8; t++) {
+          if (!selections[t]) {
+            missingMainTier = t;
+            break;
+          }
+        }
+
+        if (missingMainTier !== null) {
+          if (missingMainTier === 8 && selections[7] && !reloadedSelection) {
+            return "Tier 8 unlocked but reload is missing";
+          }
+          return "Complete previous tiers first";
+        }
+
+        if (selections[7] && !reloadedSelection) {
+          return "Tier 8 unlocked but reload is missing";
+        }
+
+        return null;
       }
-    }
 
-    updateGridVisuals();
-  }
+      function handleShareTooltip(event) {
+        if (isBuildComplete()) {
+          hideShareTooltip();
+          return;
+        }
 
-function copyShareUrl() {
-  if (!isBuildComplete()) return;
+        const tooltip = document.getElementById("share-tooltip-element");
+        const msg = getShareValidationMessage();
+        if (!msg) return;
 
-  // 1. Detect if the user is likely on mobile
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        tooltip.innerText = msg;
+        tooltip.classList.remove("hidden");
 
-  // 2. Mobile: Use Native Share Sheet
-  if (isMobile && navigator.share) {
-    navigator.share({
-      title: 'Lunar Leagues',
-      url: window.location.href
-    }).catch((err) => {
-      console.log("User cancelled share");
-    });
-  }
-  // 3. Desktop (or fallback): Copy to clipboard with your original feedback animation
-  else {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      const btn = document.getElementById('share-btn');
-      const originalText = btn.innerText;
+        tooltip.style.left = event.clientX + 15 + "px";
+        tooltip.style.top = event.clientY + 15 + "px";
+      }
 
-      // Use your specific feedback style
-      btn.innerText = "✓ Link Copied!";
-      btn.classList.remove('bg-orange-500/20', 'border-orange-500', 'text-orange-400');
-      btn.classList.add('bg-green-500/20', 'border-green-500', 'text-green-400');
+      function handleShareTooltipMobile(event) {
+        if (isBuildComplete()) return;
 
-      setTimeout(() => {
-        btn.innerText = originalText;
-        btn.classList.remove('bg-green-500/20', 'border-green-500', 'text-green-400');
-        btn.classList.add('bg-orange-500/20', 'border-orange-500', 'text-orange-400');
-      }, 2000);
-    }).catch(err => {
-      console.error('Copy failed: ', err);
-    });
-  }
-}
+        const tooltip = document.getElementById("share-tooltip-element");
+        const msg = getShareValidationMessage();
+        if (!msg) return;
 
-  function showDetails(title, iconSrc, descriptionHtml) {
-    const popup = document.getElementById("relic-universal-popup");
-    const descContainer = document.getElementById("popup-exp-desc");
+        tooltip.innerText = msg;
+        tooltip.classList.remove("hidden");
 
-    document.getElementById("popup-exp-title").innerText = title;
-    document.getElementById("popup-exp-icon").src = iconSrc;
-    descContainer.innerHTML = descriptionHtml;
-    descContainer.scrollTop = 0;
+        tooltip.style.left = "50%";
+        tooltip.style.top = "15%";
+        tooltip.style.transform = "translateX(-50%)";
 
-    popup.classList.remove("opacity-0", "pointer-events-none");
-    popup.classList.add("opacity-100");
-  }
+        setTimeout(hideShareTooltip, 2500);
+      }
 
-  function closeRelicPopup() {
-    const popup = document.getElementById("relic-universal-popup");
-    popup.classList.remove("opacity-100");
-    popup.classList.add("opacity-0", "pointer-events-none");
-  }
+      function hideShareTooltip() {
+        const tooltip = document.getElementById("share-tooltip-element");
+        tooltip.classList.add("hidden");
+        tooltip.style.transform = "";
+      }
 
-  function toggleDisclaimer() {
-    const disclaimerPopup = document.getElementById("disclaimer-popup");
+      function updateShareButtonState() {
+        const shareBtn = document.getElementById("share-btn");
+        if (isBuildComplete()) {
+          shareBtn.classList.remove(
+            "pointer-events-none",
+            "bg-gray-800/50",
+            "border-gray-700",
+            "text-gray-500",
+          );
+          shareBtn.classList.add(
+            "pointer-events-auto",
+            "bg-orange-500/20",
+            "border-orange-500",
+            "text-orange-400",
+          );
+          shareBtn.innerText = "🔗 Share Build";
+        } else {
+          shareBtn.classList.add(
+            "pointer-events-none",
+            "bg-gray-800/50",
+            "border-gray-700",
+            "text-gray-500",
+          );
+          shareBtn.classList.remove(
+            "pointer-events-auto",
+            "bg-orange-500/20",
+            "border-orange-500",
+            "text-orange-400",
+          );
+          shareBtn.innerText = "Share Build";
+        }
+      }
 
-    if (disclaimerPopup.classList.contains("opacity-0")) {
-      disclaimerPopup.classList.remove("opacity-0", "pointer-events-none");
-      disclaimerPopup.classList.add("opacity-100");
-    } else {
-      disclaimerPopup.classList.remove("opacity-100");
-      disclaimerPopup.classList.add("opacity-0", "pointer-events-none");
-    }
-  }
+      function clearCompleteBuild() {
+        selections = {
+          1: null,
+          2: null,
+          3: null,
+          4: null,
+          5: null,
+          6: null,
+          7: null,
+          8: null,
+        };
+        reloadedSelection = null;
+        hideShareTooltip();
+        updateGridVisuals();
+        updateUrlParams();
+      }
 
-  let currentPassiveState = 0;
+      function updateUrlParams() {
+        const url = new URL(window.location.href);
+        let codeString = "";
 
-  function cycleMobilePassives() {
-    currentPassiveState = (currentPassiveState + 1) % 3;
+        for (let t = 1; t <= 8; t++) {
+          const selectedKey = selections[t];
+          if (selectedKey) {
+            const choiceIdx = TIER_MAPPINGS[t].indexOf(selectedKey);
+            if (choiceIdx !== -1) {
+              const charCode = 97 + (t - 1) * 3 + choiceIdx;
+              codeString += String.fromCharCode(charCode);
+            }
+          }
+        }
 
-    const toggleBtn = document.getElementById('passive-toggle-btn');
-    const passiveBoxes = document.querySelectorAll('.passive-bonus-box');
+        if (reloadedSelection) {
+          const rTier = getTierByRelicKey(reloadedSelection);
+          const rIdx = TIER_MAPPINGS[rTier].indexOf(reloadedSelection);
+          if (rIdx !== -1) {
+            const rCharCode = 97 + (rTier - 1) * 3 + rIdx;
+            codeString += "R" + String.fromCharCode(rCharCode);
+          }
+        }
 
-    passiveBoxes.forEach(box => {
-      const listItems = box.querySelectorAll('ul > li');
-      let visibleItemsCount = 0;
+        if (codeString) {
+          url.searchParams.set("b", codeString);
+        } else {
+          url.searchParams.delete("b");
+        }
+        window.history.replaceState({}, "", url);
+      }
 
-      listItems.forEach(li => {
-        const isExclusive = li.querySelector('.text-color-strong') !== null;
+      function parseUrlParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const buildParam = urlParams.get("b");
+        if (!buildParam) {
+          updateGridVisuals();
+          return;
+        }
+
+        selections = {
+          1: null,
+          2: null,
+          3: null,
+          4: null,
+          5: null,
+          6: null,
+          7: null,
+          8: null,
+        };
+        reloadedSelection = null;
+
+        let mainPart = buildParam;
+        let reloadedPart = "";
+
+        if (buildParam.includes("R")) {
+          const parts = buildParam.split("R");
+          mainPart = parts[0];
+          reloadedPart = parts[1] || "";
+        }
+
+        for (let i = 0; i < mainPart.length; i++) {
+          const code = mainPart.charCodeAt(i) - 97;
+          if (code >= 0 && code < 24) {
+            const tier = Math.floor(code / 3) + 1;
+            const choiceIdx = code % 3;
+            const relicKey = TIER_MAPPINGS[tier]?.[choiceIdx];
+            if (relicKey) selections[tier] = relicKey;
+          }
+        }
+
+        if (reloadedPart.length > 0) {
+          const rCode = reloadedPart.charCodeAt(0) - 97;
+          if (rCode >= 0 && rCode < 18) {
+            const rTier = Math.floor(rCode / 3) + 1;
+            const rChoiceIdx = rCode % 3;
+            const rRelicKey = TIER_MAPPINGS[rTier]?.[rChoiceIdx];
+            if (rRelicKey) reloadedSelection = rRelicKey;
+          }
+        }
+
+        updateGridVisuals();
+      }
+
+      function copyShareUrl() {
+        if (!isBuildComplete()) return;
+
+        // 1. Detect if the user is likely on mobile
+        const isMobile =
+          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+            navigator.userAgent,
+          );
+
+        // 2. Mobile: Use Native Share Sheet
+        if (isMobile && navigator.share) {
+          navigator
+            .share({
+              title: "Lunar Leagues",
+              url: window.location.href,
+            })
+            .catch((err) => {
+              console.log("User cancelled share");
+            });
+        }
+        // 3. Desktop (or fallback): Copy to clipboard with your original feedback animation
+        else {
+          navigator.clipboard
+            .writeText(window.location.href)
+            .then(() => {
+              const btn = document.getElementById("share-btn");
+              const originalText = btn.innerText;
+
+              // Use your specific feedback style
+              btn.innerText = "✓ Link Copied!";
+              btn.classList.remove(
+                "bg-orange-500/20",
+                "border-orange-500",
+                "text-orange-400",
+              );
+              btn.classList.add(
+                "bg-green-500/20",
+                "border-green-500",
+                "text-green-400",
+              );
+
+              setTimeout(() => {
+                btn.innerText = originalText;
+                btn.classList.remove(
+                  "bg-green-500/20",
+                  "border-green-500",
+                  "text-green-400",
+                );
+                btn.classList.add(
+                  "bg-orange-500/20",
+                  "border-orange-500",
+                  "text-orange-400",
+                );
+              }, 2000);
+            })
+            .catch((err) => {
+              console.error("Copy failed: ", err);
+            });
+        }
+      }
+
+      function showDetails(title, iconSrc, descriptionHtml) {
+        const popup = document.getElementById("relic-universal-popup");
+        const descContainer = document.getElementById("popup-exp-desc");
+
+        document.getElementById("popup-exp-title").innerText = title;
+        document.getElementById("popup-exp-icon").src = iconSrc;
+        descContainer.innerHTML = descriptionHtml;
+        descContainer.scrollTop = 0;
+
+        popup.classList.remove("opacity-0", "pointer-events-none");
+        popup.classList.add("opacity-100");
+      }
+
+      function closeRelicPopup() {
+        const popup = document.getElementById("relic-universal-popup");
+        popup.classList.remove("opacity-100");
+        popup.classList.add("opacity-0", "pointer-events-none");
+      }
+
+      function toggleDisclaimer() {
+        const disclaimerPopup = document.getElementById("disclaimer-popup");
+
+        if (disclaimerPopup.classList.contains("opacity-0")) {
+          disclaimerPopup.classList.remove("opacity-0", "pointer-events-none");
+          disclaimerPopup.classList.add("opacity-100");
+        } else {
+          disclaimerPopup.classList.remove("opacity-100");
+          disclaimerPopup.classList.add("opacity-0", "pointer-events-none");
+        }
+      }
+
+      let currentPassiveState = 0;
+
+      function cycleMobilePassives() {
+        currentPassiveState = (currentPassiveState + 1) % 3;
+
+        const toggleBtn = document.getElementById("passive-toggle-btn");
+        const passiveBoxes = document.querySelectorAll(".passive-bonus-box");
+
+        passiveBoxes.forEach((box) => {
+          const listItems = box.querySelectorAll("ul > li");
+          let visibleItemsCount = 0;
+
+          listItems.forEach((li) => {
+            const isExclusive = li.querySelector(".text-color-strong") !== null;
+
+            if (currentPassiveState === 0) {
+              li.classList.remove("hidden");
+              visibleItemsCount++;
+            } else if (currentPassiveState === 1) {
+              if (isExclusive) {
+                li.classList.remove("hidden");
+                visibleItemsCount++;
+              } else {
+                li.classList.add("hidden");
+              }
+            } else if (currentPassiveState === 2) {
+              li.classList.add("hidden");
+            }
+          });
+
+          if (currentPassiveState === 2 || visibleItemsCount === 0) {
+            box.classList.add("hidden");
+          } else {
+            box.classList.remove("hidden");
+          }
+        });
 
         if (currentPassiveState === 0) {
-          li.classList.remove('hidden');
-          visibleItemsCount++;
+          toggleBtn.innerText = "Passives: Show All";
         } else if (currentPassiveState === 1) {
-          if (isExclusive) {
-            li.classList.remove('hidden');
-            visibleItemsCount++;
-          } else {
-            li.classList.add('hidden');
-          }
+          toggleBtn.innerText = "Passives: New Only";
         } else if (currentPassiveState === 2) {
-          li.classList.add('hidden');
+          toggleBtn.innerText = "Passives: Hidden";
+        }
+      }
+
+      function toggleWelcomePopup() {
+        const welcomePopup = document.getElementById("welcome-popup");
+        welcomePopup.classList.remove("opacity-0", "pointer-events-none");
+        welcomePopup.classList.add("opacity-100");
+      }
+
+      function handleWelcomeFlow() {
+        const welcomePopup = document.getElementById("welcome-popup");
+
+        if (!localStorage.getItem("lunar_leagues_visited")) {
+          welcomePopup.classList.remove("opacity-0", "pointer-events-none");
+          welcomePopup.classList.add("opacity-100");
+        }
+      }
+
+      function closeWelcomePopup() {
+        const welcomePopup = document.getElementById("welcome-popup");
+        welcomePopup.classList.remove("opacity-100");
+        welcomePopup.classList.add("opacity-0", "pointer-events-none");
+        localStorage.setItem("lunar_leagues_visited", "true");
+      }
+
+      function handleOutsideClick(event, targetId, closeFunction) {
+        if (event.target.id === targetId) {
+          closeFunction();
+        }
+      }
+
+      function checkVideoAutoplay() {
+        const backgroundVideo = document.getElementById("bg-video");
+        const fallbackImage = document.getElementById("bg-fallback-img");
+
+        if (!backgroundVideo || !fallbackImage) return;
+
+        const playPromise = backgroundVideo.play();
+
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            console.log("Autoplay blocked. Seamlessly swapping to image.");
+            backgroundVideo.classList.remove("opacity-40");
+            backgroundVideo.classList.add("opacity-0", "pointer-events-none");
+            fallbackImage.classList.remove("opacity-0");
+            fallbackImage.classList.add("opacity-40");
+          });
+        }
+      }
+
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeRelicPopup();
+          closeWelcomePopup();
+
+          const disclaimer = document.getElementById("disclaimer-popup");
+          if (disclaimer && !disclaimer.classList.contains("opacity-0")) {
+            toggleDisclaimer();
+          }
         }
       });
 
-      if (currentPassiveState === 2 || visibleItemsCount === 0) {
-        box.classList.add('hidden');
-      } else {
-        box.classList.remove('hidden');
-      }
-    });
-
-    if (currentPassiveState === 0) {
-      toggleBtn.innerText = "Passives: Show All";
-    } else if (currentPassiveState === 1) {
-      toggleBtn.innerText = "Passives: New Only";
-    } else if (currentPassiveState === 2) {
-      toggleBtn.innerText = "Passives: Hidden";
-    }
-  }
-
-  function toggleWelcomePopup() {
-    const welcomePopup = document.getElementById("welcome-popup");
-    welcomePopup.classList.remove("opacity-0", "pointer-events-none");
-    welcomePopup.classList.add("opacity-100");
-  }
-
-  function handleWelcomeFlow() {
-    const welcomePopup = document.getElementById("welcome-popup");
-
-    if (!localStorage.getItem("lunar_leagues_visited")) {
-      welcomePopup.classList.remove("opacity-0", "pointer-events-none");
-      welcomePopup.classList.add("opacity-100");
-    }
-  }
-
-  function closeWelcomePopup() {
-    const welcomePopup = document.getElementById("welcome-popup");
-    welcomePopup.classList.remove("opacity-100");
-    welcomePopup.classList.add("opacity-0", "pointer-events-none");
-    localStorage.setItem("lunar_leagues_visited", "true");
-  }
-
-  function handleOutsideClick(event, targetId, closeFunction) {
-    if (event.target.id === targetId) {
-      closeFunction();
-    }
-  }
-
-  function checkVideoAutoplay() {
-    const backgroundVideo = document.getElementById("bg-video");
-    const fallbackImage = document.getElementById("bg-fallback-img");
-
-    if (!backgroundVideo || !fallbackImage) return;
-
-    const playPromise = backgroundVideo.play();
-
-    if (playPromise !== undefined) {
-      playPromise.catch(error => {
-        console.log("Autoplay blocked. Seamlessly swapping to image.");
-        backgroundVideo.classList.remove("opacity-40");
-        backgroundVideo.classList.add("opacity-0", "pointer-events-none");
-        fallbackImage.classList.remove("opacity-0");
-        fallbackImage.classList.add("opacity-40");
+      window.addEventListener("DOMContentLoaded", () => {
+        handleWelcomeFlow();
+        checkVideoAutoplay();
+        parseUrlParams();
       });
-    }
-  }
+    </script>
 
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeRelicPopup();
-      closeWelcomePopup();
-
-      const disclaimer = document.getElementById("disclaimer-popup");
-      if (disclaimer && !disclaimer.classList.contains("opacity-0")) {
-        toggleDisclaimer();
+    <style data-purpose="animations">
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
-    }
-  });
 
-  window.addEventListener("DOMContentLoaded", () => {
-    handleWelcomeFlow();
-    checkVideoAutoplay();
-    parseUrlParams();
-  });
-</script>
+      .animate-fade-in {
+        animation: fadeIn 0.4s ease-out forwards;
+      }
 
-<style data-purpose="animations">
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px) }
-    to { opacity: 1; transform: translateY(0) }
-  }
+      .scrollbar-thin::-webkit-scrollbar {
+        height: 4px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb {
+        background: rgba(251, 146, 60, 0.3);
+        border-radius: 2px;
+      }
 
-  .animate-fade-in {
-    animation: fadeIn .4s ease-out forwards
-  }
-
-  .scrollbar-thin::-webkit-scrollbar {
-    height: 4px;
-  }
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
-  }
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: rgba(251, 146, 60, 0.3);
-    border-radius: 2px;
-  }
-
-  #relic-grid::-webkit-scrollbar { height: 6px }
-  #relic-grid::-webkit-scrollbar-track { background: rgba(0, 0, 0, .2) }
-  #relic-grid::-webkit-scrollbar-thumb { background: #4a5568; border-radius: 3px }
-</style>
-<script data-goatcounter="https://phoneman.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-</body>
+      #relic-grid::-webkit-scrollbar {
+        height: 6px;
+      }
+      #relic-grid::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+      }
+      #relic-grid::-webkit-scrollbar-thumb {
+        background: #4a5568;
+        border-radius: 3px;
+      }
+    </style>
+    <script
+      data-goatcounter="https://phoneman.goatcounter.com/count"
+      async
+      src="//gc.zgo.at/count.js"
+    ></script>
+  </body>
 </html>

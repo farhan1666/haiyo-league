@@ -1,5 +1,5 @@
 const RELIC_RAW_DATA = {
-	magicthegathering: `__Tier 1 Relic Concept: **Magic the Gathering**__
+  magicthegathering: `__Tier 1 Relic Concept: **Magic the Gathering**__
 - Upon unlocking this relic, receive the *Wizard's diadem,* a headgear item with +5 Magic accuracy.
 - The *Wizard's diadem* acts as an infinite source of water, earth, fire and mind runes.
 - When the Wizard's diadem is equipped, all *Fishing, Woodcutting,* and *Mining* actions are replaced with gathering spells, a 5-tick action (4 with Harmonised nightmare staff).
@@ -21,7 +21,7 @@ const RELIC_RAW_DATA = {
    - You can spend 1 Nature rune to process a gathered resource (cooks fish, burns logs, and smelts ore), granting *full skilling XP.*
    - You can spend 1 Law rune to send a gathered resource to the bank.
 - Both effects can be active at once and are toggleable.`,
-	symbiosis: `__Tier 1 Relic Concept: **Symbiosis**__
+  symbiosis: `__Tier 1 Relic Concept: **Symbiosis**__
 
 - Your first action on a mining rock, fishing spot, or tree is now *guaranteed to succeed.* This is tracked individually per node.
    - To be considered a first action, you must not have interacted with that node in 1 minute.
@@ -34,7 +34,7 @@ const RELIC_RAW_DATA = {
 - All trees now have a *full birdhouse* in them. Chopping a tree grants the full rewards and Hunter XP of a birdhouse equivalent to their tier of wood (e.g. Oak trees have Oak birdhouses, Willow trees have Willow birdhouses, Magic trees have Magic birdhouses).
    - The birdhouse takes 1 minute to respawn per unique tree.
    - Toggleable effect: Discard the birdhouse loot onto the ground.`,
-   financialfraud: `__Tier 1 Relic Concept: **Financial Fraud**__
+  financialfraud: `__Tier 1 Relic Concept: **Financial Fraud**__
 
 - Upon unlocking this relic, receive *100,000 Coins* and the *Fanciest boots.*
    - The *Fanciest boots* grant +3 defence in all styles. That's it.
@@ -50,7 +50,7 @@ const RELIC_RAW_DATA = {
    - *Total Level 1500:* 300 bonus XP (3000 Coins);
    - *Total Level 2000:* 600 bonus XP (6000 Coins).
 - Payment prioritizes Coins in the bank. If you cannot pay for a bonus XP drop, you will automatically stop investing.`,
-	conman: `__Tier 2 Relic Concept: **Conman**__
+  conman: `__Tier 2 Relic Concept: **Conman**__
 
 - Upon unlocking this relic, receive the *Slippin' suit,* a body slot item.
 
@@ -67,7 +67,7 @@ const RELIC_RAW_DATA = {
    - Coins are received instead of Coin pouches.
 
 - While the *Slippin' suit* is worn, every shop offers a 0.5-49.5% discount, scaling linearly with your *"Charisma"* level. This stacks multiplicatively with any other discounts.`,
-	holyharvest: `__Tier 2 Relic Concept: **Holy Harvest**__
+  holyharvest: `__Tier 2 Relic Concept: **Holy Harvest**__
 
 - You can now offer any seed (except Anima and Spirit tree) to an altar, regardless of Farming level, with a 75% chance not to consume it (stacks multiplicatively with the Wilderness Chaos altar).
 - When offering a seed, you will instantly receive what you would normally harvest from it, with Ultracompost applied, in noted form. This grants full *Farming XP.*
@@ -79,7 +79,7 @@ const RELIC_RAW_DATA = {
    - *Armadyl:* White berries, Snape grass, Poison ivy berries, Aldarium, Cotton yarn, Amylase crystal, Marlin scales;
    - *Bandos:* Eye of newt, Limpwurt root, Toad's legs, Kebbit teeth dust, Nail beast nails, Jangerberries, Haddock eye, Zulrah's scales;
    - *Ancient:* Goat horn dust, Potato cactus, Magic roots, Nihil dust, Lily of the sands, Rainbow crab paste, Crystal dust, Ancient essence.`,
-   perpetualstew: `__Tier 2 Relic Concept: **Perpetual Stew**__ 
+  perpetualstew: `__Tier 2 Relic Concept: **Perpetual Stew**__ 
 
 - Upon unlocking this relic, receive the *Perpetual stew,* with 1,000 charges.
 
@@ -100,7 +100,7 @@ const RELIC_RAW_DATA = {
    - *Level 71:* Heals 18 HP
    - *Level 85:* Heals 21 HP
    - *Level 99:* Heals 24 HP`,
-   friendoftheforest: `__Tier 3 Relic Concept: **Friend of the Forest**__
+  friendoftheforest: `__Tier 3 Relic Concept: **Friend of the Forest**__
 
 - Upon unlocking this relic, receive the *Druid ring,* which:
    - Can mark up to 8 Oak or higher tier *trees* in the game (choppable, excludes instances and player-farmed trees), provided you have the Woodcutting level to chop them.
@@ -114,7 +114,7 @@ const RELIC_RAW_DATA = {
    - You cannot manually store any items in the ring.
 
 - This ring ignores Wilderness teleport restrictions.`,
-	harnessedearth: `__Tier 3 Relic Concept: **Harnessed Earth**__
+  harnessedearth: `__Tier 3 Relic Concept: **Harnessed Earth**__
 
 - Upon unlocking this relic, receive the *Golem ring*, which:
    - Can mark up to 8 *mining rocks* in the game (excludes instances), provided you have the Mining level to use them, or *runic altars.*
@@ -133,7 +133,7 @@ const RELIC_RAW_DATA = {
    - You cannot manually store any items in the ring.
 
 - This ring ignores Wilderness teleport restrictions.`,
-	callofthesea: `__Tier 3 Relic Concept: **Call of the Sea**__
+  callofthesea: `__Tier 3 Relic Concept: **Call of the Sea**__
 
 - Upon unlocking this relic, receive the *Merfolk ring,* which:
    - Can mark up to 8 *fishing spots* in the game (excludes instances), provided you have the Fishing level to catch their lowest level fish available, or *salvaging stations* (excluding your boat's).
@@ -151,7 +151,7 @@ const RELIC_RAW_DATA = {
    - You cannot manually store any items in the ring.
 
 - This ring ignores Wilderness teleport restrictions.`,
-	runtotherescue: `__Tier 4 Relic Concept: **Run to the Rescue**__
+  runtotherescue: `__Tier 4 Relic Concept: **Run to the Rescue**__
 
 - *Agility courses* are now under attack! The following courses have 5-10 unaggressive monsters scattered throughout them, only visible to you:
    - All Rooftop courses;
@@ -175,7 +175,7 @@ const RELIC_RAW_DATA = {
       - Up to Hard at levels 40-59;
       - Up to Elite at levels 60-79;
       - Up to Master at levels 80+.`,
-      industrialevolution: `__Tier 4 Relic Concept: **Industrial Evolution**__
+  industrialevolution: `__Tier 4 Relic Concept: **Industrial Evolution**__
 
 - All Furnaces in the game become *Processors.*
 - Processors will take certain noted materials and transform them into finished products at a rate of 1 every 32 ticks, outputting a maximum of 3,000 products at a time. The Processor can:
@@ -194,13 +194,13 @@ const RELIC_RAW_DATA = {
 - Processors will continue running *even while you are offline.*
 
 - Toggleable effect: You can right-click a Processor to revert it to a Furnace, and vice versa.`,
-	unleashedteleport: `__Tier 4 Relic Concept: **Unleashed Teleport**__
+  unleashedteleport: `__Tier 4 Relic Concept: **Unleashed Teleport**__
 
 - Home and Minigame Teleports are now an instant cast.
 - All spellbook teleports are now *free to cast,* and have no quest, diary, or Magic level requirements.
 - All teleportation items no longer consume charges nor themselves.
 - Toggleable effect: Upon casting any teleport (including those from relics), you will be presented with your *Bank interface.*`,
-	lordoftherings: `__Tier 5 Relic Concept: **Lord of the Rings**__
+  lordoftherings: `__Tier 5 Relic Concept: **Lord of the Rings**__
 
 - All rings have unlimited charges.
 - All rings have their stat bonuses doubled.
@@ -210,7 +210,7 @@ const RELIC_RAW_DATA = {
    - The Celestial ring offers a +8 boost to Mining;
    - The Druid, Golem and Merfolk rings gather double the resources per trigger.
 - You are granted a *second ring slot.* When two rings are equipped, only the highest of any shared stat bonus is taken, and identical effects do not stack.`,
-	runicfreelancer: `__Tier 5 Relic: **Runic Freelancer**__
+  runicfreelancer: `__Tier 5 Relic: **Runic Freelancer**__
 
 - Upon unlocking this relic, receive the *Freelance kit,* which:
    - Can store any amount of runes of all types;
@@ -223,12 +223,12 @@ const RELIC_RAW_DATA = {
 - Your spellbook icon can be right-clicked to find a *"DIY Spellbook."* The DIY Spellbook presents a 7x7 grid interface, where up to 49 different spells from any spellbook can be manually chosen for each slot.
    - The DIY Spellbook can be edited at any time.
    - All autocasting weapons can autocast any combat spell that you can cast from the DIY Spellbook.`,
-   faith: `__Tier 5 Relic Concept: **Faith**__
+  faith: `__Tier 5 Relic Concept: **Faith**__
 
 - The "Sit down" emote is replaced with *"Meditate,"* which loops indefinitely. While meditating, you will receive *Prayer XP* equal to your half Prayer level (affected by Leagues modifiers) every 8 ticks.
 - Active prayers drain Prayer points 4x slower.
 - You may now activate two overhead prayers at once.`,
-	feralexorcism: `__Tier 6 Relic Concept: **Feral Exorcism**__
+  feralexorcism: `__Tier 6 Relic Concept: **Feral Exorcism**__
 
 - Upon unlocking this relic, receive the *Spirit lantern,* a main-hand or off-hand item (toggleable).
    - This item functions as both a light source and a tinderbox.
@@ -245,7 +245,7 @@ const RELIC_RAW_DATA = {
 - Additionally, the *Spirit lantern* can be used to spiritually commune with every Guild hunter, allowing you to remotely receive, turn in, and be awarded for *Hunter Rumours.*
    - Novice Hunter Rumours can be started from Level 1 Hunter.
    - Master Hunter Rumours do not require completion of At First Light.`,
-   papercrafting: `__Tier 6 Relic Concept: **Papercrafting**__
+  papercrafting: `__Tier 6 Relic Concept: **Papercrafting**__
 
 - Upon unlocking this relic, receive the *Scissors.*
    - This item functions as chisel, knife, needle and thread.
@@ -266,7 +266,7 @@ const RELIC_RAW_DATA = {
 - If the Scissors are in the inventory, a noted stack of *Pure essence can be used on a runic altar,* converting 10 of them into runes every 3 ticks.
 
 - All aforementioned actions can be done manually to speed up the process, similar to fletching darts.`,
-	mariner: `__Tier 6 Relic Concept: **Mariner**__
+  mariner: `__Tier 6 Relic Concept: **Mariner**__
 
 - Toggleable effect: All your sailing vessels move at 2x speed.
 - *Charting activities* receive the following benefits:
@@ -289,14 +289,14 @@ const RELIC_RAW_DATA = {
    - Toggleable effect: Caught fish is sent directly to your bank.
 - All salvage is instantly sorted through as if at a Salvaging station, granting *full XP,* and loot is received noted.
 - Crewmates yield *100% Sailing experience* for all tasks performed.`,
-reapersavarice: `__Tier 7 Relic Concept: **Reaper's Avarice**__
+  reapersavarice: `__Tier 7 Relic Concept: **Reaper's Avarice**__
 
 - Upon unlocking this relic, receive the *Ring of avarice.* Whilst equipped, gain the following benefits:
    - Automatically note and pick up all loot dropped by monsters. Both effects are toggleable.
    - Every time you kill a monster, there is a 50% chance to roll its standard loot table again. This includes all Boss and Raids standard tables.
       - With *Lord of the Rings,* there is a second 50% chance if the first fails.
    - Instead of dropping clue scrolls, all monsters directly drop *clue caskets,* with a 25% chance of it being one tier higher than they normally drop.`,
-rainingluck: `__Tier 7 Relic Concept: **Raining Luck**__
+  rainingluck: `__Tier 7 Relic Concept: **Raining Luck**__
 
 - Every 40-80 minutes, a *Lucky star* will fall somewhere in your available areas (only visible to you). You will be notified of this 1 minute before it lands. Once it does, an arrow will point out its location on the world map.
    - This timer starts immediately upon unlocking this relic, and runs while offline. If the player is ineligible to receive a star after the timer has ended (e.g. was offline, or in an instance), it will instead spawn within a 1-2 minute window as soon as eligible.
@@ -309,7 +309,7 @@ rainingluck: `__Tier 7 Relic Concept: **Raining Luck**__
    - Uncut dragonstones, Uncut onyxes, and a 1/32,768 chance at an Uncut zenyte;
    - Elite and Master clue geodes;
    - *Wishing lamps,* granting 10,000 XP (affected by Leagues multipliers) in a random non-combat skill.`,
-   squealoffortune: `__Tier 7 Relic Concept: **Squeal of Fortune**__
+  squealoffortune: `__Tier 7 Relic Concept: **Squeal of Fortune**__
 
 - Upon unlocking this relic, receive the *Squeal of fortune.*
 
@@ -330,7 +330,7 @@ rainingluck: `__Tier 7 Relic Concept: **Raining Luck**__
    - *6th Spin:* 100,000,000 gp
    - *7th Spin onwards:* 1,000,000,000 gp
 - The price resets after 60 realtime minutes without buying a Spin.`,
-grandmasteratarms: `__Tier 8 Relic Concept: **Grandmaster at Arms**__
+  grandmasteratarms: `__Tier 8 Relic Concept: **Grandmaster at Arms**__
 
 - Toggleable effect: When equipping a weapon, you will *automatically equip* optimal items in your inventory for its attack style.
 
@@ -345,7 +345,7 @@ grandmasteratarms: `__Tier 8 Relic Concept: **Grandmaster at Arms**__
 
 - A visual timer for the cooldown period would be overlayed onto each weapon. Manual tracking is not necessary.
    - Each weapon shares the same standard and special attack timer (e.g. After a standard attack with an Arkan blade, the Arkan blade's special attack will cost 10%, not 0 energy).`,
-   dragonmulticannon: `__Tier 8 Relic Concept: **Dragon Multicannon**__
+  dragonmulticannon: `__Tier 8 Relic Concept: **Dragon Multicannon**__
 
 - Upon unlocking this relic, receive the *Dragon multicannon.*
 
@@ -368,7 +368,7 @@ grandmasteratarms: `__Tier 8 Relic Concept: **Grandmaster at Arms**__
 - The *Dragon multicannon* can be used and will remain in areas where a Dwarf multicannon is disabled or gets destroyed.
    - This perk will also work inside the Gauntlet.
 - If placed in an instance, the *Dragon multicannon* immediately despawns when you leave it.`,
-leap: `__Tier 8 Relic Concept: **Leap**__
+  leap: `__Tier 8 Relic Concept: **Leap**__
 
 - On your next *interactive click* ("red X"), you will leap up to *10 tiles in 1 tick* towards your target, as soon as it would put you within interacting range.
    - This effectively skips the last 5 checkpoint tiles of your route, meaning it will respect walls and pathing.
@@ -376,4 +376,5 @@ leap: `__Tier 8 Relic Concept: **Leap**__
 - This effect has a *cooldown of 4 ticks* each time it triggers.
 - Killing an enemy *resets* both your Leap cooldown and your weapon attack delay.
 
-- The Leap effect is toggleable by right-clicking the Run energy orb.`}
+- The Leap effect is toggleable by right-clicking the Run energy orb.`,
+};
