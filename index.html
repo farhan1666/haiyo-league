@@ -222,13 +222,17 @@
     box-shadow: 0 0 4px rgba(255, 140, 66, 0.5);
   }
 
-  /* Core UI drop-shadow filters tracking individual asset geometries */
+  /* Core UI drop-shadow filters tracking individual asset geometries (Enhanced Prominence) */
   .relic-glow-orange {
-    filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.85)) drop-shadow(0 0 12px rgba(249, 115, 22, 0.4));
+    filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.95))
+            drop-shadow(0 0 12px rgba(249, 115, 22, 0.7))
+            drop-shadow(0 0 24px rgba(249, 115, 22, 0.35));
   }
 
   .relic-glow-reload {
-    filter: drop-shadow(0 0 6px rgba(249, 249, 249, 0.85)) drop-shadow(0 0 12px rgba(249, 249, 249, 0.4));
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.95))
+            drop-shadow(0 0 12px rgba(255, 255, 255, 0.7))
+            drop-shadow(0 0 24px rgba(255, 255, 255, 0.35));
   }
 
   /* Game Floating Notification Styling */
@@ -753,11 +757,11 @@
     selectBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
 
     reloadedBtn.innerText = "Reload";
-    reloadedBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
+    reloadedBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider hidden";
 
     if (!isTierSelectable(tier)) {
       if (tier === 8 && hasCompletedMainTiersOneToSeven() && !reloadedSelection) {
-        selectBtn.innerText = "Select Reloaded Relic First";
+        selectBtn.innerText = "Select Reload Slot First";
       } else {
         selectBtn.innerText = `Select Tiers 1-${tier - 1} First`;
       }
@@ -786,7 +790,6 @@
     showDetails(title, iconSrc, finalHtml);
   }
 
-  // Verification tracking for main slots 1 to 7
   function hasCompletedMainTiersOneToSeven() {
     for (let t = 1; t <= 7; t++) {
       if (!selections[t]) return false;
@@ -912,13 +915,13 @@
 
     if (missingMainTier !== null) {
       if (missingMainTier === 8 && selections[7] && !reloadedSelection) {
-        return "Tier 8 unlocked but reload is missing";
+        return "Select all relics first";
       }
-      return "Complete previous tiers first";
+      return "Select all relics first";
     }
 
     if (selections[7] && !reloadedSelection) {
-      return "Tier 8 unlocked but reload is missing";
+      return "Select a reloaded relic";
     }
 
     return null;
