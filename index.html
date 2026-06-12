@@ -221,6 +221,41 @@
     background: rgba(251, 146, 60, 0.8);
     box-shadow: 0 0 4px rgba(255, 140, 66, 0.5);
   }
+
+  /* Core UI drop-shadow filters tracking individual asset geometries */
+  .relic-glow-orange {
+    filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.85)) drop-shadow(0 0 12px rgba(249, 115, 22, 0.4));
+  }
+
+  .relic-glow-reload {
+    filter: drop-shadow(0 0 6px rgba(249, 249, 249, 0.85)) drop-shadow(0 0 12px rgba(249, 249, 249, 0.4));
+  }
+
+  /* Game Floating Notification Styling */
+  .osrs-float-indicator {
+    font-family: "RuneScape Plain 12", sans-serif;
+    color: #00ff00;
+    text-shadow: 1px 1px 0px #000000;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 50;
+    animation: gameFloatAnimation 1s ease-out forwards;
+  }
+
+  @keyframes gameFloatAnimation {
+    0% {
+      top: -8px;
+      opacity: 1;
+    }
+    100% {
+      top: -33px;
+      opacity: 0;
+    }
+  }
   </style>
 </head>
 
@@ -262,30 +297,34 @@
     (it's all in your head)
   </div>
 
-  <div class="text-center mb-2">
-    <button onclick="copyShareUrl()" id="share-btn"
-            class="px-5 py-2 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all">
+  <div class="text-center mb-2 flex justify-center gap-3">
+    <button onclick="copyShareUrl()" id="share-btn" disabled
+            class="px-5 py-2 font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all bg-gray-800/50 border border-gray-700 text-gray-500 cursor-not-allowed">
       🔗 Share Build
+    </button>
+    <button onclick="clearCompleteBuild()" id="clear-btn"
+            class="px-5 py-2 bg-red-500/10 border border-red-500/40 text-red-400 hover:bg-red-500 hover:text-black font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all">
+      🗑️ Clear Build
     </button>
   </div>
 
   <main class="container mx-auto px-4 py-8 max-w-full">
     <div class="flex flex-col md:flex-row md:justify-between gap-8 md:gap-0" id="relic-grid">
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-1">
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-1" data-purpose="tier-1">
         <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
           Tier 1
         </h2>
 
         <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('magicthegathering')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="magicthegathering" onclick="loadRelic('magicthegathering')">
             <img alt="Magic the Gathering" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_magicthegathering.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Magic the Gathering</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('symbiosis')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="symbiosis" onclick="loadRelic('symbiosis')">
             <img alt="Symbiosis" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_symbiosis.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Symbiosis</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('financialfraud')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="financialfraud" onclick="loadRelic('financialfraud')">
             <img alt="Financial Fraud" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_financialfraud.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Financial Fraud</span>
           </div>
@@ -306,21 +345,21 @@
         </div>
       </section>
 
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-2">
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-2" data-purpose="tier-2">
         <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
           Tier 2
         </h2>
 
         <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('conman')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="conman" onclick="loadRelic('conman')">
             <img alt="Conman" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_conman.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Conman</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('holyharvest')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="holyharvest" onclick="loadRelic('holyharvest')">
             <img alt="Holy Harvest" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_holyharvest.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Holy Harvest</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('perpetualstew')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="perpetualstew" onclick="loadRelic('perpetualstew')">
             <img alt="Perpetual Stew" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_perpetualstew.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Perpetual Stew</span>
           </div>
@@ -334,21 +373,21 @@
         </div>
       </section>
 
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-3">
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-3" data-purpose="tier-3">
         <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
           Tier 3
         </h2>
 
         <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('friendoftheforest')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="friendoftheforest" onclick="loadRelic('friendoftheforest')">
             <img alt="Friend of the Forest" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_friendoftheforest.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Friend of the Forest</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('harnessedearth')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="harnessedearth" onclick="loadRelic('harnessedearth')">
             <img alt="Harnessed Earth" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_harnessedearth.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Harnessed Earth</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('callofthesea')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="callofthesea" onclick="loadRelic('callofthesea')">
             <img alt="Call of the Sea" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_callofthesea.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Call of the Sea</span>
           </div>
@@ -365,21 +404,21 @@
         </div>
       </section>
 
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-4">
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-4" data-purpose="tier-4">
         <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
           Tier 4
         </h2>
 
         <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('runtotherescue')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="runtotherescue" onclick="loadRelic('runtotherescue')">
             <img alt="Run to the Rescue" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_runtotherescue.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Run to the Rescue</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('industrialevolution')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="industrialevolution" onclick="loadRelic('industrialevolution')">
             <img alt="Industrial Evolution" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_industrialevolution.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Industrial Evolution</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('unleashedteleport')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="unleashedteleport" onclick="loadRelic('unleashedteleport')">
             <img alt="Unleashed Teleport" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_unleashedteleport.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Unleashed Teleport</span>
           </div>
@@ -397,21 +436,21 @@
         </div>
       </section>
 
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-5">
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-5" data-purpose="tier-5">
         <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
           Tier 5
         </h2>
 
         <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('lordoftherings')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="lordoftherings" onclick="loadRelic('lordoftherings')">
             <img alt="Lord of the Rings" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_lordoftherings.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Lord of the Rings</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('runicfreelancer')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="runicfreelancer" onclick="loadRelic('runicfreelancer')">
             <img alt="Runic Freelancer" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_runicfreelancer.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Runic Freelancer</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('faith')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="faith" onclick="loadRelic('faith')">
             <img alt="Faith" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_faith.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Faith</span>
           </div>
@@ -426,21 +465,21 @@
         </div>
       </section>
 
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-6">
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-6" data-purpose="tier-6">
         <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
           Tier 6
         </h2>
 
         <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('feralexorcism')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="feralexorcism" onclick="loadRelic('feralexorcism')">
             <img alt="Feral Exorcism" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_feralexorcism.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Feral Exorcism</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('papercrafting')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="papercrafting" onclick="loadRelic('papercrafting')">
             <img alt="Papercrafting" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_papercrafting.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Papercrafting</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('mariner')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="mariner" onclick="loadRelic('mariner')">
             <img alt="Mariner" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_mariner.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Mariner</span>
           </div>
@@ -454,21 +493,21 @@
         </div>
       </section>
 
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-7">
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-7" data-purpose="tier-7">
         <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
           Tier 7
         </h2>
 
         <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('reapersavarice')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="reapersavarice" onclick="loadRelic('reapersavarice')">
             <img alt="Reapers Avarice" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_reapersavarice.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Reaper's Avarice</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('rainingluck')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="rainingluck" onclick="loadRelic('rainingluck')">
             <img alt="Raining Luck" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_rainingluck.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Raining Luck</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('squealoffortune')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="squealoffortune" onclick="loadRelic('squealoffortune')">
             <img alt="Squeal of Fortune" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_squealoffortune.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Squeal of Fortune</span>
           </div>
@@ -482,21 +521,21 @@
         </div>
       </section>
 
-      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-8">
+      <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" id="tier-column-8" data-purpose="tier-8">
         <h2 class="relic-tier-title uppercase tracking-widest text-orange-400">
           Tier 8
         </h2>
 
         <div class="grid grid-cols-3 w-full gap-2 justify-items-center md:flex md:flex-col md:gap-8 md:items-center pb-2 md:pb-0">
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('grandmasteratarms')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="grandmasteratarms" onclick="loadRelic('grandmasteratarms')">
             <img alt="Grandmaster At Arms" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_grandmasteratarms.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Grandmaster at Arms</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('dragonmulticannon')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="dragonmulticannon" onclick="loadRelic('dragonmulticannon')">
             <img alt="Dragon Multicannon" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_dragonmulticannon.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Dragon Multicannon</span>
           </div>
-          <div class="relic-icon-wrapper cursor-pointer flex flex-col items-center group w-full" onclick="loadRelic('leap')">
+          <div class="relic-icon-wrapper relative cursor-pointer flex flex-col items-center group w-full" data-relic-id="leap" onclick="loadRelic('leap')">
             <img alt="Leap" class="w-20 h-20 p-1 group-hover:scale-110 transition-transform" src="images/relics/relic_leap.webp">
             <span class="text-xs mt-2 text-orange-200/70 group-hover:text-orange-400 text-center font-medium">Leap</span>
           </div>
@@ -537,7 +576,7 @@
         </button>
         <button onclick="selectCurrentRelic(true)" id="popup-reloaded-btn"
                 class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider hidden">
-          Reload
+          Select As Reloaded Bonus
         </button>
       </div>
 
@@ -609,7 +648,7 @@
 
 <script data-purpose="interaction-logic">
   let selections = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null, 8: null };
-  let reloadedSelection = null; // Tracks the extra Tier 1-6 choice allowed by Tier 7 Reloaded
+  let reloadedSelection = null;
   let currentlyOpenRelicKey = null;
 
   const TIER_MAPPINGS = {
@@ -682,7 +721,7 @@
 
     const finalHtml = htmlOutput.join("");
 
-    const gridItem = document.querySelector(`[onclick="loadRelic('${key}')"]`);
+    const gridItem = document.querySelector(`[data-relic-id="${key}"]`);
     const title = gridItem ? gridItem.querySelector('span').innerText : key;
     const iconSrc = gridItem ? gridItem.querySelector('img').src : '';
 
@@ -690,30 +729,42 @@
     const selectBtn = document.getElementById('popup-select-btn');
     const reloadedBtn = document.getElementById('popup-reloaded-btn');
 
-    // Reset button layouts
     selectBtn.innerText = "Select This Relic";
     selectBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-green-600/20 border border-green-500 text-green-400 hover:bg-green-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
 
-    reloadedBtn.innerText = "Reload";
-    reloadedBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
+    reloadedBtn.innerText = "Select As Reloaded Bonus";
+    reloadedBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider hidden";
 
-    if (selections[tier] === key) {
+    if (!isTierSelectable(tier)) {
+      selectBtn.innerText = `Select Tiers 1-${tier - 1} First`;
+      selectBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-800/50 border border-gray-700 text-gray-500 transition-colors rounded text-lg font-semibold uppercase tracking-wider cursor-not-allowed";
+    } else if (selections[tier] === key) {
       selectBtn.innerText = "Selected ✓";
-      selectBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-yellow-500/20 border border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
+      selectBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
     }
 
-    // Toggle secondary button visibility if tier falls within T1-T6 and T7 is already configured
     if (tier >= 1 && tier <= 6 && selections[7]) {
       reloadedBtn.classList.remove('hidden');
-      if (reloadedSelection === key) {
+      if (!isTierSelectable(tier)) {
+        reloadedBtn.innerText = "Complete Order First";
+        reloadedBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-800/50 border border-gray-700 text-gray-500 transition-colors rounded text-lg font-semibold uppercase tracking-wider cursor-not-allowed";
+      } else if (reloadedSelection === key) {
         reloadedBtn.innerText = "Reloaded Active ✓";
-        reloadedBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/40 border border-orange-400 text-orange-300 hover:bg-orange-400 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
+        reloadedBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-pink-500/40 border border-pink-400 text-pink-300 hover:bg-pink-400 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
       }
     } else {
       reloadedBtn.classList.add('hidden');
     }
 
     showDetails(title, iconSrc, finalHtml);
+  }
+
+  function isTierSelectable(tier) {
+    if (tier === 1) return true;
+    for (let t = 1; t < tier; t++) {
+      if (!selections[t]) return false;
+    }
+    return true;
   }
 
   function getTierByRelicKey(key) {
@@ -723,56 +774,109 @@
     return null;
   }
 
+  function triggerFloatingIndicator(relicKey) {
+    const parentContainer = document.querySelector(`[data-relic-id="${relicKey}"]`);
+    if (!parentContainer) return;
+
+    const oldIndicator = parentContainer.querySelector('.osrs-float-indicator');
+    if (oldIndicator) oldIndicator.remove();
+
+    const indicator = document.createElement('div');
+    indicator.className = 'osrs-float-indicator';
+    indicator.innerText = 'reload unlocked';
+
+    parentContainer.appendChild(indicator);
+
+    setTimeout(() => {
+      indicator.remove();
+    }, 1000);
+  }
+
   function selectCurrentRelic(isReloadedSelection = false) {
     if (!currentlyOpenRelicKey) return;
 
     const tier = getTierByRelicKey(currentlyOpenRelicKey);
-    if (!tier) return;
+    if (!tier || !isTierSelectable(tier)) return;
+
+    let tier7SelectedNow = false;
 
     if (isReloadedSelection) {
+      if (!selections[7]) return;
       if (reloadedSelection === currentlyOpenRelicKey) {
         reloadedSelection = null;
       } else {
-        // Enforce that it cannot be the exact same relic chosen as the main slot for its tier
         if (selections[tier] === currentlyOpenRelicKey) return;
         reloadedSelection = currentlyOpenRelicKey;
       }
     } else {
       if (selections[tier] === currentlyOpenRelicKey) {
-        selections[tier] = null;
-        if (tier === 7) reloadedSelection = null; // Wipe bonus option if T7 itself is unchecked
+        for (let t = tier; t <= 8; t++) {
+          selections[t] = null;
+        }
+        reloadedSelection = null;
       } else {
         selections[tier] = currentlyOpenRelicKey;
-        if (reloadedSelection === currentlyOpenRelicKey) reloadedSelection = null; // Unbind cross-selected options
+        if (tier === 7) tier7SelectedNow = true;
+        if (reloadedSelection === currentlyOpenRelicKey) reloadedSelection = null;
       }
     }
 
     updateGridVisuals();
     updateUrlParams();
     closeRelicPopup();
+
+    if (tier7SelectedNow) {
+      triggerFloatingIndicator(currentlyOpenRelicKey);
+    }
   }
 
   function updateGridVisuals() {
     document.querySelectorAll('.relic-icon-wrapper img').forEach(img => {
-      img.className = "w-20 h-20 p-1 group-hover:scale-110 transition-transform";
+      img.classList.remove('relic-glow-orange', 'relic-glow-reload');
     });
 
-    // Draw main standard highlights in yellow
     Object.values(selections).forEach(key => {
       if (!key) return;
-      const activeIcon = document.querySelector(`[onclick="loadRelic('${key}')"] img`);
+      const activeIcon = document.querySelector(`[data-relic-id="${key}"] img`);
       if (activeIcon) {
-        activeIcon.className = "w-20 h-20 p-1 group-hover:scale-110 transition-transform border-2 border-yellow-400 rounded-xl bg-yellow-500/10 shadow-[0_0_10px_rgba(234,179,8,0.3)]";
+        activeIcon.classList.add('relic-glow-orange');
       }
     });
 
-    // Draw Reloaded special secondary highlight in unique orange
     if (reloadedSelection) {
-      const reloadedIcon = document.querySelector(`[onclick="loadRelic('${reloadedSelection}')"] img`);
+      const reloadedIcon = document.querySelector(`[data-relic-id="${reloadedSelection}"] img`);
       if (reloadedIcon) {
-        reloadedIcon.className = "w-20 h-20 p-1 group-hover:scale-110 transition-transform border-2 border-orange-500 rounded-xl bg-orange-500/20 shadow-[0_0_10px_rgba(249,115,22,0.4)]";
+        reloadedIcon.classList.add('relic-glow-reload');
       }
     }
+
+    updateShareButtonState();
+  }
+
+  function isBuildComplete() {
+    for (let t = 1; t <= 8; t++) {
+      if (!selections[t]) return false;
+    }
+    if (selections[7] && !reloadedSelection) return false;
+    return true;
+  }
+
+  function updateShareButtonState() {
+    const shareBtn = document.getElementById('share-btn');
+    if (isBuildComplete()) {
+      shareBtn.disabled = false;
+      shareBtn.className = "px-5 py-2 bg-orange-500/20 border border-orange-500 text-orange-400 hover:bg-orange-400 hover:text-black font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all";
+    } else {
+      shareBtn.disabled = true;
+      shareBtn.className = "px-5 py-2 font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all bg-gray-800/50 border border-gray-700 text-gray-500 cursor-not-allowed";
+    }
+  }
+
+  function clearCompleteBuild() {
+    selections = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null, 8: null };
+    reloadedSelection = null;
+    updateGridVisuals();
+    updateUrlParams();
   }
 
   function updateUrlParams() {
@@ -790,7 +894,6 @@
       }
     }
 
-    // Append capital R segment logic if an extra tier slot is saved
     if (reloadedSelection) {
       const rTier = getTierByRelicKey(reloadedSelection);
       const rIdx = TIER_MAPPINGS[rTier].indexOf(reloadedSelection);
@@ -811,7 +914,10 @@
   function parseUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
     const buildParam = urlParams.get('b');
-    if (!buildParam) return;
+    if (!buildParam) {
+      updateGridVisuals();
+      return;
+    }
 
     selections = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null, 8: null };
     reloadedSelection = null;
@@ -837,7 +943,7 @@
 
     if (reloadedPart.length > 0) {
       const rCode = reloadedPart.charCodeAt(0) - 97;
-      if (rCode >= 0 && rCode < 18) { // Choices restricted back down to T1-T6
+      if (rCode >= 0 && rCode < 18) {
         const rTier = Math.floor(rCode / 3) + 1;
         const rChoiceIdx = rCode % 3;
         const rRelicKey = TIER_MAPPINGS[rTier]?.[rChoiceIdx];
@@ -849,14 +955,14 @@
   }
 
   function copyShareUrl() {
+    if (!isBuildComplete()) return;
     navigator.clipboard.writeText(window.location.href).then(() => {
       const btn = document.getElementById('share-btn');
-      const originalText = btn.innerText;
       btn.innerText = "✓ Link Copied!";
       btn.className = "px-5 py-2 bg-green-500/20 border border-green-500 text-green-400 font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all";
       setTimeout(() => {
-        btn.innerText = originalText;
-        btn.className = "px-5 py-2 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all";
+        btn.innerText = "🔗 Share Build";
+        updateShareButtonState();
       }, 2000);
     }).catch(err => {
       console.error('Could not copy text: ', err);
