@@ -276,6 +276,17 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     white-space: nowrap;
   }
+    /* Disable hover effects on touch devices */
+@media (hover: hover) {
+  .btn-action:hover { background: #ff8c42; color: #1a1a1a; }
+  /* Add similar for your share and clear buttons if needed */
+}
+
+/* Force mobile-friendly active states */
+button:active {
+  transform: scale(0.98);
+  opacity: 0.8;
+}
   </style>
 </head>
 
@@ -318,9 +329,14 @@
   </div>
 
   <div class="text-center mb-2 flex justify-center gap-3">
-    <div class="relative inline-block" id="share-btn-wrapper" onmousemove="handleShareTooltip(event)" onmouseleave="hideShareTooltip()" ontouchstart="handleShareTooltipMobile(event)">
-      <button onclick="copyShareUrl()" id="share-btn" disabled
-              class="px-5 py-2 font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all bg-gray-800/50 border border-gray-700 text-gray-500 cursor-not-allowed pointer-events-none">
+    <div class="relative inline-block pointer-events-auto" id="share-btn-wrapper"
+         onclick="copyShareUrl()"
+         onmouseover="handleShareTooltip(event)"
+         onmousemove="handleShareTooltip(event)"
+         onmouseleave="hideShareTooltip()"
+         ontouchstart="handleShareTooltipMobile(event)">
+      <button onclick="copyShareUrl()" id="share-btn"
+              class="pointer-events-none px-5 py-2 font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all bg-gray-800/50 border border-gray-700 text-gray-500">
         Share Build
       </button>
     </div>
@@ -915,13 +931,13 @@
 
     if (missingMainTier !== null) {
       if (missingMainTier === 8 && selections[7] && !reloadedSelection) {
-        return "Select all relics first";
+        return "Tier 8 unlocked but reload is missing";
       }
-      return "Select all relics first";
+      return "Complete previous tiers first";
     }
 
     if (selections[7] && !reloadedSelection) {
-      return "Select a reloaded relic";
+      return "Tier 8 unlocked but reload is missing";
     }
 
     return null;
@@ -967,18 +983,18 @@
     tooltip.style.transform = '';
   }
 
-  function updateShareButtonState() {
-    const shareBtn = document.getElementById('share-btn');
-    if (isBuildComplete()) {
-      shareBtn.disabled = false;
-      shareBtn.innerText = "🔗 Share Build";
-      shareBtn.className = "px-5 py-2 bg-orange-500/20 border border-orange-500 text-orange-400 hover:bg-orange-400 hover:text-black font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all";
-    } else {
-      shareBtn.disabled = true;
-      shareBtn.innerText = "Share Build";
-      shareBtn.className = "px-5 py-2 font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all bg-gray-800/50 border border-gray-700 text-gray-500 cursor-not-allowed pointer-events-none";
-    }
+function updateShareButtonState() {
+  const shareBtn = document.getElementById('share-btn');
+  if (isBuildComplete()) {
+    shareBtn.classList.remove('pointer-events-none', 'bg-gray-800/50', 'border-gray-700', 'text-gray-500');
+    shareBtn.classList.add('pointer-events-auto', 'bg-orange-500/20', 'border-orange-500', 'text-orange-400');
+    shareBtn.innerText = "🔗 Share Build";
+  } else {
+    shareBtn.classList.add('pointer-events-none', 'bg-gray-800/50', 'border-gray-700', 'text-gray-500');
+    shareBtn.classList.remove('pointer-events-auto', 'bg-orange-500/20', 'border-orange-500', 'text-orange-400');
+    shareBtn.innerText = "Share Build";
   }
+}
 
   function clearCompleteBuild() {
     selections = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null, 8: null };
@@ -1063,19 +1079,26 @@
     updateGridVisuals();
   }
 
-  function copyShareUrl() {
-    if (!isBuildComplete()) return;
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      const btn = document.getElementById('share-btn');
-      btn.innerText = "✓ Link Copied!";
-      btn.className = "px-5 py-2 bg-green-500/20 border border-green-500 text-green-400 font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all";
-      setTimeout(() => {
-        updateShareButtonState();
-      }, 2000);
-    }).catch(err => {
-      console.error('Could not copy text: ', err);
+function copyShareUrl() {
+  if (!isBuildComplete()) return;
+
+  // 1. Try Native Share
+  if (navigator.share) {
+    navigator.share({
+      title: 'Lunar Leagues',
+      url: window.location.href
+    }).catch((err) => {
+      // If user cancels, we don't care
+      console.log("User cancelled share");
     });
   }
+  // 2. Fallback to Clipboard for Desktop/Unsupported
+  else {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      alert("Link copied to clipboard!");
+    });
+  }
+}
 
   function showDetails(title, iconSrc, descriptionHtml) {
     const popup = document.getElementById("relic-universal-popup");
