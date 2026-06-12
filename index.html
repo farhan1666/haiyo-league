@@ -1,7 +1,5 @@
 <!doctype html>
-
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width,initial-scale=1" name="viewport">
@@ -264,6 +262,13 @@
     (it's all in your head)
   </div>
 
+  <div class="text-center mb-2">
+    <button onclick="copyShareUrl()" id="share-btn"
+            class="px-5 py-2 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all">
+      🔗 Share Build
+    </button>
+  </div>
+
   <main class="container mx-auto px-4 py-8 max-w-full">
     <div class="flex flex-col md:flex-row md:justify-between gap-8 md:gap-0" id="relic-grid">
       <section class="tier-column flex-1 px-4 flex flex-col items-center gap-6" data-purpose="tier-1">
@@ -443,7 +448,7 @@
 
         <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
           <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
+          <ul class="text-passive text-orange-100/80 space-y-2">
             <li class="flex items-start gap-2"><span>Leagues XP multiplier is increased from 12x to 16x.</span></li>
           </ul>
         </div>
@@ -471,7 +476,7 @@
 
         <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
           <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
+          <ul class="text-passive text-orange-100/80 space-y-2">
             <li class="flex items-start gap-2"><span class="text-color-strong">Reloaded: In addition to choosing a relic from this tier, you can unlock any additional relic from Tier 6 and below.</span></li>
           </ul>
         </div>
@@ -499,7 +504,7 @@
 
         <div class="passive-bonus-box mt-2 md:mt-6 w-full bg-[#1e0f29]/80 p-4 rounded-lg border border-orange-900/30 transition-all duration-200">
           <h3 class="text-passive-title font-bold text-orange-300 mb-3 uppercase underline">Passive Bonuses</h3>
-          <ul class="text-passive leading-relaxed text-orange-100/80 space-y-2">
+          <ul class="text-passive text-orange-100/80 space-y-2">
             <li class="flex items-start gap-2"><span class="text-color-strong">Preserve, Chivalry, Piety, Rigour and Augury are automatically unlocked, provided you have the Prayer level to use them.</span></li>
             <li class="flex items-start gap-2"><span class="text-color-strong">With Level 99 Herblore, you can now mix a Super combat potion, a Ranging potion, a Magic potion, and an Onion together to create an Overload (Nightmare Zone version).</span></li>
           </ul>
@@ -513,19 +518,27 @@
     <div class="bg-[#1e0f29]/90 border border-orange-900/50 p-6 md:p-8 w-full md:max-w-5xl max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl relative flex flex-col gap-4" onclick="event.stopPropagation()">
 
       <div class="flex items-center justify-center gap-4 md:gap-6 border-b border-orange-900/30 pb-2 min-h-[5rem] md:min-h-[8rem]">
-
         <div class="w-20 h-20 md:w-32 md:h-32 shrink-0 overflow-hidden">
           <img alt="Selected Relic" class="w-full h-full object-contain" id="popup-exp-icon" src="">
         </div>
-
         <h3 class="text-3xl !text-[2.6rem] sm:!text-[3.4rem] md:!text-[4.2rem] text-orange-400 leading-none select-none" id="popup-exp-title">
           Relic Name
         </h3>
-
       </div>
 
       <div class="text-lg text-gray-300 overflow-y-auto pr-1 leading-relaxed" id="popup-exp-desc">
         Detailed explanation.
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-2 w-full mt-4" id="popup-action-container">
+        <button onclick="selectCurrentRelic(false)" id="popup-select-btn"
+                class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-green-600/20 border border-green-500 text-green-400 hover:bg-green-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider">
+          Select This Relic
+        </button>
+        <button onclick="selectCurrentRelic(true)" id="popup-reloaded-btn"
+                class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider hidden">
+          Reload
+        </button>
       </div>
 
       <button onclick="closeRelicPopup()"
@@ -595,7 +608,23 @@
 </div>
 
 <script data-purpose="interaction-logic">
+  let selections = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null, 8: null };
+  let reloadedSelection = null; // Tracks the extra Tier 1-6 choice allowed by Tier 7 Reloaded
+  let currentlyOpenRelicKey = null;
+
+  const TIER_MAPPINGS = {
+    1: ['magicthegathering', 'symbiosis', 'financialfraud'],
+    2: ['conman', 'holyharvest', 'perpetualstew'],
+    3: ['friendoftheforest', 'harnessedearth', 'callofthesea'],
+    4: ['runtotherescue', 'industrialevolution', 'unleashedteleport'],
+    5: ['lordoftherings', 'runicfreelancer', 'faith'],
+    6: ['feralexorcism', 'papercrafting', 'mariner'],
+    7: ['reapersavarice', 'rainingluck', 'squealoffortune'],
+    8: ['grandmasteratarms', 'dragonmulticannon', 'leap']
+  };
+
   function loadRelic(key) {
+    currentlyOpenRelicKey = key;
     const rawText = RELIC_RAW_DATA[key];
     if (!rawText) return;
 
@@ -657,7 +686,181 @@
     const title = gridItem ? gridItem.querySelector('span').innerText : key;
     const iconSrc = gridItem ? gridItem.querySelector('img').src : '';
 
+    const tier = getTierByRelicKey(key);
+    const selectBtn = document.getElementById('popup-select-btn');
+    const reloadedBtn = document.getElementById('popup-reloaded-btn');
+
+    // Reset button layouts
+    selectBtn.innerText = "Select This Relic";
+    selectBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-green-600/20 border border-green-500 text-green-400 hover:bg-green-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
+
+    reloadedBtn.innerText = "Reload";
+    reloadedBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-600/20 border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
+
+    if (selections[tier] === key) {
+      selectBtn.innerText = "Selected ✓";
+      selectBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-yellow-500/20 border border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
+    }
+
+    // Toggle secondary button visibility if tier falls within T1-T6 and T7 is already configured
+    if (tier >= 1 && tier <= 6 && selections[7]) {
+      reloadedBtn.classList.remove('hidden');
+      if (reloadedSelection === key) {
+        reloadedBtn.innerText = "Reloaded Active ✓";
+        reloadedBtn.className = "flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-orange-500/40 border border-orange-400 text-orange-300 hover:bg-orange-400 hover:text-black transition-colors rounded text-lg font-semibold uppercase tracking-wider";
+      }
+    } else {
+      reloadedBtn.classList.add('hidden');
+    }
+
     showDetails(title, iconSrc, finalHtml);
+  }
+
+  function getTierByRelicKey(key) {
+    for (const [tier, keys] of Object.entries(TIER_MAPPINGS)) {
+      if (keys.includes(key)) return parseInt(tier);
+    }
+    return null;
+  }
+
+  function selectCurrentRelic(isReloadedSelection = false) {
+    if (!currentlyOpenRelicKey) return;
+
+    const tier = getTierByRelicKey(currentlyOpenRelicKey);
+    if (!tier) return;
+
+    if (isReloadedSelection) {
+      if (reloadedSelection === currentlyOpenRelicKey) {
+        reloadedSelection = null;
+      } else {
+        // Enforce that it cannot be the exact same relic chosen as the main slot for its tier
+        if (selections[tier] === currentlyOpenRelicKey) return;
+        reloadedSelection = currentlyOpenRelicKey;
+      }
+    } else {
+      if (selections[tier] === currentlyOpenRelicKey) {
+        selections[tier] = null;
+        if (tier === 7) reloadedSelection = null; // Wipe bonus option if T7 itself is unchecked
+      } else {
+        selections[tier] = currentlyOpenRelicKey;
+        if (reloadedSelection === currentlyOpenRelicKey) reloadedSelection = null; // Unbind cross-selected options
+      }
+    }
+
+    updateGridVisuals();
+    updateUrlParams();
+    closeRelicPopup();
+  }
+
+  function updateGridVisuals() {
+    document.querySelectorAll('.relic-icon-wrapper img').forEach(img => {
+      img.className = "w-20 h-20 p-1 group-hover:scale-110 transition-transform";
+    });
+
+    // Draw main standard highlights in yellow
+    Object.values(selections).forEach(key => {
+      if (!key) return;
+      const activeIcon = document.querySelector(`[onclick="loadRelic('${key}')"] img`);
+      if (activeIcon) {
+        activeIcon.className = "w-20 h-20 p-1 group-hover:scale-110 transition-transform border-2 border-yellow-400 rounded-xl bg-yellow-500/10 shadow-[0_0_10px_rgba(234,179,8,0.3)]";
+      }
+    });
+
+    // Draw Reloaded special secondary highlight in unique orange
+    if (reloadedSelection) {
+      const reloadedIcon = document.querySelector(`[onclick="loadRelic('${reloadedSelection}')"] img`);
+      if (reloadedIcon) {
+        reloadedIcon.className = "w-20 h-20 p-1 group-hover:scale-110 transition-transform border-2 border-orange-500 rounded-xl bg-orange-500/20 shadow-[0_0_10px_rgba(249,115,22,0.4)]";
+      }
+    }
+  }
+
+  function updateUrlParams() {
+    const url = new URL(window.location.href);
+    let codeString = "";
+
+    for (let t = 1; t <= 8; t++) {
+      const selectedKey = selections[t];
+      if (selectedKey) {
+        const choiceIdx = TIER_MAPPINGS[t].indexOf(selectedKey);
+        if (choiceIdx !== -1) {
+          const charCode = 97 + ((t - 1) * 3) + choiceIdx;
+          codeString += String.fromCharCode(charCode);
+        }
+      }
+    }
+
+    // Append capital R segment logic if an extra tier slot is saved
+    if (reloadedSelection) {
+      const rTier = getTierByRelicKey(reloadedSelection);
+      const rIdx = TIER_MAPPINGS[rTier].indexOf(reloadedSelection);
+      if (rIdx !== -1) {
+        const rCharCode = 97 + ((rTier - 1) * 3) + rIdx;
+        codeString += "R" + String.fromCharCode(rCharCode);
+      }
+    }
+
+    if (codeString) {
+      url.searchParams.set('b', codeString);
+    } else {
+      url.searchParams.delete('b');
+    }
+    window.history.replaceState({}, '', url);
+  }
+
+  function parseUrlParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const buildParam = urlParams.get('b');
+    if (!buildParam) return;
+
+    selections = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null, 8: null };
+    reloadedSelection = null;
+
+    let mainPart = buildParam;
+    let reloadedPart = "";
+
+    if (buildParam.includes("R")) {
+      const parts = buildParam.split("R");
+      mainPart = parts[0];
+      reloadedPart = parts[1] || "";
+    }
+
+    for (let i = 0; i < mainPart.length; i++) {
+      const code = mainPart.charCodeAt(i) - 97;
+      if (code >= 0 && code < 24) {
+        const tier = Math.floor(code / 3) + 1;
+        const choiceIdx = code % 3;
+        const relicKey = TIER_MAPPINGS[tier]?.[choiceIdx];
+        if (relicKey) selections[tier] = relicKey;
+      }
+    }
+
+    if (reloadedPart.length > 0) {
+      const rCode = reloadedPart.charCodeAt(0) - 97;
+      if (rCode >= 0 && rCode < 18) { // Choices restricted back down to T1-T6
+        const rTier = Math.floor(rCode / 3) + 1;
+        const rChoiceIdx = rCode % 3;
+        const rRelicKey = TIER_MAPPINGS[rTier]?.[rChoiceIdx];
+        if (rRelicKey) reloadedSelection = rRelicKey;
+      }
+    }
+
+    updateGridVisuals();
+  }
+
+  function copyShareUrl() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      const btn = document.getElementById('share-btn');
+      const originalText = btn.innerText;
+      btn.innerText = "✓ Link Copied!";
+      btn.className = "px-5 py-2 bg-green-500/20 border border-green-500 text-green-400 font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all";
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.className = "px-5 py-2 bg-orange-500/10 border border-orange-500/40 text-orange-400 hover:bg-orange-500 hover:text-black font-semibold rounded shadow-md tracking-wider uppercase text-xs sm:text-sm transition-all";
+      }, 2000);
+    }).catch(err => {
+      console.error('Could not copy text: ', err);
+    });
   }
 
   function showDetails(title, iconSrc, descriptionHtml) {
@@ -759,7 +962,6 @@
     localStorage.setItem("lunar_leagues_visited", "true");
   }
 
-  // Closes open popups when background dimming fields are targets of event pointer streams
   function handleOutsideClick(event, targetId, closeFunction) {
     if (event.target.id === targetId) {
       closeFunction();
@@ -785,7 +987,6 @@
     }
   }
 
-  // Intercept key events globally and clean close visible stack frames
   window.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
       closeRelicPopup();
@@ -801,6 +1002,7 @@
   window.addEventListener("DOMContentLoaded", () => {
     handleWelcomeFlow();
     checkVideoAutoplay();
+    parseUrlParams();
   });
 </script>
 
@@ -831,5 +1033,4 @@
 </style>
 <script data-goatcounter="https://phoneman.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
-
 </html>
